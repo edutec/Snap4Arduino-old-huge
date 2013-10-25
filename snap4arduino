@@ -1,0 +1,19 @@
+#!/bin/sh
+if test $# -gt 0; then
+	for arg
+	do
+		case "$arg" in
+			--dev)
+				bin/CogVM shared/Pharo2.0.image
+			;;
+			--debug)
+				bin/CogVM -vm-display-null shared/Pharo2.0.image --debug
+			;;
+			*)
+				echo "Usage: $0 [--debug]"
+			;;
+		esac
+	done
+else
+		bin/CogVM -vm-display-null shared/Pharo2.0.image
+fi
