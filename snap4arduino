@@ -15,5 +15,5 @@ if test $# -gt 0; then
 		esac
 	done
 else
-		bin/CogVM -vm-display-null shared/Pharo2.0.image
+		bin/CogVM -vm-display-null shared/Pharo2.0.image --serve
 fi
