@@ -8,7 +8,9 @@ Developed at [Citilab](http://citilab.eu/) by the [Edutec](http://edutec.citilab
 Libraries and third party software used in this project
 -------------------------------------------------------
 
-*    [Pharo 2.0](http://pharo-project.org)
-     [Zinc HTTP Components](http://zn.stfx.eu/zn/index.html)
-     [Arduino for Pharo](http://ss3.gemstone.com/ss/Arduino.html)
+*    [Pharo 2.0](http://pharo-project.org) with:
+    
+     * [Zinc HTTP Components](http://zn.stfx.eu/zn/index.html)
+
+     * [Arduino for Pharo](http://ss3.gemstone.com/ss/Arduino.html)
 *    [Node-Webkit](https://github.com/rogerwang/node-webkit)
