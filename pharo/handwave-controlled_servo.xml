@@ -1,0 +1,273 @@
+<project name="handwave-controlled servo" app="Snap! 4.0, http://snap.berkeley.edu" version="1">
+<notes/>
+<thumbnail>
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAAB4CAYAAAB1ovlvAAAEGElEQVR4Xu3dMUokXRiF4dsgGIoimGhgpoELUDBwCQZuqBNxGUZmgmBuILSpaGCmGxDETLFhxioocQbbrqFK3tHzmgzD3133+855uD3T/DCDX68/xR8TgBIYCBBK3mPrBAQoBDQBAaLxe7gANYAmIEA0fg8XoAbQBASIxu/hAtQAmoAA0fg9XIAaQBMQIBq/hwtQA2gCAkTj93ABagBNQIBo/B4uQA2gCQgQjd/DBagBNAEBovF7uAA1gCYgQDR+DxegBtAEBIjG7+EC1ACagADR+D1cgBpAExAgGr+HC1ADaAICROP3cAFqAE1AgGj8Hi5ADaAJCBCN38MFqAE0AQGi8Xu4ADWAJiBANH4PF6AG0AQEiMbv4QLUAJqAANH4PVyAGkATECAav4cLUANoAgLsKf6zs7MPn7Szs9PTCT/zMQLsodcK3/b2dpmZmfnjaePxuJyfnxcRTg5ZgB0BTsLXPFaEnwcswB4ATrvhKqTTXtNxjG/7dgF2rK7BdXh4WE5OTsrx8XFZXV0tl5eXZW5urn66AP0I7shs8tsbXLOzs+X5+bl+YfVr9fvmR4AC/HKAg8GgPuP1X6AvV1dX9V9KHh8fvQGnJO9HcEeaze12cHBQf+weHR2VpaWlcnNzUxYWFgQowI7Cpry9zcdrm9d87ZT/79O9ATt2MxqNyvz8fFlfX//wSdVN+PDwULa2tjqe9DPfLsAeeq1uuOpL6M3Nzbcvo6vv/y4uLkr1q1/B+JeQHph9/oj7+/tyfX1dY2u+fF5cXCwbGxtffvZ3PsAbcEJ71UfqcDgse3t7rfp9enqqb7zqJvTWaxVZ/SIBfpLV7u7u23+9vb0tp6enZWVl5cN3NP8zgrdee3wCbJHVe4TvX/7y8lKDrH6a288/67UI9K+XeANOyawNwH+P3Xc0CQiw5Ufw3d1dfeMtLy+rp8cEBDghzLW1tbK/v18m3YA9dhD9KAFG188vL0C+g+gJBBhdP7+8APkOoicQYHT9/PIC5DuInkCA0fXzywuQ7yB6AgFG188vL0C+g+gJBBhdP7+8APkOoicQYHT9/PIC5DuInkCA0fXzywuQ7yB6AgFG188vL0C+g+gJBBhdP7+8APkOoicQYHT9/PIC5DuInkCA0fXzywuQ7yB6AgFG188vL0C+g+gJBBhdP7+8APkOoicQYHT9/PIC5DuInkCA0fXzywuQ7yB6AgFG188vL0C+g+gJBBhdP7+8APkOoicQYHT9/PIC5DuInkCA0fXzywuQ7yB6AgFG188vL0C+g+gJBBhdP7+8APkOoicQYHT9/PIC5DuInkCA0fXzywuQ7yB6AgFG188vL0C+g+gJBBhdP7+8APkOoicQYHT9/PIC5DuInkCA0fXzywuQ7yB6AgFG188v/xvIzom3ZyRMigAAAABJRU5ErkJggg==
+</thumbnail>
+<stage name="Stage" costume="0" tempo="60" threadsafe="false" codify="false" scheduled="false" id="1">
+<pentrails>
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAFoCAYAAACPNyggAAAOhUlEQVR4Xu3VwQkAAAjEMN1/abewn7jAQRC64wgQIECAAIF3gX1fNEiAAAECBAiMAHsCAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQICLAfIECAAAECgYAAB+gmCRAgQICAAPsBAgQIECAQCAhwgG6SAAECBAgIsB8gQIAAAQKBgAAH6CYJECBAgIAA+wECBAgQIBAICHCAbpIAAQIECAiwHyBAgAABAoGAAAfoJgkQIECAgAD7AQIECBAgEAgIcIBukgABAgQIHLFxAWmhEwHPAAAAAElFTkSuQmCC
+</pentrails>
+<costumes>
+<list id="2"/>
+</costumes>
+<sounds>
+<list id="3"/>
+</sounds>
+<variables/>
+<blocks/>
+<scripts/>
+<sprites>
+<sprite name="Sprite" idx="1" x="0" y="0" heading="90" scale="1" rotation="1" draggable="true" costume="0" color="80,80,80" pen="tip" id="8">
+<costumes>
+<list id="9"/>
+</costumes>
+<sounds>
+<list id="10"/>
+</sounds>
+<variables/>
+<blocks/>
+<scripts>
+<script x="81" y="77">
+<block s="receiveGo"/>
+<custom-block s="connect arduino at %s">
+<l>/dev/ttyACM0</l>
+</custom-block>
+<custom-block s="set digital pin %n to %b">
+<l>12</l>
+<block s="reportTrue"/>
+</custom-block>
+<block s="doWait">
+<l>0.2</l>
+</block>
+<custom-block s="set digital pin %n to %b">
+<l>12</l>
+<block s="reportFalse"/>
+</custom-block>
+<custom-block s="setup digital pin %n as servo">
+<l>5</l>
+</custom-block>
+<block s="doForever">
+<script>
+<block s="doIf">
+<block s="reportLessThan">
+<block s="reportAnalogReading">
+<l>1</l>
+</block>
+<l>200</l>
+</block>
+<script>
+<custom-block s="set servo %n to %n">
+<l>5</l>
+<l>1500</l>
+</custom-block>
+</script>
+</block>
+<block s="doIf">
+<block s="reportGreaterThan">
+<block s="reportAnalogReading">
+<l>1</l>
+</block>
+<l>500</l>
+</block>
+<script>
+<custom-block s="set servo %n to %n">
+<l>5</l>
+<l>1700</l>
+</custom-block>
+</script>
+</block>
+<block s="doIf">
+<block s="reportAnd">
+<block s="reportGreaterThan">
+<block s="reportAnalogReading">
+<l>1</l>
+</block>
+<l>200</l>
+</block>
+<block s="reportLessThan">
+<block s="reportAnalogReading">
+<l>1</l>
+</block>
+<l>500</l>
+</block>
+</block>
+<script>
+<custom-block s="set servo %n to %n">
+<l>5</l>
+<l>1200</l>
+</custom-block>
+</script>
+</block>
+</script>
+</block>
+</script>
+</scripts>
+</sprite>
+</sprites>
+</stage>
+<hidden/>
+<headers/>
+<code/>
+<blocks>
+<block-definition s="connect arduino at %'port'" type="command" category="sensing">
+<header/>
+<code/>
+<inputs>
+<input type="%s">/dev/ttyACM0</input>
+</inputs>
+<script>
+<block s="doReport">
+<block s="reportURL">
+<block s="reportJoinWords">
+<list>
+<l>localhost:8080/connect?port=</l>
+<block var="port"/>
+</list>
+</block>
+</block>
+</block>
+</script>
+</block-definition>
+<block-definition s="set digital pin %'pin' to %'boolean'" type="command" category="sensing">
+<header/>
+<code/>
+<inputs>
+<input type="%n"/>
+<input type="%b"/>
+</inputs>
+<script>
+<block s="doDeclareVariables">
+<list>
+<l>bool</l>
+</list>
+</block>
+<block s="doIfElse">
+<block var="boolean"/>
+<script>
+<block s="doSetVar">
+<l>bool</l>
+<l>1</l>
+</block>
+</script>
+<script>
+<block s="doSetVar">
+<l>bool</l>
+<l>0</l>
+</block>
+</script>
+</block>
+<block s="webSocketSend">
+<block s="reportJoinWords">
+<list>
+<l>digitalWrite&</l>
+<block var="pin"/>
+<l>&</l>
+<block var="bool"/>
+</list>
+</block>
+</block>
+</script>
+</block-definition>
+<block-definition s="set servo %'pin' to %'value'" type="command" category="sensing">
+<header/>
+<code/>
+<inputs>
+<input type="%n"/>
+<input type="%n"/>
+</inputs>
+<script>
+<block s="webSocketSend">
+<block s="reportJoinWords">
+<list>
+<l>servoWrite&</l>
+<block var="pin"/>
+<l>&</l>
+<block var="value"/>
+</list>
+</block>
+</block>
+</script>
+</block-definition>
+<block-definition s="setup digital pin %'pin' as digital output" type="command" category="sensing">
+<header/>
+<code/>
+<inputs>
+<input type="%n"/>
+</inputs>
+<script>
+<block s="doReport">
+<block s="reportURL">
+<block s="reportJoinWords">
+<list>
+<l>localhost:8080/digitalPinMode?pin=</l>
+<block var="pin"/>
+<l>&mode=O</l>
+</list>
+</block>
+</block>
+</block>
+</script>
+</block-definition>
+<block-definition s="setup digital pin %'pin' as digital input" type="command" category="sensing">
+<header/>
+<code/>
+<inputs>
+<input type="%n"/>
+</inputs>
+<script>
+<block s="doReport">
+<block s="reportURL">
+<block s="reportJoinWords">
+<list>
+<l>localhost:8080/digitalPinMode?pin=</l>
+<block var="pin"/>
+<l>&mode=I</l>
+</list>
+</block>
+</block>
+</block>
+</script>
+</block-definition>
+<block-definition s="setup digital pin %'pin' as PWM" type="command" category="sensing">
+<header/>
+<code/>
+<inputs>
+<input type="%n"/>
+</inputs>
+<script>
+<block s="doReport">
+<block s="reportURL">
+<block s="reportJoinWords">
+<list>
+<l>localhost:8080/digitalPinMode?pin=</l>
+<block var="pin"/>
+<l>&mode=P</l>
+</list>
+</block>
+</block>
+</block>
+</script>
+</block-definition>
+<block-definition s="setup digital pin %'pin' as servo" type="command" category="sensing">
+<header/>
+<code/>
+<inputs>
+<input type="%n"/>
+</inputs>
+<script>
+<block s="doReport">
+<block s="reportURL">
+<block s="reportJoinWords">
+<list>
+<l>localhost:8080/digitalPinMode?pin=</l>
+<block var="pin"/>
+<l>&mode=S</l>
+</list>
+</block>
+</block>
+</block>
+</script>
+</block-definition>
+</blocks>
+<variables/>
+</project>
