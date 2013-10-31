@@ -19,20 +19,20 @@ var board;
 var isDebugMode = (process.argv[2] == '--debug');
 function debugLog(string) { if (isDebugMode) console.log(string) };
 
-var firmata = require('/usr/local/lib/node_modules/firmata/lib/firmata');
+var firmata = require('./node_modules/firmata/lib/firmata');
 
 // WebSocket server to communicate with Snap!
-var WebSocketServer = require('/usr/local/lib/node_modules/ws').Server
+var WebSocketServer = require('./node_modules/ws').Server
   , webSocketServer = new WebSocketServer({port: defaultWebSocketPort});
 debugLog("websocket server started on port " + defaultWebSocketPort);
 
 // WebServer to serve Snap!
-var connect = require('/usr/local/lib/node_modules/connect');
+var connect = require('./node_modules/connect');
 connect.createServer(connect.static('snap')).listen(defaultWebPort);
 debugLog("web server serving Snap! at port " + defaultWebPort);
 
 // We open Snap! on a web browser
-var open = require('/usr/local/lib/node_modules/open');
+var open = require('./node_modules/open');
 open('http://localhost:' + defaultWebPort + '/snap.html#open:blocks.xml');
 
 webSocketServer.on('connection', function(webSocket) {
