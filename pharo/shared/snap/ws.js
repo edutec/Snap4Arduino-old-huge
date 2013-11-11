@@ -7,7 +7,6 @@ var analogReadingThreadId;
 var digitalReadingThreadId;
 
 
-
 function requestAnalogReadings() {
 	socket.send('analogReadings');
 }
@@ -22,6 +21,10 @@ function inform(title, message) {
 	(new DialogBoxMorph()).inform(title, message, world);
 }
 
+
+// A bit of a hack for everyone to be able to return the world
+// We can cheat because we _know_ there is a single world in Snap!
+Morph.prototype.world = function() { return world }
 
 
 socket.onmessage = function(message) {
