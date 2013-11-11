@@ -22,11 +22,6 @@ function inform(title, message) {
 }
 
 
-// A bit of a hack for everyone to be able to return the world
-// We can cheat because we _know_ there is a single world in Snap!
-Morph.prototype.world = function() { return world }
-
-
 socket.onmessage = function(message) {
 	messageArray = message.data.split("&");
 	switch (messageArray[0]) {
@@ -38,6 +33,7 @@ socket.onmessage = function(message) {
 			break;
 	}
 };
+
 
 socket.onclose = function() { 
 	inform("Connection lost!", "Lost connection to the server.\nPlease make sure the server is running, then reload this page and try again.");

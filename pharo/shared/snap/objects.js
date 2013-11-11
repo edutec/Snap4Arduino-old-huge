@@ -1802,6 +1802,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         button.showHelp = BlockMorph.prototype.showHelp;
         blocks.push(button);
 
+		console.log(this);
         if (this.variables.allNames().length > 0) {
             button = new PushButtonMorph(
                 null,

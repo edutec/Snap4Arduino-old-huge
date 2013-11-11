@@ -27,9 +27,8 @@ SpriteMorph.prototype.originalBlockTemplates = SpriteMorph.prototype.blockTempla
 
 function overridenBlockTemplates(category) {
 
-	var cat = category || 'motion',
-		// *this* will either be StageMorph or SpriteMorph
-		blocks = this.__proto__.originalBlockTemplates(cat); 
+	// *this* will either be StageMorph or SpriteMorph
+	var blocks = this.originalBlockTemplates(category); 
 
 	function blockBySelector(selector) {
         var newBlock = SpriteMorph.prototype.blockForSelector(selector, true);
@@ -37,7 +36,7 @@ function overridenBlockTemplates(category) {
         return newBlock;
     }
 
-	if (cat === 'sensing') {
+	if (category === 'sensing') {
 		blocks.push('-');
 		blocks.push(blockBySelector('webSocketSend'));
         blocks.push(blockBySelector('reportAnalogReading'));
