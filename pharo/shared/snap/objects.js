@@ -776,27 +776,7 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'http:// %s',
             defaults: ['snap.berkeley.edu']
         },
-/*
-		// <Snap4Arduino>
-		webSocketSend: {
-            type: 'command',
-            category: 'sensing',
-            spec: 'send WebSocket message %s',
-            defaults: ['hello']
-		},
-        reportAnalogReading: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'analog reading %n'
-        },
-        reportDigitalReading: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'digital reading %n'
-        },
-		// </Snap4Arduino>
-*/
-		reportIsFastTracking: {
+        reportIsFastTracking: {
             type: 'predicate',
             category: 'sensing',
             spec: 'turbo mode?'
@@ -4370,13 +4350,6 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportAttributeOf'));
         blocks.push('-');
         blocks.push(block('reportURL'));
-/*
-		// <Snap4Arduino>
-        blocks.push(block('webSocketSend'));
-        blocks.push(block('reportAnalogReading'));
-        blocks.push(block('reportDigitalReading'));
-		// </Snap4Arduino>
-*/
         blocks.push('-');
         blocks.push(block('reportIsFastTracking'));
         blocks.push(block('doSetFastTracking'));
