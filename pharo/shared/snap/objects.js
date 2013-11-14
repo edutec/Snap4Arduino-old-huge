@@ -124,7 +124,7 @@ PrototypeHatBlockMorph*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.objects = '2013-October-14';
+modules.objects = '2013-November-12';
 
 var SpriteMorph;
 var StageMorph;
@@ -1802,7 +1802,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         button.showHelp = BlockMorph.prototype.showHelp;
         blocks.push(button);
 
-		console.log(this);
         if (this.variables.allNames().length > 0) {
             button = new PushButtonMorph(
                 null,
@@ -6031,7 +6030,7 @@ WatcherMorph.prototype.update = function () {
         } else {
             newValue = this.target[this.getter]();
         }
-        num = parseFloat(newValue);
+        num = +newValue;
         if (!isNaN(num)) {
             newValue = Math.round(newValue * 1000000000) / 1000000000;
         }

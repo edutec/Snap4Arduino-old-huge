@@ -1,26 +1,45 @@
 // Definition of our new primitive blocks
 
-SpriteMorph.prototype.blocks.webSocketSend = {
-            type: 'command',
-            category: 'sensing',
-            spec: 'send WebSocket message %s',
-            defaults: ['hello']
-		};
 SpriteMorph.prototype.blocks.reportAnalogReading = 
 		{
             type: 'reporter',
             category: 'sensing',
-            spec: 'analog reading %n'
+            spec: 'analog reading %analogPin'
         };
 SpriteMorph.prototype.blocks.reportDigitalReading = 
 		{
             type: 'reporter',
             category: 'sensing',
-            spec: 'digital reading %n'
+            spec: 'digital reading %digitalPin'
         };
 
+SpriteMorph.prototype.blocks.connectArduino =
+		{
+			type: 'command',
+			category: 'sensing',
+			spec: 'connect arduino %arduinoType at %port',
+		};
 
-// Our way of overriding blockTemplates() without having to copy all of its code:
+SpriteMorph.prototype.blocks.setPinMode =
+		{
+			type: 'command',
+			category: 'sensing',
+			spec: 'setup digital pin %digitalPin as %pinMode',
+		};
+SpriteMorph.prototype.blocks.digitalWrite =
+		{
+			type: 'command',
+			category: 'sensing',
+			spec: 'set digital pin %digitalPin to %b',
+		};
+SpriteMorph.prototype.blocks.servoWrite =
+		{
+			type: 'command',
+			category: 'sensing',
+			spec: 'set servo %servoPin to %servoValue',
+		};
+
+// blockTemplates() proxy
 
 StageMorph.prototype.originalBlockTemplates = StageMorph.prototype.blockTemplates;
 SpriteMorph.prototype.originalBlockTemplates = SpriteMorph.prototype.blockTemplates;
@@ -38,9 +57,14 @@ function overridenBlockTemplates(category) {
 
 	if (category === 'sensing') {
 		blocks.push('-');
-		blocks.push(blockBySelector('webSocketSend'));
+        blocks.push(blockBySelector('connectArduino'));
+        blocks.push(blockBySelector('setPinMode'));
+		blocks.push('-');
         blocks.push(blockBySelector('reportAnalogReading'));
         blocks.push(blockBySelector('reportDigitalReading'));
+		blocks.push('-');
+        blocks.push(blockBySelector('servoWrite'));
+        blocks.push(blockBySelector('digitalWrite'));
 	};
 
 	return blocks;

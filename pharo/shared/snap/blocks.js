@@ -155,7 +155,7 @@ DialogBoxMorph, BlockInputFragmentMorph, PrototypeHatBlockMorph, Costume*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.blocks = '2013-October-25';
+modules.blocks = '2013-November-12';
 
 var SyntaxElementMorph;
 var BlockMorph;
@@ -517,6 +517,12 @@ SyntaxElementMorph.prototype.revertToDefaultInput = function (arg, noValues) {
     if (idx !== -1) {
         if (this instanceof BlockMorph) {
             deflt = this.labelPart(this.parseSpec(this.blockSpec)[idx]);
+            if (deflt instanceof InputSlotMorph && this.definition) {
+                deflt.choices = this.definition.dropDownMenuOfInputIdx(
+                    this.inputs().indexOf(arg)
+                );
+                deflt.fixLayout();
+            }
         } else if (this instanceof MultiArgMorph) {
             deflt = this.labelPart(this.slotSpec);
         } else if (this instanceof ReporterSlotMorph) {
@@ -1597,38 +1603,22 @@ SyntaxElementMorph.prototype.showBubble = function (value) {
         txt  = value.length > 500 ? value.slice(0, 500) + '...' : value;
         morphToShow = new TextMorph(
             txt,
-            this.fontSize,
-            null,
-            false,
-            false,
-            'center'
+            this.fontSize
         );
     } else if (value === null) {
         morphToShow = new TextMorph(
             '',
-            this.fontSize,
-            null,
-            false,
-            false,
-            'center'
+            this.fontSize
         );
     } else if (value === 0) {
         morphToShow = new TextMorph(
             '0',
-            this.fontSize,
-            null,
-            false,
-            false,
-            'center'
+            this.fontSize
         );
     } else if (value.toString) {
         morphToShow = new TextMorph(
             value.toString(),
-            this.fontSize,
-            null,
-            false,
-            false,
-            'center'
+            this.fontSize
         );
     }
     bubble = new SpeechBubbleMorph(
@@ -1889,7 +1879,8 @@ BlockMorph.prototype.parseSpec = function (spec) {
 
 BlockMorph.prototype.setSpec = function (spec) {
     var myself = this,
-        part;
+        part,
+        inputIdx = -1;
 
     if (!spec) {return; }
     this.parts().forEach(function (part) {
@@ -1899,6 +1890,9 @@ BlockMorph.prototype.setSpec = function (spec) {
         this.add(this.placeHolder());
     }
     this.parseSpec(spec).forEach(function (word) {
+        if (word[0] === '%') {
+            inputIdx += 1;
+        }
         part = myself.labelPart(word);
         myself.add(part);
         if (!(part instanceof CommandSlotMorph)) {
@@ -1916,6 +1910,10 @@ BlockMorph.prototype.setSpec = function (spec) {
         }
         if (myself.isPrototype) {
             myself.add(myself.placeHolder());
+        }
+        if (part instanceof InputSlotMorph && myself.definition) {
+            part.choices = myself.definition.dropDownMenuOfInputIdx(inputIdx);
+            part.fixLayout(); // needed when de-serializing
         }
     });
     this.blockSpec = spec;
@@ -2325,7 +2323,7 @@ BlockMorph.prototype.mapToHeader = function () {
     } else {
         help = 'Enter code that corresponds to the block\'s definition. ' +
             'Choose your own\nformal parameter names (ignoring the ones ' +
-            'shown .';
+            'shown).';
     }
     new DialogBoxMorph(
         this,

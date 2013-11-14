@@ -4,10 +4,10 @@ if test $# -gt 0; then
 	do
 		case "$arg" in
 			--dev)
-                                bin/gnu/CogVM shared/Pharo2.0.image
+                                ./bin/gnu/CogVM shared/Pharo2.0.image
 			;;
 			--debug)
-                                bin/gnu/CogVM -vm-display-null shared/Pharo2.0.image --debug
+                                ./bin/gnu/CogVM -vm-display-null shared/Pharo2.0.image --debug
 			;;
 			*)
 				echo "Usage: $0 [--debug]"
@@ -15,5 +15,5 @@ if test $# -gt 0; then
 		esac
 	done
 else
-                bin/gnu/CogVM -vm-display-null shared/Pharo2.0.image --serve
+                ./bin/gnu/CogVM -vm-display-null shared/Pharo2.0.image --serve
 fi
