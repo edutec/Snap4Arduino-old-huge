@@ -27,47 +27,50 @@ function overridenLabelPart(spec) {
 				null,
 				false,
 				{
-					'stopped' : 1500,
-					'clockwise' : 1200,
-				 	'counter-clockwise' : 1700
+					'stopped' : ['stopped'] , 
+					'clockwise' : ['clockwise'] ,
+				 	'counter-clockwise' : ['counter-clockwise']
 				},
 				true
 				);
-			part.setContents(1200);
+			part.setContents(['clockwise']);
 		break;
 		case '%pinMode':
 			part = new InputSlotMorph(
 				null,
 				false,
 				{
-					'digital input' : 'I',
-					'digital output' : 'O',
-				 	'PWM' : 'P',
-				 	'servo' : 'S'
+					'digital input' : ['digital input'],
+					'digital output' : ['digital output'] ,
+				 	'PWM' : ['PWM'] ,
+				 	'servo' : ['servo']
 				},
 				true
 				);
-			part.setContents('I');
+			part.setContents(['servo']);
 		break;
 		case '%servoPin':
 			part = new InputSlotMorph(
 				null,
 				true,
-				function() { return boardSpecs.servoPins }
+				function() { return boardSpecs.servoPins },
+				true
 				);
 		break;
 		case '%analogPin':
 			part = new InputSlotMorph(
 				null,
 				true,
-				function() { return boardSpecs.analogPins }
+				function() { return boardSpecs.analogPins },
+				true
 				);
 		break;
 		case '%digitalPin':
 			part = new InputSlotMorph(
 				null,
 				true,
-				function() { return boardSpecs.digitalPins }
+				function() { return boardSpecs.digitalPins },
+				true
 				);
 		break;
 		default:

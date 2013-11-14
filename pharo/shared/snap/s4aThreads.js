@@ -41,7 +41,22 @@ Process.prototype.connectArduino = function (type, port) {
 }
 
 Process.prototype.servoWrite = function (pin, value) {
-	socket.send("servoWrite&" + pin + "&" + value);
+	var numericValue;
+	switch (value[0]) {
+		case "clockwise":
+			numericValue = 1200;
+		break;
+		case "counter-clockwise":
+			numericValue = 1700;
+		break;
+		case "stopped":
+			numericValue = 1500;
+		break;
+		default:
+			numericValue = value;
+		break;
+	}
+	socket.send("servoWrite&" + pin + "&" + numericValue);
 }
 
 Process.prototype.digitalWrite = function (pin, boolenValue) {
@@ -55,10 +70,27 @@ Process.prototype.Write = function (pin, value) {
 }
 
 Process.prototype.setPinMode = function (pin, mode) {
-	if (this.reportURL('localhost:8080/digitalPinMode?pin=' + pin + '&mode=' + mode) === 'OK') {
-		if (mode === 'S') {
+
+	var modeChar;
+//	boardSpecs.servoPins[pin] = null; // in case we have set a pin previously setup as servo, we reset it
+	
+	switch (mode[0]) {
+		case 'digital input':
+			modeChar = 'I';
+		break;
+		case 'digital output':
+			modeChar = 'O';
+		break;
+		case 'PWM':
+			modeChar = 'P';
+		break;
+		case 'servo':
+			modeChar = 'S';
 			boardSpecs.servoPins[pin] = pin;
-		}
+		break;
+	}
+
+	if (this.reportURL('localhost:8080/digitalPinMode?pin=' + pin + '&mode=' + modeChar) === 'OK') {
 		return true; 
 	} 
 }
