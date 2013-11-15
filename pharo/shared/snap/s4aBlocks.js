@@ -27,11 +27,11 @@ function overridenLabelPart(spec) {
 				null,
 				false,
 				{
+					'angle (0-180)' : 90,
 					'stopped' : ['stopped'] , 
 					'clockwise' : ['clockwise'] ,
 				 	'counter-clockwise' : ['counter-clockwise']
-				},
-				true
+				}
 				);
 			part.setContents(['clockwise']);
 		break;
