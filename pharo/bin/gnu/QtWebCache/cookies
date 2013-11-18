@@ -1,0 +1,2 @@
+[General]
+cookies="@Variant(\0\0\0\x7f\0\0\0\x16QList<QNetworkCookie>\0\0\0\0\x17\0\0\0\x3\0\0\0\x7f__utma=111052613.174833832.1384777441.1384777441.1384777441.1; expires=Wed, 18-Nov-2015 12:24:02 GMT; domain=.qtweb.net; path=/\0\0\0\x62__utmb=111052613.1.10.1384777441; expires=Mon, 18-Nov-2013 12:54:02 GMT; domain=.qtweb.net; path=/\0\0\0\x8f__utmz=111052613.1384777441.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); expires=Tue, 20-May-2014 00:24:02 GMT; domain=.qtweb.net; path=/)"
