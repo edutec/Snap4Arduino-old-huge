@@ -2,7 +2,7 @@ var analogReadings = [];
 var digitalReadings = [];
 var analogReadingThreadId;
 var digitalReadingThreadId;
-var serialPortNames = {};:
+var serialPortNames = {};
 var arduinoTypes = {
 	"Mini"						: "ArduinoMini",
 	"Pro w/ atmega168"			: "ArduinoPro",
