@@ -155,7 +155,7 @@ DialogBoxMorph, BlockInputFragmentMorph, PrototypeHatBlockMorph, Costume*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.blocks = '2013-November-12';
+modules.blocks = '2013-November-15';
 
 var SyntaxElementMorph;
 var BlockMorph;
@@ -518,10 +518,13 @@ SyntaxElementMorph.prototype.revertToDefaultInput = function (arg, noValues) {
         if (this instanceof BlockMorph) {
             deflt = this.labelPart(this.parseSpec(this.blockSpec)[idx]);
             if (deflt instanceof InputSlotMorph && this.definition) {
-                deflt.choices = this.definition.dropDownMenuOfInputIdx(
-                    this.inputs().indexOf(arg)
+                deflt.setChoices.apply(
+                    deflt,
+                    this.definition.inputOptionsOfIdx(inp)
                 );
-                deflt.fixLayout();
+                deflt.setContents(
+                    this.definition.defaultValueOfInputIdx(inp)
+                );
             }
         } else if (this instanceof MultiArgMorph) {
             deflt = this.labelPart(this.slotSpec);
@@ -1912,8 +1915,10 @@ BlockMorph.prototype.setSpec = function (spec) {
             myself.add(myself.placeHolder());
         }
         if (part instanceof InputSlotMorph && myself.definition) {
-            part.choices = myself.definition.dropDownMenuOfInputIdx(inputIdx);
-            part.fixLayout(); // needed when de-serializing
+            part.setChoices.apply(
+                part,
+                myself.definition.inputOptionsOfIdx(inputIdx)
+            );
         }
     });
     this.blockSpec = spec;
@@ -6593,6 +6598,23 @@ InputSlotMorph.prototype.getVarNamesDict = function () {
     return {};
 };
 
+InputSlotMorph.prototype.setChoices = function (dict, readonly) {
+    // externally specify choices and read-only status,
+    // used for custom blocks
+    var cnts = this.contents();
+    this.choices = dict;
+    this.isReadOnly = readonly || false;
+    if (this.parent instanceof BlockMorph) {
+        this.parent.fixLabelColor();
+        if (!readonly) {
+            cnts.shadowOffset = new Point();
+            cnts.shadowColor = null;
+            cnts.setColor(new Color(0, 0, 0));
+        }
+    }
+    this.fixLayout();
+};
+
 // InputSlotMorph layout:
 
 InputSlotMorph.prototype.fixLayout = function () {
@@ -6840,7 +6862,6 @@ InputSlotMorph.prototype.drawNew = function () {
         }
     } else {
         r = (this.height() - (this.edge * 2)) / 2;
-        context.fillStyle = this.color.toString();
         context.beginPath();
         context.arc(
             r + this.edge,

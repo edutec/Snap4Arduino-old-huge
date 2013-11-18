@@ -13,4 +13,6 @@ Libraries and third party software used in this project
      * [Zinc HTTP Components](http://zn.stfx.eu/zn/index.html)
 
      * [Arduino for Pharo](http://ss3.gemstone.com/ss/Arduino.html)
-*    [Node-Webkit](https://github.com/rogerwang/node-webkit)
+
+
+_The NodeJS version was a first prototype and is kept here just for archiving purposes._
