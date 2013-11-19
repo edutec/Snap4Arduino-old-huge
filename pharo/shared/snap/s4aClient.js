@@ -26,6 +26,7 @@ var boardSpecs = {
 
 // WebSocket
 
+	console.log('ohai');
 var socket = new WebSocket("ws://localhost:4001/s4a");
 var webSocketRefreshInterval = 20; //milliseconds
 
