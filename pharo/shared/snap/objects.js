@@ -1,3 +1,4 @@
+console.log('2');
 /*
 
     objects.js
