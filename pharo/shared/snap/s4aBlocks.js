@@ -9,7 +9,14 @@ function overridenLabelPart(spec) {
 			part = new InputSlotMorph(
 				null,
 				false,
-				serialPortNames
+				function() { 
+					if (Object.keys(serialPortNames).length == 0) {
+						socket.send("serialPortNames");
+						return serialPortNames
+					} else {
+						return serialPortNames
+					}
+				} 
 				);
 			part.setContents(Object.keys(serialPortNames)[0]);
 		break;
