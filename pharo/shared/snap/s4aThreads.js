@@ -36,7 +36,8 @@ Process.prototype.reportDigitalReading = function (pin) {
 
 Process.prototype.connectArduino = function (type, port) {
 	if (this.reportURL('localhost:8080/connect?port=' + port + '&type=' + type) === 'OK') {
-		socket.send("boardSpecs");	
+		socket.send("boardSpecs");
+		inform("Board connected", "An Arduino board has been connected.\nHappy prototyping!");
 	} 
 }
 
@@ -72,7 +73,6 @@ Process.prototype.Write = function (pin, value) {
 Process.prototype.setPinMode = function (pin, mode) {
 
 	var modeChar;
-//	boardSpecs.servoPins[pin] = null; // in case we have set a pin previously setup as servo, we reset it
 	
 	switch (mode[0]) {
 		case 'digital input':
@@ -86,7 +86,6 @@ Process.prototype.setPinMode = function (pin, mode) {
 		break;
 		case 'servo':
 			modeChar = 'S';
-			boardSpecs.servoPins[pin] = pin;
 		break;
 	}
 
