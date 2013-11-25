@@ -27,7 +27,7 @@ var boardSpecs = {
 // WebSocket
 
 var socket = new WebSocket("ws://localhost:4001/s4a");
-var webSocketRefreshInterval = 20; //milliseconds
+var webSocketRefreshInterval = 10; //milliseconds
 
 
 socket.onopen = function() { initializeAll() }
@@ -43,9 +43,6 @@ socket.onmessage = function(message) {
 			break;
 		case 'boardSpecs':
 			boardSpecs = JSON.parse(messageArray[1]);
-			if (Object.keys(boardSpecs.analogPins).length > 0) {
-				inform("Board connected", "An Arduino board has been connected.\nHappy prototyping!");
-			}
 			break;
 		case 'serialPortNames':
 			serialPortNames = JSON.parse(messageArray[1]);
@@ -61,8 +58,8 @@ socket.onclose = function() {
 // Initialize-release
 
 function initializeAll() {
-	socket.send('serialPortNames') // will send back possible serial port names where an Arduino may be connected
 	socket.send('greetings'); // will send a greeting back if no board is already connected. If it is, will send the boardSpecs
+	setInterval(updateState, webSocketRefreshInterval*15); // we don't need to keep state too updated, so 15 times slower than real-time is more than ok
 }
 
 function releaseAll() {
@@ -75,7 +72,14 @@ function releaseAll() {
 function requestAnalogReadings() { socket.send('analogReadings') }
 function requestDigitalReadings() { socket.send('digitalReadings') }
 
-// Helpers
+// State
+
+function updateState() {
+	socket.send('serialPortNames') // will send back possible serial port names where an Arduino may be connected
+	socket.send('boardSpecs'); 
+}
+
+// GUI
 
 function inform(title, message) {
 	(new DialogBoxMorph()).inform(title, message, world);

@@ -427,6 +427,10 @@ SnapTranslator.dict.ca = {
         'Envia a tots %msg i espera',
     'Message name':
         'Nom del missatge',
+    'message':
+        'missatge',
+    'any message':
+        'qualsevol missatge',
     'wait %n secs':
         'espera %n segons',
     'wait until %b':
@@ -449,6 +453,8 @@ SnapTranslator.dict.ca = {
         'atura aquest programa',
     'stop all %stop':
         'atura-ho tot %stop',
+    'pause all %pause':
+        'pausa-ho tot %pause',
     'run %cmdRing %inputs':
         'executa %cmdRing %inputs',
     'launch %cmdRing %inputs':
@@ -461,6 +467,15 @@ SnapTranslator.dict.ca = {
         'crida %cmdRing amb continuació',
     'warp %c':
         'executa de cop %c',
+    'when I start as a clone':
+        'quan una còpia meva comenci',
+    'create a clone of %cln':
+        'crea un clon de %cln',
+    'myself':
+        'mi mateix',
+    'delete this clone':
+        'esborra aquest clon',
+
 
     // sensing:
     'touching %col ?':
@@ -489,8 +504,14 @@ SnapTranslator.dict.ca = {
         'reinicia el cronòmetre',
     'timer':
         'cronòmetre',
+    '%att of %spr':
+        '%att de %spr',
     'http:// %s':
         'http:// %s',
+    'turbo mode?':
+        'mode turbo?',
+    'set turbo mode to %b':
+        'posa el mode turbo a %b',
 
     'filtered for %clr':
         'filtrat per a %clr',
@@ -508,8 +529,8 @@ SnapTranslator.dict.ca = {
         '%fun de %n',
     'pick random %n to %n':
         'nombre a l\'atzar entre %n i %n',
-    '%b i %b':
-        '%b y %b',
+    '%b and %b':
+        '%b i %b',
     '%b or %b':
         '%b o %b',
     'not %b':
@@ -520,6 +541,8 @@ SnapTranslator.dict.ca = {
         'fals',
     'join %words':
         'unir %words',
+    'split %s by %delim':
+        'divideix %s per %delim',
     'hello':
         'hola',
     'world':
@@ -545,6 +568,8 @@ SnapTranslator.dict.ca = {
         'Crear una variable',
     'Variable name':
         'Nom de variable',
+    'Script variable name':
+        'Nom de la variable de programa',
     'Delete a variable':
         'Esborrar una variable',
 
@@ -563,7 +588,7 @@ SnapTranslator.dict.ca = {
     'list %exp':
         'llista %exp',
     '%s in front of %l':
-        '%s afegit davant de %l',
+        '%s afegir davant de %l',
     'item %idx of %l':
         'element %idx de %l',
     'all but first of %l':
@@ -591,6 +616,8 @@ SnapTranslator.dict.ca = {
     // snap menu
     'About...':
         'Sobre Snap!',
+    'Reference manual':
+        'Manual de referència',
     'Snap! website':
         'Web de Snap!',
     'Download source':
@@ -633,327 +660,405 @@ SnapTranslator.dict.ca = {
         'Importar eines',
     'load the official library of\npowerful blocks':
         'carregar la llibreria\noficial de blocs avançats',
+    'Libraries...':
+        'Llibreries...',
+    'Import library':
+        'Importar llibreria',
+
+    // cloud menu
+    'Login...':
+        'Iniciar sessió...',
+    'Signup...':
+        'Registrar-se...',
 
     // settings menu
     'Language...':
         'Idioma...',
+    'Zoom blocks...':
+        'Mida dels blocs...',
     'Blurred shadows':
-        'Sombras borrosas',
+        'Ombres suavitzades',
     'uncheck to use solid drop\nshadows and highlights':
-        'desmarque para usar sombras s\u00F3lidas \ne iluminaciones',
+        'desmarca\'m per utilitzar\nombres i realçats sòlids',
     'check to use blurred drop\nshadows and highlights':
-        'marcar para usar sombras borrosas\ne iluminaciones',
+        'marca\'m per utilitzar\nombres i realçats suavitzats',
     'Zebra coloring':
-        'Coloraci\u00F3n de cebra',
+        'Coloració en zebra',
     'check to enable alternating\ncolors for nested blocks':
-        'marcar para habilitar alternaci\u00F3n\nde colores para bloques anidados',
+        'marca\'m per habilitar la coloració\nalternada per a blocs imbricats',
     'uncheck to disable alternating\ncolors for nested block':
-        'desmarcar para inhabilitar alternaci\u00F3n\nde colores para bloques anidados',
+        'desmarca\'m per deshabilitar la coloració\nalternada per a blocs imbricats',
     'Dynamic input labels':
-        'Etiquetas de entradas din\u00E1micas',
+        'Etiquetes d\'entrada dinàmiques',
     'uncheck to disable dynamic\nlabels for variadic inputs':
-        'desmarcar para inhabilitar etiquetas\ndin\u00E1micas para entradas varidic',
+        'desmarca\'m per inhabilitar les\netiquetes dinàmiques d\'entrada de variables',
     'check to enable dynamic\nlabels for variadic inputs':
-        'marcar para habilitar etiquetas\ndin\u00E1micas para entradas varidic',
+        'marca\'m per habilitar les\netiquetes dinàmiques d\'entrada de variables',
     'Prefer empty slot drops':
-        'Preferir ranuras de gotas vac\u00EDas',
+        'Dóna preferència a les ranures buides',
     'settings menu prefer empty slots hint':
-        'men\u00FA de ajustes prefiere pistas de ranuras vac\u00EDas',
+        'marca\'m per a fer que les ranures\nbuides tinguin preferència sobre les plenes\na l\'hora de deixar-hi caure peces',
     'uncheck to allow dropped\nreporters to kick out others':
-        'desmarcar para permitir reporteros\nca\u00EDdos para echar a otros',
+        'marca\'m per a fer que les ranures\nbuides tinguin la mateixa preferència que les\nplenes a l\'hora de deixar-hi caure peces',
     'Long form input dialog':
-        'di\u00E1logo de entradas de forma larga',
+        'Forçar diàleg de selecció de tipus',
+	'Plain prototype labels':
+        'Etiquetes de prototip simples',
+    'uncheck to always show (+) symbols\nin block prototype labels':
+        'desmarca\'m per mostrar sempre el\nsímbol (+) en les etiquetes de prototip\nde bloc (a l\'editor de blocs)',
+    'check to hide (+) symbols\nin block prototype labels':
+        'desmarca\'m per amagar el símbol (+)\nen les etiquetes de prototip\nde bloc (a l\'editor de blocs)',
     'check to always show slot\ntypes in the input dialog':
-        'marcar para siempre mostrar tipos\nde espacios en el di\u00E1logo de insumo',
+        'marca\'m per a mostrar sempre\nel diàleg de selecció de tipus\nen afegir paràmetres als blocs\npersonalitzats',
     'uncheck to use the input\ndialog in short form':
-        'desmarcar para usar el di\u00E1logo\nde insumo en forma corta',
+        'desmarca\'m per a no mostrar\nautomàticament el diàleg de selecció\nde tipus en afegir paràmetres\nals blocs personalitzats',
     'Virtual keyboard':
-        'Teclado virtual',
+        'Teclat virtual',
     'uncheck to disable\nvirtual keyboard support\nfor mobile devices':
-        'desmarcar para inhabilitar\nsoporte al teclado virtual\npara dispositivos m\u00F3viles',
+        'desmarca\'m per inhabilitar\nel suport per al teclat virtual\nen dispositius mòbils',
     'check to enable\nvirtual keyboard support\nfor mobile devices':
-        'marcar para habilitar\nsoporte para el teclado virtual\npara dispositivos m\u00F3viles',
+        'marca\'m per habilitar\nel suport per al teclat virtual\nen dispositius mòbils',
     'Input sliders':
-        'Deslizadores de insumo',
+        'Lliscadors d\'entrada',
     'uncheck to disable\ninput sliders for\nentry fields':
-        'desmarcar para inhabilitar\ndeslizadores de insumo para\ncampos de entrada',
+        'desmarca\'m per deshabilitar\nels lliscadors per als camps\nd\'entrada',
     'check to enable\ninput sliders for\nentry fields':
-        'marcar para habilitar\ndeslizadores de entrada para\ncampos de entrada',
+        'marca\'m per habilitar\nels lliscadors per als camps\nd\'entrada',
     'Clicking sound':
-        'Sonido de clic',
+        'So de clic',
     'uncheck to turn\nblock clicking\nsound off':
-        'desmarcar para encender\nbloquear clic\napagar sonido',
+        'desmarca\'m per deshabilitar\nel so de clic en clicar sobre\nels blocs',
     'check to turn\nblock clicking\nsound on':
-        'marcar para encender\nbloque de clic\nencender sonido',
+        'marca\'m per habilitar\nel so de clic en clicar sobre\nels blocs',
     'Animations':
-        'Animaciones',
+        'Animacions',
     'uncheck to disable\nIDE animations':
-        'desmarcar para inhabilitar\nanimaciones IDE',
+        'desmarca\'m per deshabilitar\nles animacions de la interfície',
+    'Turbo mode':
+        'Mode turbo',
+    'check to prioritize\nscript execution':
+        'marca\'m per activar el mode de\nprioritat en l\'execució de programes',
+    'uncheck to run scripts\nat normal speed':
+        'desmarca\'m per executar\nels programes a la velocitat\nnormal',
     'check to enable\nIDE animations':
-        'marcar para habilitar\nanimaciones IDE',
+        'marca\'m per habilitar\nles animacions de la interfície',
     'Thread safe scripts':
-        'Programas seguros para serie',
+        'Fil d\'execució segur',
     'uncheck to allow\nscript reentrancy':
-        'desmarcar para permitir\nreingreso de programa',
+        'desmarca\'m per permetre\nla re-entrada als programes',
     'check to disallow\nscript reentrancy':
-        'marcar para no permitir\nreingreso de programa',
+        'marca\'m per no permetre\nla re-entrada als programes',
+    'Prefer smooth animations':
+        'Suavitza les animacions',
+    'uncheck for greater speed\nat variable frame rates':
+        'desmarca\'m per augmentar la velocitat de\nles animacions fins la màxima capacitat d\'aquesta màquina',
+    'check for smooth, predictable\nanimations across computers':
+        'marca\'m per aconseguir unes animacions\nmés suaus i a velocitat predible en màquines diferents',
 
     // inputs
     'with inputs':
-        'con entradas',
+        'amb entrades',
     'input names:':
-        'nombres de entradas:',
+        'noms d\'entrades:',
     'Input Names:':
-        'Nombres de entradas:',
+        'Noms d\'entrades:',
     'input list:':
-        'lista de entradas:',
+        'llista d\'entrades:',
 
     // context menus:
     'help':
-        'ayuda',
+        'ajuda',
+
+    // palette:
+    'hide primitives':
+        'amaga blocs primitius',
+    'show primitives':
+        'mostra blocs primitius',
 
     // blocks:
     'help...':
-        'ayuda...',
+        'ajuda...',
     'relabel...':
-        'renombrar...',
+        'canvia\'m el nom...',
     'duplicate':
-        'duplicar',
+        'duplica\'m',
     'make a copy\nand pick it up':
-        'crear una copia y recogerla',
+        'crea una còpia\ni agafa-la',
     'only duplicate this block':
-        's\u00F3lo duplicar este bloque',
+        'duplica només aquest bloc',
     'delete':
-        'borrar',
+        'esborra\'m',
     'script pic...':
-        'foto de programa...',
+        'mostra la meva imatge...',
     'open a new window\nwith a picture of this script':
-        'abrir una nueva ventana\ncon una foto de este programa',
+        'obre una nova finestra\namb una imatge d\'aquest programa',
     'ringify':
-        'zumbar',
+        'encapsula\'m',
     'unringify':
-        'deszumbar',
+        'des-encapsula\'m',
 
     // custom blocks:
     'delete block definition...':
-        'borrar definici\u00F3n de bloque',
+        'esborra la definició d\'aquest bloc',
     'edit...':
-        'editar...',
+        'edita...',
 
     // sprites:
     'edit':
         'editar',
+    'detach from':
+        'desenganxa de',
+    'detach all parts':
+        'desenganxa totes les parts',
     'export...':
         'exportar...',
 
     // stage:
     'show all':
-        'mostrar todos',
+        'mostrar-los tots',
+    'pic...':
+        'exportar com a imatge...',
+    'open a new window\nwith a picture of the stage':
+        'obre una nova finestra\namb una foto de l\'escenari',
 
     // scripting area
     'clean up':
-        'limpiar',
+        'neteja',
     'arrange scripts\nvertically':
-        'alinear programas\nverticalmente',
+        'alinea els programes\nverticalment',
     'add comment':
-        'agregar comentario',
+        'afegeix un comentari',
+    'undrop':
+        'recupera bloc',
+    'undo the last\nblock drop\nin this pane':
+        'recupera l\'últim bloc\nque s\'hagi llençat',
+    'scripts pic...':
+        'exportar com a imatge...',
+    'open a new window\nwith a picture of all scripts':
+        'obre una nova finestra\namb una foto d\'aquests programes',
     'make a block...':
-        'crear un bloque...',
+        'crea un bloc...',
 
     // costumes
     'rename':
-        'renombrar',
+        'canvia de nom',
     'export':
-        'exportar',
+        'exporta',
     'rename costume':
-        'renombrar disfraz',
+        'canvia el nom del vestit',
 
     // sounds
     'Play sound':
-        'Tocar sonido',
+        'Toca el so',
     'Stop sound':
-        'Detener sonido',
+        'Atura el so',
     'Stop':
-        'Detener',
+        'Atura',
     'Play':
-        'Tocar',
+        'Toca',
     'rename sound':
-        'renombrar sonido',
+        'canvia el nom del so',
 
     // dialogs
     // buttons
     'OK':
-        'OK',
+        'D\'acord',
     'Ok':
-        'Ok',
+        'D\'acord',
     'Cancel':
-        'Cancelar',
+        'Cancel·la',
     'Yes':
-        'Si',
+        'Sí',
     'No':
         'No',
 
     // help
     'Help':
-        'Ayuda',
+        'Ajuda',
+
+    // zoom blocks
+    'Zoom blocks':
+    	'Canvia la mida dels blocs',
+    'build':
+        'fes',
+    'your own':
+        'els teus propis',
+    'blocks':
+        'blocs',
+    'normal (1x)':
+        'normal (1x)',
+    'demo (1.2x)':
+        'demostració (1.2x)',
+    'presentation (1.4x)':
+        'presentació (1.4x)',
+    'big (2x)':
+        'gran (2x)',
+    'huge (4x)':
+        'immens (4x)',
+    'giant (8x)':
+        'gegant (8x)',
+    'monstrous (10x)':
+        'monstruós (10x)',
 
     // Project Manager
     'Untitled':
-        'Sin T\u00EDtulo',
+        'Sense títol',
     'Open Project':
-        'Abrir Proyecto',
+        'Obre projecte',
     '(empty)':
-        '(vacio)',
+        '(buit)',
     'Saved!':
-        '\u00A1Guardado!',
+        'Desat!',
     'Delete Project':
-        'Borrar Proyecto',
+        'Esborra projecte',
     'Are you sure you want to delete':
-        '\u00BFEst\u00E1s seguro que deseas borrar?',
+        'Segur que vols esborrar',
     'rename...':
-        'renombrar...',
+        'canvia el nom...',
 
     // costume editor
     'Costume Editor':
-        'Editor de disfraz',
+        'Editor de vestits',
     'click or drag crosshairs to move the rotation center':
-        'da clic o arrastra punto de mira para mover el centro de rotaci\u00F3n',
+        'clica o arrossega la creueta per moure el centre de rotació',
 
     // project notes
     'Project Notes':
-        'Notas de proyecto',
+        'Notes del projecte',
 
     // new project
     'New Project':
-        'Nuevo Proyecto',
+        'Nou projecte',
     'Replace the current project with a new one?':
-        '\u00BFReemplazar este proyecto con uno nuevo?',
+        'Vols substituir el projecte actual per un de nou?',
 
     // save project
     'Save Project As...':
-        'Guardar Proyecto Como...',
+			'Anomena i desa projecte...',
 
     // export blocks
     'Export blocks':
-        'Exportar bloques',
+        'Exporta blocs',
     'Import blocks':
-        'Importar bloques',
+        'Importa blocs',
     'this project doesn\'t have any\ncustom global blocks yet':
-        'este proyecto no tiene ning\u00FAn bloque personalizado todab\u00EDa',
+        'aquest projecte encara no\nté cap bloc personalitzat',
     'select':
         'seleccionar',
     'all':
-        'todos',
+        'tots els blocs',
     'none':
-        'ninguno',
+        'cap bloc',
 
     // variable dialog
     'for all sprites':
-        'para todos los objetos',
+        'per a tots els objectes',
     'for this sprite only':
-        'para este objeto solamente',
+        'només per a aquest objecte',
 
     // block dialog
     'Change block':
-        'Cambiar bloque',
+        'Canvia el bloc',
     'Command':
-        'Comando',
+        'Comanda',
     'Reporter':
-        'Reportero',
+        'Reportador',
     'Predicate':
-        'Predicado',
+        'Predicat',
 
     // block editor
     'Block Editor':
-        'Bloquear editor',
+        'Editor de blocs',
     'Apply':
-        'Aplicar',
+        'Aplica',
 
     // block deletion dialog
     'Delete Custom Block':
-        'Borrar Bloque Personalizado',
+        'Esborrar un bloc personalitzat',
     'block deletion dialog text':
-        'supreci\u00F3n de bloque de texto de di\u00E1logo',
+        'Segur que vols esborrar la definició\nd\'aquest bloc?',
 
     // input dialog
     'Create input name':
-        'Crear nombre de insumo',
+        'Crear ranura',
     'Edit input name':
-        'Editar nombre de insumo',
+        'Editar ranura',
     'Edit label fragment':
-        'Editar fragmento de etiqueta',
+        'Editar fragment d\'etiqueta',
     'Title text':
-        'Texto de t\u00EDtulo',
+        'Text del títol',
     'Input name':
-        'Nombre de insumo',
+        'Nom de la ranura',
     'Delete':
-        'Borrar',
+        'Esborra',
     'Object':
-        'Objeto',
+        'Objecte',
     'Number':
-        'N\u00FAmero',
+        'Nombre',
     'Text':
-        'Texto',
+        'Text',
     'List':
-        'Lista',
+        'Llista',
     'Any type':
-        'Cualquier tipo',
+        'Qualsevol tipus',
     'Boolean (T/F)':
-        'Booleano (C/F)',
+        'Booleà (C/F)',
     'Command\n(inline)':
-        'Comando\n(en l\u00EDnea)',
+        'Comanda\n(inserida)',
     'Command\n(C-shape)':
-        'Comando\n(forma C)',
+        'Comanda\n(en forma de C)',
     'Any\n(unevaluated)':
-        'Cualquier\n(sin evaluar)',
+        'Qualsevol\n(sense evaluar)',
     'Boolean\n(unevaluated)':
-        'Booleano\n(sin evaluar)',
+        'Booleà\n(sense evaluar)',
     'Single input.':
-        'Entrada sola.',
+        'Entrada única.',
     'Default Value:':
-        'Valor Predeterminado:',
+        'Valor predeterminat:',
     'Multiple inputs (value is list of inputs)':
-        'M\u00FAltiples entradas (valor es lista de insumos)',
+        'Entrades múltiples (el valor és una llista d\'entrades)',
     'Upvar - make internal variable visible to caller':
-        'Crear variable interno visible al llamador',
+        'Variable interna visible des de l\'exterior',
 
     // About Snap
     'About Snap':
-        'Acerca de Snap',
+        'Sobre Snap',
     'Back...':
-        'Atr\u00E1s...',
+        'Enrera...',
     'License...':
-        'Licencia...',
+        'Llicència...',
     'Modules...':
-        'M\u00F3dulos...',
+        'Mòduls...',
     'Credits...':
-        'Creditos...',
+        'Crèdits...',
     'Translators...':
-        'Traductores',
+        'Traductors',
     'License':
-        'Licencia',
+        'Llicència',
     'current module versions:':
-        'versiones del m\u00F3dulo actual',
+        'versions del mòdul actual',
     'Contributors':
-        'Contribuidores',
+        'Contribuïdors',
     'Translations':
-        'Traducciones',
+        'Traduccions',
 
     // variable watchers
     'normal':
         'normal',
     'large':
-        'grande',
+        'gran',
     'slider':
-        'deslizador',
+        'lliscador',
     'slider min...':
-        'm\u00EDnimo de deslizador...',
+        'valor mínim del lliscador...',
     'slider max...':
-        'm\u00E1ximo de deslizador...',
+        'valor màxim del lliscador...',
+    'import...':
+        'importa...',
     'Slider minimum value':
-        'm\u00EDnimo valor de deslizador',
+        'Valor mínim del lliscador...',
     'Slider maximum value':
-        'm\u00E1ximo valor de deslizador',
+        'Valor màxim del lliscador...',
 
     // list watchers
     'length: ':
@@ -961,30 +1066,32 @@ SnapTranslator.dict.ca = {
 
     // coments
     'add comment here...':
-        'agregar comentario aqu\u00ED',
+        'afegir un comentari aquí...',
 
     // drow downs
     // directions
     '(90) right':
-        '(90) derecha',
+        '(90) dreta',
     '(-90) left':
-        '(-90) izquierda',
+        '(-90) esquerra',
     '(0) up':
-        '(0) arriba',
+        '(0) amunt',
     '(180) down':
-        '(180) abajo',
+        '(180) avall',
 
     // collision detection
     'mouse-pointer':
-        'puntero del rat\u00F3n',
+        'punter del ratolí',
     'edge':
-        'borde',
+        'vora',
     'pen trails':
-        'rastro del l\u00E1piz',
+        'rastre del llapis',
 
     // costumes
     'Turtle':
         'Tortuga',
+    'Empty':
+        'Buit',
 
     // graphical effects
     'ghost':
@@ -992,15 +1099,15 @@ SnapTranslator.dict.ca = {
 
     // keys
     'space':
-        'espacio',
+        'espai',
     'up arrow':
-        'flecha de arriba',
+        'fletxa amunt',
     'down arrow':
-        'flecha de abajo',
+        'fletxa avall',
     'right arrow':
-        'flecha derecha',
+        'fletxa dreta',
     'left arrow':
-        'flecha izquierda',
+        'fletxa esquerra',
     'a':
         'a',
     'b':
@@ -1076,13 +1183,15 @@ SnapTranslator.dict.ca = {
 
     // messages
     'new...':
-        'nuevo...',
+        'nou...',
 
     // math functions
     'abs':
         'abs',
+    'floor':
+        'part entera',
     'sqrt':
-        'ra\u00EDz cuadrada',
+        'arrel quadrada',
     'sin':
         'sin',
     'cos':
@@ -1100,25 +1209,35 @@ SnapTranslator.dict.ca = {
     'e^':
         'e^',
 
+    // delimiters
+    'whitespace':
+        'espai en blanc',
+    'line':
+        'línia',
+    'tab':
+        'tabulador',
+    'cr':
+        'retorn de carro',
+
     // data types
     'number':
-        'n\u00FAmero',
+        'nombre',
     'text':
-        'texto',
+        'text',
     'Boolean':
-        'Booleano',
+        'Booleà',
     'list':
-        'lista',
+        'llista',
     'command':
-        'comando',
+        'comanda',
     'reporter':
-        'reportero',
+        'reporter',
     'predicate':
-        'predicado',
+        'predicat',
 
     // list indices
     'last':
-        '\u00FAltimo',
+        'últim',
     'any':
-        'cualquier'
+        'qualsevol'
 };

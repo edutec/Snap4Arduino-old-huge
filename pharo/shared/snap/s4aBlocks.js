@@ -10,12 +10,8 @@ function overridenLabelPart(spec) {
 				null,
 				false,
 				function() { 
-					if (Object.keys(serialPortNames).length == 0) {
-						socket.send("serialPortNames");
-						return serialPortNames
-					} else {
-						return serialPortNames
-					}
+					socket.send("serialPortNames");
+					return serialPortNames
 				} 
 				);
 			part.setContents(Object.keys(serialPortNames)[0]);
