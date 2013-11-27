@@ -1,0 +1,48 @@
+﻿Compilación iniciada a las 27/11/2013 17:35:43.
+     1>Proyecto "C:\Documents and Settings\Formacio\Mis documentos\GitHub\Snap4Arduino\dev\TrayIcon\TaskbarDemo.vcxproj" en el nodo 2 (rebuild destinos).
+     1>_PrepareForClean:
+         Se eliminará el archivo ".\Debug\TaskbarDemo.lastbuildstate".
+       InitializeBuildStatus:
+         Se creará ".\Debug\TaskbarDemo.unsuccessfulbuild" porque se especificó "AlwaysCreate".
+       ClCompile:
+         c:\Archivos de programa\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm- /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /Gd /TP /analyze- /errorReport:prompt StdAfx.cpp SystemTraySDK.cpp TaskbarDemo.cpp
+         StdAfx.cpp
+         SystemTraySDK.cpp
+     1>c:\documents and settings\formacio\mis documentos\github\snap4arduino\dev\trayicon\systemtraysdk.cpp(184): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\archivos de programa\microsoft visual studio 10.0\vc\include\string.h(188) : vea la declaración de 'strncpy'
+     1>c:\documents and settings\formacio\mis documentos\github\snap4arduino\dev\trayicon\systemtraysdk.cpp(211): warning C4996: '_tcsncpy': This function or variable may be unsafe. Consider using _tcsncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\archivos de programa\microsoft visual studio 10.0\vc\include\tchar.h(1516) : vea la declaración de '_tcsncpy'
+     1>c:\documents and settings\formacio\mis documentos\github\snap4arduino\dev\trayicon\systemtraysdk.cpp(213): warning C4996: '_tcsncpy': This function or variable may be unsafe. Consider using _tcsncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\archivos de programa\microsoft visual studio 10.0\vc\include\tchar.h(1516) : vea la declaración de '_tcsncpy'
+     1>c:\documents and settings\formacio\mis documentos\github\snap4arduino\dev\trayicon\systemtraysdk.cpp(476): warning C4018: '>=' : no coinciden signed/unsigned
+     1>c:\documents and settings\formacio\mis documentos\github\snap4arduino\dev\trayicon\systemtraysdk.cpp(508): warning C4996: '_tcsncpy': This function or variable may be unsafe. Consider using _tcsncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\archivos de programa\microsoft visual studio 10.0\vc\include\tchar.h(1516) : vea la declaración de '_tcsncpy'
+     1>c:\documents and settings\formacio\mis documentos\github\snap4arduino\dev\trayicon\systemtraysdk.cpp(539): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\archivos de programa\microsoft visual studio 10.0\vc\include\string.h(188) : vea la declaración de 'strncpy'
+     1>c:\documents and settings\formacio\mis documentos\github\snap4arduino\dev\trayicon\systemtraysdk.cpp(605): warning C4996: '_tcsncpy': This function or variable may be unsafe. Consider using _tcsncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\archivos de programa\microsoft visual studio 10.0\vc\include\tchar.h(1516) : vea la declaración de '_tcsncpy'
+     1>c:\documents and settings\formacio\mis documentos\github\snap4arduino\dev\trayicon\systemtraysdk.cpp(607): warning C4996: '_tcsncpy': This function or variable may be unsafe. Consider using _tcsncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\archivos de programa\microsoft visual studio 10.0\vc\include\tchar.h(1516) : vea la declaración de '_tcsncpy'
+         TaskbarDemo.cpp
+     1>c:\documents and settings\formacio\mis documentos\github\snap4arduino\dev\trayicon\taskbardemo.cpp(178): warning C4101: 'ps' : variable local sin referencia
+     1>c:\documents and settings\formacio\mis documentos\github\snap4arduino\dev\trayicon\taskbardemo.cpp(179): warning C4101: 'hdc' : variable local sin referencia
+         Generando código...
+       ResourceCompile:
+         C:\Archivos de programa\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _DEBUG /l"0x0c09" /nologo /fo".\Debug\TaskbarDemo.res" TaskbarDemo.rc 
+       Link:
+         c:\Archivos de programa\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\Debug/TaskbarDemo.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:".\Debug\TaskbarDemo.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\Debug/TaskbarDemo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Debug\TaskbarDemo.lib" /MACHINE:X86 .\Debug\TaskbarDemo.res
+         .\Debug/StdAfx.obj
+         .\Debug/SystemTraySDK.obj
+         .\Debug/TaskbarDemo.obj
+     1>StdAfx.obj : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/INCREMENTAL:NO'
+         TaskbarDemo.vcxproj -> C:\Documents and Settings\Formacio\Mis documentos\GitHub\Snap4Arduino\dev\TrayIcon\.\Debug\TaskbarDemo.exe
+       Manifest:
+         C:\Archivos de programa\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:".\Debug/TaskbarDemo.exe;#1" /manifest .\Debug\TaskbarDemo.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Se eliminará el archivo ".\Debug\TaskbarDemo.unsuccessfulbuild".
+         Aplicando tarea Touch a ".\Debug\TaskbarDemo.lastbuildstate".
+     1>Compilación del proyecto terminada "C:\Documents and Settings\Formacio\Mis documentos\GitHub\Snap4Arduino\dev\TrayIcon\TaskbarDemo.vcxproj" (rebuild destinos).
+
+Compilación correcta.
+
+Tiempo transcurrido 00:00:06.56
