@@ -185,7 +185,7 @@ SnapTranslator.dict.ca = {
     'translator_e-mail':
         'tibabenfortlapalanca@gmail.com', // optional
     'last_changed':
-        '2013-11-20', // this, too, will appear in the Translators tab
+        '2013-11-26', // this, too, will appear in the Translators tab
 
     // GUI
     // control bar:

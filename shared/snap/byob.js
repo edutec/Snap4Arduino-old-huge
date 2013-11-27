@@ -106,7 +106,7 @@ SymbolMorph, isNil*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.byob = '2013-November-15';
+modules.byob = '2013-November-26';
 
 // Declarations
 
@@ -2888,9 +2888,9 @@ InputSlotDialogMorph.prototype.editSlotOptions = function () {
         myself.fragment.options,
         myself.world(),
         null,
-        'Enter one option per line.' +
+        localize('Enter one option per line.' +
             'Optionally use "=" as key/value delimiter\n' +
-            'e.g.\n   the answer=42'
+            'e.g.\n   the answer=42')
     );
 };
 
