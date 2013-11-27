@@ -155,7 +155,7 @@ DialogBoxMorph, BlockInputFragmentMorph, PrototypeHatBlockMorph, Costume*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.blocks = '2013-November-22';
+modules.blocks = '2013-November-26';
 
 var SyntaxElementMorph;
 var BlockMorph;
@@ -1239,7 +1239,7 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             part.drawNew();
             break;
         default:
-            // nop();
+            nop();
         }
     } else if (spec[0] === '$' &&
             spec.length > 1 &&
@@ -2256,7 +2256,10 @@ BlockMorph.prototype.restoreInputs = function (oldInputs) {
         if (old instanceof ReporterBlockMorph) {
             myself.silentReplaceInput(inp, old.fullCopy());
         } else if (old && inp instanceof InputSlotMorph) {
-            inp.setContents(old.evaluate());
+            // original - turns empty numberslots to 0:
+            // inp.setContents(old.evaluate());
+            // "fix" may be wrong b/c constants
+            inp.setContents(old.contents().text);
         }
         i += 1;
     });
@@ -5262,7 +5265,7 @@ CommandSlotMorph.prototype.evaluate = function () {
 };
 
 CommandSlotMorph.prototype.isEmptySlot = function () {
-    return this.nestedBlock() === null;
+    return !this.isStatic && (this.nestedBlock() === null);
 };
 
 // CommandSlotMorph context menu ops
@@ -10533,7 +10536,7 @@ CommentMorph.prototype.userMenu = function () {
     );
     menu.addItem("delete", 'destroy');
     menu.addItem(
-        "picture...",
+        "comment pic...",
         function () {
             window.open(myself.fullImage().toDataURL());
         },

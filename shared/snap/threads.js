@@ -83,7 +83,7 @@ ArgLabelMorph, localize, XML_Element, hex_sha512*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.threads = '2013-October-17';
+modules.threads = '2013-November-26';
 
 var ThreadManager;
 var Process;
@@ -98,15 +98,20 @@ function snapEquals(a, b) {
         }
         return false;
     }
-    var x = parseFloat(a),
-        y = parseFloat(b);
+    var x = +a,
+        y = +b;
     if (isNaN(x) || isNaN(y)) {
         x = a;
         y = b;
     }
+    /*
+      // handle text comparision text-insensitive.
+      // I think this is a pedagogical feature for novices,
+      // but some teachers disagree. Commented out for now.
     if (isString(x) && isString(y)) {
         return x.toLowerCase() === y.toLowerCase();
     }
+    */
     return x === y;
 }
 
@@ -784,7 +789,7 @@ Process.prototype.evaluate = function (
         // assign formal parameters
         for (i = 0; i < context.inputs.length; i += 1) {
             value = 0;
-            if (parms[i]) {
+            if (!isNil(parms[i])) {
                 value = parms[i];
             }
             outer.variables.addVar(context.inputs[i], value);
@@ -853,7 +858,7 @@ Process.prototype.fork = function (context, args) {
         // assign formal parameters
         for (i = 0; i < context.inputs.length; i += 1) {
             value = 0;
-            if (parms[i]) {
+            if (!isNil(parms[i])) {
                 value = parms[i];
             }
             outer.variables.addVar(context.inputs[i], value);
@@ -1013,7 +1018,7 @@ Process.prototype.evaluateCustomBlock = function () {
         // assign formal parameters
         for (i = 0; i < context.inputs.length; i += 1) {
             value = 0;
-            if (parms[i]) {
+            if (!isNil(parms[i])) {
                 value = parms[i];
             }
             outer.variables.addVar(context.inputs[i], value);
@@ -1842,30 +1847,30 @@ Process.prototype.reportTypeOf = function (thing) {
 // Process math primtives
 
 Process.prototype.reportSum = function (a, b) {
-    return parseFloat(a) + parseFloat(b);
+    return +a + (+b);
 };
 
 Process.prototype.reportDifference = function (a, b) {
-    return parseFloat(a) - parseFloat(b);
+    return +a - +b;
 };
 
 Process.prototype.reportProduct = function (a, b) {
-    return parseFloat(a) * parseFloat(b);
+    return +a * +b;
 };
 
 Process.prototype.reportQuotient = function (a, b) {
-    return parseFloat(a) / parseFloat(b);
+    return +a / +b;
 };
 
 Process.prototype.reportModulus = function (a, b) {
-    var x = parseFloat(a),
-        y = parseFloat(b);
+    var x = +a,
+        y = +b;
     return ((x % y) + y) % y;
 };
 
 Process.prototype.reportRandom = function (min, max) {
-    var floor = parseFloat(min),
-        ceil = parseFloat(max);
+    var floor = +min,
+        ceil = +max;
     if ((floor % 1 !== 0) || (ceil % 1 !== 0)) {
         return Math.random() * (ceil - floor) + floor;
     }
@@ -1873,8 +1878,8 @@ Process.prototype.reportRandom = function (min, max) {
 };
 
 Process.prototype.reportLessThan = function (a, b) {
-    var x = parseFloat(a),
-        y = parseFloat(b);
+    var x = +a,
+        y = +b;
     if (isNaN(x) || isNaN(y)) {
         x = a;
         y = b;
@@ -1887,8 +1892,8 @@ Process.prototype.reportNot = function (bool) {
 };
 
 Process.prototype.reportGreaterThan = function (a, b) {
-    var x = parseFloat(a),
-        y = parseFloat(b);
+    var x = +a,
+        y = +b;
     if (isNaN(x) || isNaN(y)) {
         x = a;
         y = b;
@@ -1942,11 +1947,11 @@ Process.prototype.reportFalse = function () {
 };
 
 Process.prototype.reportRound = function (n) {
-    return Math.round(parseFloat(n));
+    return Math.round(+n);
 };
 
 Process.prototype.reportMonadic = function (fname, n) {
-    var x = parseFloat(n),
+    var x = +n,
         result = 0;
 
     switch (this.inputOption(fname)) {
@@ -1990,6 +1995,7 @@ Process.prototype.reportMonadic = function (fname, n) {
         result = 0;
         break;
     default:
+        nop();
     }
     return result;
 };
@@ -2021,6 +2027,7 @@ Process.prototype.reportTextFunction = function (fname, string) {
         result = hex_sha512(x);
         break;
     default:
+        nop();
     }
     return result;
 };
@@ -2041,7 +2048,7 @@ Process.prototype.reportJoinWords = function (aList) {
 // Process string ops
 
 Process.prototype.reportLetter = function (idx, string) {
-    var i = parseFloat(idx || 0),
+    var i = +(idx || 0),
         str = (string || '').toString();
     return str[i - 1] || '';
 };
@@ -2057,7 +2064,7 @@ Process.prototype.reportUnicode = function (string) {
 };
 
 Process.prototype.reportUnicodeAsLetter = function (num) {
-    var code = parseFloat(num || 0);
+    var code = +(num || 0);
     return String.fromCharCode(code);
 };
 
@@ -2947,7 +2954,9 @@ VariableFrame.prototype.getVar = function (name, upvars) {
 };
 
 VariableFrame.prototype.addVar = function (name, value) {
-    this.vars[name] = (value === 0 ? 0 : value || null);
+    this.vars[name] = (value === 0 ? 0
+              : value === false ? false
+                       : value === '' ? '' : value || null);
 };
 
 VariableFrame.prototype.deleteVar = function (name) {
