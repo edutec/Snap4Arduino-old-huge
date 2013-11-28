@@ -1,0 +1,1995 @@
+THERE_BE_DRAGONS_HERE
+User Interrupt
+28 November 2013 5:00:32.832 pm
+
+VM: Win32 - IX86 - 5.1 - NBCoInterpreter NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+NBCogit NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+git://gitorious.org/cogvm/blessed.git Commit: 412abef33cbed05cf1d75329e451d71c0c6aa5a7 Date: 2013-03-13 17:48:50 +0100 By: Esteban Lorenzano <estebanlm@gmail.com> Jenkins build #14535
+
+Image: Pharo2.0 [Latest update: #20624]
+
+DefaultCommandLineHandler>>simulateHeadlessForWin32
+	Receiver: a DefaultCommandLineHandler
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		commandLine: 	a CommandLineArguments
+		stdout: 	a VTermOutputDriver
+		stderr: 	a VTermOutputDriver
+
+
+DefaultCommandLineHandler>>serve
+	Receiver: a DefaultCommandLineHandler
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		commandLine: 	a CommandLineArguments
+		stdout: 	a VTermOutputDriver
+		stderr: 	a VTermOutputDriver
+
+
+DefaultCommandLineHandler>>handleArgument:
+	Receiver: a DefaultCommandLineHandler
+	Arguments and temporary variables: 
+		aString: 	'--serve'
+	Receiver's instance variables: 
+		commandLine: 	a CommandLineArguments
+		stdout: 	a VTermOutputDriver
+		stderr: 	a VTermOutputDriver
+
+
+DefaultCommandLineHandler>>activate
+	Receiver: a DefaultCommandLineHandler
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		commandLine: 	a CommandLineArguments
+		stdout: 	a VTermOutputDriver
+		stderr: 	a VTermOutputDriver
+
+
+[self new activate] in DefaultCommandLineHandler class>>startUp:
+	Receiver: DefaultCommandLineHandler
+	Arguments and temporary variables: 
+		resuming: 	true
+	Receiver's instance variables: 
+		superclass: 	CommandLineHandler
+		methodDict: 	a MethodDictionary(#activate->DefaultCommandLineHandler>>#activate ...etc...
+		format: 	136
+		layout: 	nil
+		instanceVariables: 	nil
+		organization: 	a ClassOrganizer
+		subclasses: 	nil
+		name: 	#DefaultCommandLineHandler
+		classPool: 	nil
+		sharedPools: 	nil
+		environment: 	a SystemDictionary(lots of globals)
+		category: 	#'System-CommandLine'
+		traitComposition: 	{}
+		localSelectors: 	nil
+
+
+BlockClosure>>cull:
+	Receiver: [self new activate]
+	Arguments and temporary variables: 
+		anArg: 	true
+	Receiver's instance variables: 
+		outerContext: 	DefaultCommandLineHandler class>>startUp:
+		startpc: 	38
+		numArgs: 	0
+
+
+[each cull: resuming] in [:each | self
+		logStartUpErrorDuring: [each cull: resuming]
+		into: errors
+		tryDebugger: self isInteractive] in SmalltalkImage>>executeDeferredStartupActions:
+	Receiver: Smalltalk
+	Arguments and temporary variables: 
+		resuming: 	true
+		errors: 	an OrderedCollection()
+		each: 	[self new activate]
+	Receiver's instance variables: 
+		globals: 	a SystemDictionary(lots of globals)
+		deferredStartupActions: 	an OrderedCollection([self managedServers
+		do: [:each ...etc...
+		specialObjectsArray: 	an Array(nil false true #Processor->Processor Bitmap Small...etc...
+		session: 	an Object
+
+
+BlockClosure>>on:do:
+	Receiver: [each cull: resuming]
+	Arguments and temporary variables: 
+		exception: 	an ExceptionSet
+		handlerAction: 	[:err | self
+		logStartupError: err
+		into: aCollection
+		tryDeb...etc...
+		handlerActive: 	true
+	Receiver's instance variables: 
+		outerContext: 	[:each | self
+		logStartUpErrorDuring: [each cull: resuming]
+		in...etc...
+		startpc: 	60
+		numArgs: 	0
+
+
+SmalltalkImage>>logStartUpErrorDuring:into:tryDebugger:
+	Receiver: Smalltalk
+	Arguments and temporary variables: 
+		aBlock: 	[each cull: resuming]
+		aCollection: 	an OrderedCollection()
+		tryDebugger: 	true
+	Receiver's instance variables: 
+		globals: 	a SystemDictionary(lots of globals)
+		deferredStartupActions: 	an OrderedCollection([self managedServers
+		do: [:each ...etc...
+		specialObjectsArray: 	an Array(nil false true #Processor->Processor Bitmap Small...etc...
+		session: 	an Object
+
+
+[:each | self
+		logStartUpErrorDuring: [each cull: resuming]
+		into: errors
+		tryDebugger: self isInteractive] in SmalltalkImage>>executeDeferredStartupActions:
+	Receiver: Smalltalk
+	Arguments and temporary variables: 
+		resuming: 	true
+		errors: 	an OrderedCollection()
+		each: 	[self new activate]
+	Receiver's instance variables: 
+		globals: 	a SystemDictionary(lots of globals)
+		deferredStartupActions: 	an OrderedCollection([self managedServers
+		do: [:each ...etc...
+		specialObjectsArray: 	an Array(nil false true #Processor->Processor Bitmap Small...etc...
+		session: 	an Object
+
+
+OrderedCollection>>do:
+	Receiver: an OrderedCollection([self managedServers
+		do: [:each | each start]] [self default loadSt...etc...
+	Arguments and temporary variables: 
+		aBlock: 	[:each | self
+		logStartUpErrorDuring: [each cull: resuming]
+		into: er...etc...
+		index: 	3
+	Receiver's instance variables: 
+		array: 	an Array([self managedServers
+		do: [:each | each start]] [self default ...etc...
+		firstIndex: 	1
+		lastIndex: 	3
+
+
+SmalltalkImage>>executeDeferredStartupActions:
+	Receiver: Smalltalk
+	Arguments and temporary variables: 
+		resuming: 	true
+		errors: 	an OrderedCollection()
+	Receiver's instance variables: 
+		globals: 	a SystemDictionary(lots of globals)
+		deferredStartupActions: 	an OrderedCollection([self managedServers
+		do: [:each ...etc...
+		specialObjectsArray: 	an Array(nil false true #Processor->Processor Bitmap Small...etc...
+		session: 	an Object
+
+
+SmalltalkImage>>startupImage:snapshotWorked:
+	Receiver: Smalltalk
+	Arguments and temporary variables: 
+		isNewImage: 	true
+		snapshotResult: 	true
+		startupErrors: 	an OrderedCollection()
+	Receiver's instance variables: 
+		globals: 	a SystemDictionary(lots of globals)
+		deferredStartupActions: 	an OrderedCollection([self managedServers
+		do: [:each ...etc...
+		specialObjectsArray: 	an Array(nil false true #Processor->Processor Bitmap Small...etc...
+		session: 	an Object
+
+
+SmalltalkImage>>snapshot:andQuit:
+	Receiver: Smalltalk
+	Arguments and temporary variables: 
+		save: 	true
+		quit: 	true
+		snapshotResult: 	true
+		isNewImage: 	true
+		startupErrors: 	nil
+	Receiver's instance variables: 
+		globals: 	a SystemDictionary(lots of globals)
+		deferredStartupActions: 	an OrderedCollection([self managedServers
+		do: [:each ...etc...
+		specialObjectsArray: 	an Array(nil false true #Processor->Processor Bitmap Small...etc...
+		session: 	an Object
+
+
+[Smalltalk snapshot: true andQuit: true] in WorldState class>>saveAndQuit
+	Receiver: WorldState
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		superclass: 	Object
+		methodDict: 	a MethodDictionary(#activeHand->WorldState>>#activeHand #addAlarm:w...etc...
+		format: 	152
+		layout: 	nil
+		instanceVariables: 	#('hands' 'viewBox' 'canvas' 'damageRecorder' 'stepList' 'la...etc...
+		organization: 	a ClassOrganizer
+		subclasses: 	nil
+		name: 	#WorldState
+		classPool: 	a Dictionary(#CanSurrenderToOS->true #DebugShowDamage->false #Deferr...etc...
+		sharedPools: 	nil
+		environment: 	a SystemDictionary(lots of globals)
+		category: 	#'Morphic-Worlds'
+		traitComposition: 	{}
+		localSelectors: 	nil
+
+
+BlockClosure>>ensure:
+	Receiver: [Smalltalk snapshot: true andQuit: true]
+	Arguments and temporary variables: 
+		aBlock: 	[oldcursor show]
+		complete: 	nil
+		returnValue: 	nil
+	Receiver's instance variables: 
+		outerContext: 	WorldState class>>saveAndQuit
+		startpc: 	39
+		numArgs: 	0
+
+
+CursorWithMask(Cursor)>>showWhile:
+	Receiver: ((CursorWithMask
+	extent: (16@16)
+	depth: 1
+	fromArray: #(
+		2r0
+		2r11000000000000000000
+...etc...
+	Arguments and temporary variables: 
+		aBlock: 	[Smalltalk snapshot: true andQuit: true]
+		oldcursor: 	((CursorWithMask
+	extent: (16@16)
+	depth: 1
+	fromArray: #(
+		2r0
+		2...etc...
+	Receiver's instance variables: 
+		bits: 	a Bitmap of length 16
+		width: 	16
+		height: 	16
+		depth: 	1
+		offset: 	(-1@ -1)
+		maskForm: 	Form(16x16x1)
+
+
+WorldState class>>saveAndQuit
+	Receiver: WorldState
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		superclass: 	Object
+		methodDict: 	a MethodDictionary(#activeHand->WorldState>>#activeHand #addAlarm:w...etc...
+		format: 	152
+		layout: 	nil
+		instanceVariables: 	#('hands' 'viewBox' 'canvas' 'damageRecorder' 'stepList' 'la...etc...
+		organization: 	a ClassOrganizer
+		subclasses: 	nil
+		name: 	#WorldState
+		classPool: 	a Dictionary(#CanSurrenderToOS->true #DebugShowDamage->false #Deferr...etc...
+		sharedPools: 	nil
+		environment: 	a SystemDictionary(lots of globals)
+		category: 	#'Morphic-Worlds'
+		traitComposition: 	{}
+		localSelectors: 	nil
+
+
+[| selArgCount |
+(selArgCount := selector numArgs) = 0
+		ifTrue: [target perform: selector]
+		ifFalse: [selArgCount = arguments size
+				ifTrue: [target perform: selector withArguments: arguments]
+				ifFalse: [target
+						perform: selector
+						withArguments: (arguments copyWith: evt)]].
+	self changed] in ToggleMenuItemMorph(MenuItemMorph)>>invokeWithEvent:
+	Receiver: a ToggleMenuItemMorph(1036517376)'Save and quit'
+	Arguments and temporary variables: 
+		evt: 	[(1335@730) mouseUp 586405 nil]
+		w: 	a PasteUpMorph(425197568) [world]
+		selArgCount: 	0
+	Receiver's instance variables: 
+		bounds: 	(1297.0@716.0) corner: (1442.0@734.0)
+		owner: 	a MenuMorph(272629760)
+		submorphs: 	#()
+		fullBounds: 	(1297.0@716.0) corner: (1442.0@734.0)
+		color: 	Color black
+		extension: 	a MorphExtension (1046740992) [other:  (announcer -> an Announcer)]
+		font: 	a StrikeFont(Bitmap DejaVu Sans 9 14)
+		emphasis: 	0
+		contents: 	'Save and quit'
+		hasFocus: 	false
+		isEnabled: 	true
+		subMenu: 	nil
+		isSelected: 	false
+		target: 	WorldState
+		selector: 	#saveAndQuit
+		arguments: 	nil
+		icon: 	Form(16x16x32)
+		getStateSelector: 	nil
+		enablementSelector: 	nil
+		keyText: 	nil
+
+
+BlockClosure>>ensure:
+	Receiver: [| selArgCount |
+(selArgCount := selector numArgs) = 0
+		ifTrue: [target perform: selector...etc...
+	Arguments and temporary variables: 
+		aBlock: 	[oldcursor show]
+		complete: 	nil
+		returnValue: 	nil
+	Receiver's instance variables: 
+		outerContext: 	ToggleMenuItemMorph(MenuItemMorph)>>invokeWithEvent:
+		startpc: 	160
+		numArgs: 	0
+
+
+CursorWithMask(Cursor)>>showWhile:
+	Receiver: ((CursorWithMask
+	extent: (16@16)
+	depth: 1
+	fromArray: #(
+		2r0
+		2r100000000000000000000...etc...
+	Arguments and temporary variables: 
+		aBlock: 	[| selArgCount |
+(selArgCount := selector numArgs) = 0
+		ifTrue: [targe...etc...
+		oldcursor: 	((CursorWithMask
+	extent: (16@16)
+	depth: 1
+	fromArray: #(
+		2r0
+		2...etc...
+	Receiver's instance variables: 
+		bits: 	a Bitmap of length 16
+		width: 	16
+		height: 	16
+		depth: 	1
+		offset: 	(-1@ -1)
+		maskForm: 	Form(16x16x1)
+
+
+ToggleMenuItemMorph(MenuItemMorph)>>invokeWithEvent:
+	Receiver: a ToggleMenuItemMorph(1036517376)'Save and quit'
+	Arguments and temporary variables: 
+		evt: 	[(1335@730) mouseUp 586405 nil]
+		w: 	a PasteUpMorph(425197568) [world]
+	Receiver's instance variables: 
+		bounds: 	(1297.0@716.0) corner: (1442.0@734.0)
+		owner: 	a MenuMorph(272629760)
+		submorphs: 	#()
+		fullBounds: 	(1297.0@716.0) corner: (1442.0@734.0)
+		color: 	Color black
+		extension: 	a MorphExtension (1046740992) [other:  (announcer -> an Announcer)]
+		font: 	a StrikeFont(Bitmap DejaVu Sans 9 14)
+		emphasis: 	0
+		contents: 	'Save and quit'
+		hasFocus: 	false
+		isEnabled: 	true
+		subMenu: 	nil
+		isSelected: 	false
+		target: 	WorldState
+		selector: 	#saveAndQuit
+		arguments: 	nil
+		icon: 	Form(16x16x32)
+		getStateSelector: 	nil
+		enablementSelector: 	nil
+		keyText: 	nil
+
+
+ToggleMenuItemMorph(MenuItemMorph)>>mouseUp:
+	Receiver: a ToggleMenuItemMorph(1036517376)'Save and quit'
+	Arguments and temporary variables: 
+		evt: 	[(1335@730) mouseUp 586405 nil]
+	Receiver's instance variables: 
+		bounds: 	(1297.0@716.0) corner: (1442.0@734.0)
+		owner: 	a MenuMorph(272629760)
+		submorphs: 	#()
+		fullBounds: 	(1297.0@716.0) corner: (1442.0@734.0)
+		color: 	Color black
+		extension: 	a MorphExtension (1046740992) [other:  (announcer -> an Announcer)]
+		font: 	a StrikeFont(Bitmap DejaVu Sans 9 14)
+		emphasis: 	0
+		contents: 	'Save and quit'
+		hasFocus: 	false
+		isEnabled: 	true
+		subMenu: 	nil
+		isSelected: 	false
+		target: 	WorldState
+		selector: 	#saveAndQuit
+		arguments: 	nil
+		icon: 	Form(16x16x32)
+		getStateSelector: 	nil
+		enablementSelector: 	nil
+		keyText: 	nil
+
+
+ToggleMenuItemMorph(MenuItemMorph)>>handleMouseUp:
+	Receiver: a ToggleMenuItemMorph(1036517376)'Save and quit'
+	Arguments and temporary variables: 
+		anEvent: 	[(1335@730) mouseUp 586405 nil]
+	Receiver's instance variables: 
+		bounds: 	(1297.0@716.0) corner: (1442.0@734.0)
+		owner: 	a MenuMorph(272629760)
+		submorphs: 	#()
+		fullBounds: 	(1297.0@716.0) corner: (1442.0@734.0)
+		color: 	Color black
+		extension: 	a MorphExtension (1046740992) [other:  (announcer -> an Announcer)]
+		font: 	a StrikeFont(Bitmap DejaVu Sans 9 14)
+		emphasis: 	0
+		contents: 	'Save and quit'
+		hasFocus: 	false
+		isEnabled: 	true
+		subMenu: 	nil
+		isSelected: 	false
+		target: 	WorldState
+		selector: 	#saveAndQuit
+		arguments: 	nil
+		icon: 	Form(16x16x32)
+		getStateSelector: 	nil
+		enablementSelector: 	nil
+		keyText: 	nil
+
+
+MouseButtonEvent>>sentTo:
+	Receiver: [(1335@730) mouseUp 586405 nil]
+	Arguments and temporary variables: 
+		anObject: 	a ToggleMenuItemMorph(1036517376)'Save and quit'
+	Receiver's instance variables: 
+		timeStamp: 	586405
+		source: 	a HandMorph(843055104)
+		windowIndex: 	nil
+		type: 	#mouseUp
+		buttons: 	0
+		position: 	(1335@730)
+		handler: 	nil
+		wasHandled: 	true
+		whichButton: 	4
+
+
+ToggleMenuItemMorph(Morph)>>handleEvent:
+	Receiver: a ToggleMenuItemMorph(1036517376)'Save and quit'
+	Arguments and temporary variables: 
+		anEvent: 	[(1335@730) mouseUp 586405 nil]
+	Receiver's instance variables: 
+		bounds: 	(1297.0@716.0) corner: (1442.0@734.0)
+		owner: 	a MenuMorph(272629760)
+		submorphs: 	#()
+		fullBounds: 	(1297.0@716.0) corner: (1442.0@734.0)
+		color: 	Color black
+		extension: 	a MorphExtension (1046740992) [other:  (announcer -> an Announcer)]
+		font: 	a StrikeFont(Bitmap DejaVu Sans 9 14)
+		emphasis: 	0
+		contents: 	'Save and quit'
+		hasFocus: 	false
+		isEnabled: 	true
+		subMenu: 	nil
+		isSelected: 	false
+		target: 	WorldState
+		selector: 	#saveAndQuit
+		arguments: 	nil
+		icon: 	Form(16x16x32)
+		getStateSelector: 	nil
+		enablementSelector: 	nil
+		keyText: 	nil
+
+
+MorphicEventDispatcher>>dispatchDefault:with:
+	Receiver: a MorphicEventDispatcher
+	Arguments and temporary variables: 
+		anEvent: 	[(1335@730) mouseUp 586405 nil]
+		aMorph: 	a ToggleMenuItemMorph(1036517376)'Save and quit'
+		localEvt: 	nil
+		index: 	1
+		child: 	nil
+		morphs: 	#()
+		inside: 	true
+	Receiver's instance variables: 
+		lastType: 	#mouseUp
+		lastDispatch: 	#dispatchDefault:with:
+
+
+MorphicEventDispatcher>>dispatchEvent:with:
+	Receiver: a MorphicEventDispatcher
+	Arguments and temporary variables: 
+		anEvent: 	[(1335@730) mouseUp 586405 nil]
+		aMorph: 	a ToggleMenuItemMorph(1036517376)'Save and quit'
+	Receiver's instance variables: 
+		lastType: 	#mouseUp
+		lastDispatch: 	#dispatchDefault:with:
+
+
+ToggleMenuItemMorph(Morph)>>processEvent:using:
+	Receiver: a ToggleMenuItemMorph(1036517376)'Save and quit'
+	Arguments and temporary variables: 
+		anEvent: 	[(1335@730) mouseUp 586405 nil]
+		defaultDispatcher: 	a MorphicEventDispatcher
+	Receiver's instance variables: 
+		bounds: 	(1297.0@716.0) corner: (1442.0@734.0)
+		owner: 	a MenuMorph(272629760)
+		submorphs: 	#()
+		fullBounds: 	(1297.0@716.0) corner: (1442.0@734.0)
+		color: 	Color black
+		extension: 	a MorphExtension (1046740992) [other:  (announcer -> an Announcer)]
+		font: 	a StrikeFont(Bitmap DejaVu Sans 9 14)
+		emphasis: 	0
+		contents: 	'Save and quit'
+		hasFocus: 	false
+		isEnabled: 	true
+		subMenu: 	nil
+		isSelected: 	false
+		target: 	WorldState
+		selector: 	#saveAndQuit
+		arguments: 	nil
+		icon: 	Form(16x16x32)
+		getStateSelector: 	nil
+		enablementSelector: 	nil
+		keyText: 	nil
+
+
+MorphicEventDispatcher>>dispatchDefault:with:
+	Receiver: a MorphicEventDispatcher
+	Arguments and temporary variables: 
+		anEvent: 	[(1335@730) mouseUp 586405 nil]
+		aMorph: 	a MenuMorph(272629760)
+		localEvt: 	[(1335@730) mouseUp 586405 nil]
+		index: 	15
+		child: 	a ToggleMenuItemMorph(1036517376)'Save and quit'
+		morphs: 	an Array(an AlignmentMorph(392691712) a ToggleMenuItemMorph(797442048)'...etc...
+		inside: 	false
+	Receiver's instance variables: 
+		lastType: 	#mouseUp
+		lastDispatch: 	#dispatchDefault:with:
+
+
+MorphicEventDispatcher>>dispatchEvent:with:
+	Receiver: a MorphicEventDispatcher
+	Arguments and temporary variables: 
+		anEvent: 	[(1335@730) mouseUp 586405 nil]
+		aMorph: 	a MenuMorph(272629760)
+	Receiver's instance variables: 
+		lastType: 	#mouseUp
+		lastDispatch: 	#dispatchDefault:with:
+
+
+MenuMorph(Morph)>>processEvent:using:
+	Receiver: a MenuMorph(272629760)
+	Arguments and temporary variables: 
+		anEvent: 	[(1335@730) mouseUp 586405 nil]
+		defaultDispatcher: 	a MorphicEventDispatcher
+	Receiver's instance variables: 
+		bounds: 	(1292.0@488.0) corner: (1447.0@758.0)
+		owner: 	nil
+		submorphs: 	an Array(an AlignmentMorph(392691712) a ToggleMenuItemMorph(79744204...etc...
+		fullBounds: 	(1292.0@488.0) corner: (1447.0@758.0)
+		color: 	(Color r: 0.848 g: 0.848 b: 0.848)
+		extension: 	a MorphExtension (287571968) [other:  (basicColor -> (Color r: 0.745...etc...
+		borderWidth: 	2
+		borderColor: 	(Color r: 0.595 g: 0.595 b: 0.595)
+		defaultTarget: 	nil
+		selectedItem: 	a ToggleMenuItemMorph(1036517376)'Save and quit'
+		stayUp: 	false
+		popUpOwner: 	nil
+		activeSubMenu: 	nil
+		activatorDockingBar: 	nil
+		embeddable: 	nil
+		menuItems: 	nil
+
+
+MenuMorph(Morph)>>processEvent:
+	Receiver: a MenuMorph(272629760)
+	Arguments and temporary variables: 
+		anEvent: 	[(1335@730) mouseUp 586405 nil]
+	Receiver's instance variables: 
+		bounds: 	(1292.0@488.0) corner: (1447.0@758.0)
+		owner: 	nil
+		submorphs: 	an Array(an AlignmentMorph(392691712) a ToggleMenuItemMorph(79744204...etc...
+		fullBounds: 	(1292.0@488.0) corner: (1447.0@758.0)
+		color: 	(Color r: 0.848 g: 0.848 b: 0.848)
+		extension: 	a MorphExtension (287571968) [other:  (basicColor -> (Color r: 0.745...etc...
+		borderWidth: 	2
+		borderColor: 	(Color r: 0.595 g: 0.595 b: 0.595)
+		defaultTarget: 	nil
+		selectedItem: 	a ToggleMenuItemMorph(1036517376)'Save and quit'
+		stayUp: 	false
+		popUpOwner: 	nil
+		activeSubMenu: 	nil
+		activatorDockingBar: 	nil
+		embeddable: 	nil
+		menuItems: 	nil
+
+
+MenuMorph>>handleFocusEvent:
+	Receiver: a MenuMorph(272629760)
+	Arguments and temporary variables: 
+		evt: 	[(1335@730) mouseUp 586405 nil]
+	Receiver's instance variables: 
+		bounds: 	(1292.0@488.0) corner: (1447.0@758.0)
+		owner: 	nil
+		submorphs: 	an Array(an AlignmentMorph(392691712) a ToggleMenuItemMorph(79744204...etc...
+		fullBounds: 	(1292.0@488.0) corner: (1447.0@758.0)
+		color: 	(Color r: 0.848 g: 0.848 b: 0.848)
+		extension: 	a MorphExtension (287571968) [other:  (basicColor -> (Color r: 0.745...etc...
+		borderWidth: 	2
+		borderColor: 	(Color r: 0.595 g: 0.595 b: 0.595)
+		defaultTarget: 	nil
+		selectedItem: 	a ToggleMenuItemMorph(1036517376)'Save and quit'
+		stayUp: 	false
+		popUpOwner: 	nil
+		activeSubMenu: 	nil
+		activatorDockingBar: 	nil
+		embeddable: 	nil
+		menuItems: 	nil
+
+
+[ActiveHand := self.
+	ActiveEvent := anEvent.
+	result := focusHolder
+				handleFocusEvent: (anEvent
+						transformedBy: (focusHolder transformedFrom: self))] in HandMorph>>sendFocusEvent:to:clear:
+	Receiver: a HandMorph(843055104)
+	Arguments and temporary variables: 
+		anEvent: 	[(1335@730) mouseUp 586405 nil]
+		focusHolder: 	a MenuMorph(272629760)
+		aBlock: 	[self mouseFocus: nil]
+		w: 	a PasteUpMorph(425197568) [world]
+		result: 	nil
+	Receiver's instance variables: 
+		bounds: 	(1335@730) corner: (1351@746)
+		owner: 	a PasteUpMorph(425197568) [world]
+		submorphs: 	#()
+		fullBounds: 	nil
+		color: 	Color blue
+		extension: 	a MorphExtension (141295616) [eventHandler = an EventHandler] 
+		mouseFocus: 	nil
+		keyboardFocus: 	nil
+		eventListeners: 	nil
+		mouseListeners: 	nil
+		keyboardListeners: 	nil
+		mouseClickState: 	nil
+		mouseOverHandler: 	a MouseOverHandler
+		lastMouseEvent: 	[(1335@730) mouseUp 586405 nil]
+		targetOffset: 	(1294@519)
+		damageRecorder: 	a DamageRecorder
+		cacheCanvas: 	nil
+		cachedCanvasHasHoles: 	true
+		temporaryCursor: 	nil
+		temporaryCursorOffset: 	nil
+		hardwareCursor: 	nil
+		hasChanged: 	true
+		savedPatch: 	nil
+		lastEventBuffer: 	#(1 586405 1335 730 0 0 0 1)
+		lastKeyScanCode: 	100
+		combinedChar: 	nil
+		eventSource: 	nil
+		lastSystemEvent: 	nil
+		captureBlock: 	nil
+		recentModifiers: 	0
+
+
+[aBlock value] in PasteUpMorph>>becomeActiveDuring:
+	Receiver: a PasteUpMorph(425197568) [world]
+	Arguments and temporary variables: 
+		aBlock: 	[ActiveHand := self.
+	ActiveEvent := anEvent.
+	result := focusHolder
+		...etc...
+		priorWorld: 	a PasteUpMorph(425197568) [world]
+		priorHand: 	a HandMorph(843055104)
+		priorEvent: 	[(1335@730) mouseOver red nil nil]
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (1272@736)
+		owner: 	nil
+		submorphs: 	an Array(a TaskbarMorph(984088576) a SystemWindow(961544192) a Nauti...etc...
+		fullBounds: 	(0@0) corner: (1272@736)
+		color: 	(Color r: 0.97 g: 0.98 b: 1.0)
+		extension: 	a MorphExtension (666632192) [eventHandler = an EventHandler]  [othe...etc...
+		borderWidth: 	0
+		borderColor: 	(Color r: 0.03 g: 0.02 b: 0.0)
+		backgroundMorph: 	nil
+		worldState: 	a WorldState
+		griddingOn: 	nil
+
+
+BlockClosure>>on:do:
+	Receiver: [aBlock value]
+	Arguments and temporary variables: 
+		exception: 	Error
+		handlerAction: 	[:ex | 
+ActiveWorld := priorWorld.
+	ActiveEvent := priorEvent.
+	...etc...
+		handlerActive: 	true
+	Receiver's instance variables: 
+		outerContext: 	PasteUpMorph>>becomeActiveDuring:
+		startpc: 	67
+		numArgs: 	0
+
+
+PasteUpMorph>>becomeActiveDuring:
+	Receiver: a PasteUpMorph(425197568) [world]
+	Arguments and temporary variables: 
+		aBlock: 	[ActiveHand := self.
+	ActiveEvent := anEvent.
+	result := focusHolder
+		...etc...
+		priorWorld: 	a PasteUpMorph(425197568) [world]
+		priorHand: 	a HandMorph(843055104)
+		priorEvent: 	[(1335@730) mouseOver red nil nil]
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (1272@736)
+		owner: 	nil
+		submorphs: 	an Array(a TaskbarMorph(984088576) a SystemWindow(961544192) a Nauti...etc...
+		fullBounds: 	(0@0) corner: (1272@736)
+		color: 	(Color r: 0.97 g: 0.98 b: 1.0)
+		extension: 	a MorphExtension (666632192) [eventHandler = an EventHandler]  [othe...etc...
+		borderWidth: 	0
+		borderColor: 	(Color r: 0.03 g: 0.02 b: 0.0)
+		backgroundMorph: 	nil
+		worldState: 	a WorldState
+		griddingOn: 	nil
+
+
+HandMorph>>sendFocusEvent:to:clear:
+	Receiver: a HandMorph(843055104)
+	Arguments and temporary variables: 
+		anEvent: 	[(1335@730) mouseUp 586405 nil]
+		focusHolder: 	a MenuMorph(272629760)
+		aBlock: 	[self mouseFocus: nil]
+		w: 	a PasteUpMorph(425197568) [world]
+		result: 	nil
+	Receiver's instance variables: 
+		bounds: 	(1335@730) corner: (1351@746)
+		owner: 	a PasteUpMorph(425197568) [world]
+		submorphs: 	#()
+		fullBounds: 	nil
+		color: 	Color blue
+		extension: 	a MorphExtension (141295616) [eventHandler = an EventHandler] 
+		mouseFocus: 	nil
+		keyboardFocus: 	nil
+		eventListeners: 	nil
+		mouseListeners: 	nil
+		keyboardListeners: 	nil
+		mouseClickState: 	nil
+		mouseOverHandler: 	a MouseOverHandler
+		lastMouseEvent: 	[(1335@730) mouseUp 586405 nil]
+		targetOffset: 	(1294@519)
+		damageRecorder: 	a DamageRecorder
+		cacheCanvas: 	nil
+		cachedCanvasHasHoles: 	true
+		temporaryCursor: 	nil
+		temporaryCursorOffset: 	nil
+		hardwareCursor: 	nil
+		hasChanged: 	true
+		savedPatch: 	nil
+		lastEventBuffer: 	#(1 586405 1335 730 0 0 0 1)
+		lastKeyScanCode: 	100
+		combinedChar: 	nil
+		eventSource: 	nil
+		lastSystemEvent: 	nil
+		captureBlock: 	nil
+		recentModifiers: 	0
+
+
+
+--- The full stack ---
+DefaultCommandLineHandler>>simulateHeadlessForWin32
+DefaultCommandLineHandler>>serve
+DefaultCommandLineHandler>>handleArgument:
+DefaultCommandLineHandler>>activate
+[self new activate] in DefaultCommandLineHandler class>>startUp:
+BlockClosure>>cull:
+[each cull: resuming] in [:each | self
+		logStartUpErrorDuring: [each cull: resuming]
+		into: errors
+		tryDebugger: self isInteractive] in SmalltalkImage>>executeDeferredStartupActions:
+BlockClosure>>on:do:
+SmalltalkImage>>logStartUpErrorDuring:into:tryDebugger:
+[:each | self
+		logStartUpErrorDuring: [each cull: resuming]
+		into: errors
+		tryDebugger: self isInteractive] in SmalltalkImage>>executeDeferredStartupActions:
+OrderedCollection>>do:
+SmalltalkImage>>executeDeferredStartupActions:
+SmalltalkImage>>startupImage:snapshotWorked:
+SmalltalkImage>>snapshot:andQuit:
+[Smalltalk snapshot: true andQuit: true] in WorldState class>>saveAndQuit
+BlockClosure>>ensure:
+CursorWithMask(Cursor)>>showWhile:
+WorldState class>>saveAndQuit
+[| selArgCount |
+(selArgCount := selector numArgs) = 0
+		ifTrue: [target perform: selector]
+		ifFalse: [selArgCount = arguments size
+				ifTrue: [target perform: selector withArguments: arguments]
+				ifFalse: [target
+						perform: selector
+						withArguments: (arguments copyWith: evt)]].
+	self changed] in ToggleMenuItemMorph(MenuItemMorph)>>invokeWithEvent:
+BlockClosure>>ensure:
+CursorWithMask(Cursor)>>showWhile:
+ToggleMenuItemMorph(MenuItemMorph)>>invokeWithEvent:
+ToggleMenuItemMorph(MenuItemMorph)>>mouseUp:
+ToggleMenuItemMorph(MenuItemMorph)>>handleMouseUp:
+MouseButtonEvent>>sentTo:
+ToggleMenuItemMorph(Morph)>>handleEvent:
+MorphicEventDispatcher>>dispatchDefault:with:
+MorphicEventDispatcher>>dispatchEvent:with:
+ToggleMenuItemMorph(Morph)>>processEvent:using:
+MorphicEventDispatcher>>dispatchDefault:with:
+MorphicEventDispatcher>>dispatchEvent:with:
+MenuMorph(Morph)>>processEvent:using:
+MenuMorph(Morph)>>processEvent:
+MenuMorph>>handleFocusEvent:
+[ActiveHand := self.
+	ActiveEvent := anEvent.
+	result := focusHolder
+				handleFocusEvent: (anEvent
+						transformedBy: (focusHolder transformedFrom: self))] in HandMorph>>sendFocusEvent:to:clear:
+[aBlock value] in PasteUpMorph>>becomeActiveDuring:
+BlockClosure>>on:do:
+PasteUpMorph>>becomeActiveDuring:
+HandMorph>>sendFocusEvent:to:clear:
+ - - - - - - - - - - - - - - -  
+			- - - - - - - - - - - - - - - - - -
+HandMorph>>sendEvent:focus:clear:
+HandMorph>>sendMouseEvent:
+HandMorph>>handleEvent:
+HandMorph>>processEvents
+[:h | 
+ActiveHand := h.
+	h processEvents.
+	ActiveHand := nil] in WorldState>>doOneCycleNowFor:
+Array(SequenceableCollection)>>do:
+WorldState>>handsDo:
+WorldState>>doOneCycleNowFor:
+WorldState>>doOneCycleFor:
+PasteUpMorph>>doOneCycle
+[[World doOneCycle.
+	Processor yield.
+	false] whileFalse.
+	nil] in MorphicUIManager>>spawnNewProcess
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+-------------------------------------------------------------------------------
+
+THERE_BE_DRAGONS_HERE
+User Interrupt
+28 November 2013 5:00:33.326 pm
+
+VM: Win32 - IX86 - 5.1 - NBCoInterpreter NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+NBCogit NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+git://gitorious.org/cogvm/blessed.git Commit: 412abef33cbed05cf1d75329e451d71c0c6aa5a7 Date: 2013-03-13 17:48:50 +0100 By: Esteban Lorenzano <estebanlm@gmail.com> Jenkins build #14535
+
+Image: Pharo2.0 [Latest update: #20624]
+
+WeakArray class>>finalizationProcess
+	Receiver: WeakArray
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		superclass: 	Array
+		methodDict: 	a MethodDictionary()
+		format: 	514
+		layout: 	nil
+		instanceVariables: 	nil
+		organization: 	a ClassOrganizer
+		subclasses: 	nil
+		name: 	#WeakArray
+		classPool: 	a Dictionary(#FinalizationDependents->a WeakArray(WeakAnnouncementSu...etc...
+		sharedPools: 	nil
+		environment: 	a SystemDictionary(lots of globals)
+		category: 	#'Collections-Weak'
+		traitComposition: 	{}
+		localSelectors: 	nil
+
+
+[self finalizationProcess] in WeakArray class>>restartFinalizationProcess
+	Receiver: WeakArray
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		superclass: 	Array
+		methodDict: 	a MethodDictionary()
+		format: 	514
+		layout: 	nil
+		instanceVariables: 	nil
+		organization: 	a ClassOrganizer
+		subclasses: 	nil
+		name: 	#WeakArray
+		classPool: 	a Dictionary(#FinalizationDependents->a WeakArray(WeakAnnouncementSu...etc...
+		sharedPools: 	nil
+		environment: 	a SystemDictionary(lots of globals)
+		category: 	#'Collections-Weak'
+		traitComposition: 	{}
+		localSelectors: 	nil
+
+
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+	Receiver: [self finalizationProcess]
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		outerContext: 	WeakArray class>>restartFinalizationProcess
+		startpc: 	119
+		numArgs: 	0
+
+
+
+--- The full stack ---
+WeakArray class>>finalizationProcess
+[self finalizationProcess] in WeakArray class>>restartFinalizationProcess
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+-------------------------------------------------------------------------------
+
+THERE_BE_DRAGONS_HERE
+User Interrupt
+28 November 2013 5:00:33.358 pm
+
+VM: Win32 - IX86 - 5.1 - NBCoInterpreter NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+NBCogit NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+git://gitorious.org/cogvm/blessed.git Commit: 412abef33cbed05cf1d75329e451d71c0c6aa5a7 Date: 2013-03-13 17:48:50 +0100 By: Esteban Lorenzano <estebanlm@gmail.com> Jenkins build #14535
+
+Image: Pharo2.0 [Latest update: #20624]
+
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+	Receiver: [[World doOneCycle.
+	Processor yield.
+	false] whileFalse.
+	nil]
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		outerContext: 	MorphicUIManager>>spawnNewProcess
+		startpc: 	65
+		numArgs: 	0
+
+
+
+--- The full stack ---
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+-------------------------------------------------------------------------------
+
+THERE_BE_DRAGONS_HERE
+User Interrupt
+28 November 2013 5:00:33.381 pm
+
+VM: Win32 - IX86 - 5.1 - NBCoInterpreter NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+NBCogit NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+git://gitorious.org/cogvm/blessed.git Commit: 412abef33cbed05cf1d75329e451d71c0c6aa5a7 Date: 2013-03-13 17:48:50 +0100 By: Esteban Lorenzano <estebanlm@gmail.com> Jenkins build #14535
+
+Image: Pharo2.0 [Latest update: #20624]
+
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+	Receiver: [[World doOneCycle.
+	Processor yield.
+	false] whileFalse.
+	nil]
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		outerContext: 	MorphicUIManager>>spawnNewProcess
+		startpc: 	65
+		numArgs: 	0
+
+
+
+--- The full stack ---
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+-------------------------------------------------------------------------------
+
+THERE_BE_DRAGONS_HERE
+User Interrupt
+28 November 2013 5:00:33.453 pm
+
+VM: Win32 - IX86 - 5.1 - NBCoInterpreter NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+NBCogit NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+git://gitorious.org/cogvm/blessed.git Commit: 412abef33cbed05cf1d75329e451d71c0c6aa5a7 Date: 2013-03-13 17:48:50 +0100 By: Esteban Lorenzano <estebanlm@gmail.com> Jenkins build #14535
+
+Image: Pharo2.0 [Latest update: #20624]
+
+Array(SequenceableCollection)>>at:ifAbsent:
+	Receiver: {Unicode. JISX0208. GB2312. KSX1001. JISX0208. JapaneseEnvironment. SimplifiedChineseEnvir...etc...
+	Arguments and temporary variables: 
+		index: 	1
+		exceptionBlock: 	[EncodedCharSets at: 1]
+	Receiver's instance variables: 
+{Unicode. JISX0208. GB2312. KSX1001. JISX0208. JapaneseEnvironment. SimplifiedChineseEnvir...etc...
+
+EncodedCharSet class>>charsetAt:
+	Receiver: EncodedCharSet
+	Arguments and temporary variables: 
+		encoding: 	0
+	Receiver's instance variables: 
+		superclass: 	Object
+		methodDict: 	a MethodDictionary()
+		format: 	2
+		layout: 	nil
+		instanceVariables: 	nil
+		organization: 	a ClassOrganizer
+		subclasses: 	{GB2312. JISX0208. KSX1001. Latin1. Unicode}
+		name: 	#EncodedCharSet
+		classPool: 	a Dictionary(#EncodedCharSets->{Unicode. JISX0208. GB2312. KSX1001. ...etc...
+		sharedPools: 	nil
+		environment: 	a SystemDictionary(lots of globals)
+		category: 	#'Multilingual-Encodings'
+		traitComposition: 	{}
+		localSelectors: 	nil
+		compoundTextSequence: 	nil
+
+
+Character>>characterSet
+	Receiver: $c
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		value: 	99
+
+
+Character>>isLetter
+	Receiver: $c
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		value: 	99
+
+
+ByteSymbol(String)>>numArgs
+	Receiver: #createColumnsFor:
+	Arguments and temporary variables: 
+		firstChar: 	$c
+		numColons: 	nil
+		start: 	nil
+		ix: 	nil
+		i: 	nil
+		iLimiT: 	nil
+		i: 	nil
+		iLimiT: 	nil
+	Receiver's instance variables: 
+#createColumnsFor:
+
+PluggableMultiColumnListMorph(PluggableListMorph)>>wrapItem:index:
+	Receiver: a PluggableMultiColumnListMorph(781713408)
+	Arguments and temporary variables: 
+		anItem: 	'DefaultCommandLineHandler>>serve'
+		anIndex: 	2
+		selector: 	#createColumnsFor:
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (150@120)
+		owner: 	nil
+		submorphs: 	an Array(a TransformMorph(794034176))
+		fullBounds: 	nil
+		color: 	Color transparent
+		extension: 	nil
+		borderWidth: 	1
+		borderColor: 	Color black
+		model: 	a Debugger
+		open: 	false
+		accessor: 	nil
+		scrollBar: 	a ScrollBar(798228480)
+		scroller: 	a TransformMorph(794034176)
+		retractableScrollBar: 	false
+		scrollBarOnLeft: 	false
+		getMenuSelector: 	#contextStackMenu:
+		getMenuTitleSelector: 	nil
+		hasFocus: 	false
+		hScrollBar: 	a ScrollBar(167772160)
+		list: 	an OrderedCollection('DefaultCommandLineHandler>>simulateHeadlessForWin32...etc...
+		getListSelector: 	#contextStackList
+		getListSizeSelector: 	nil
+		getListElementSelector: 	nil
+		getIndexSelector: 	#contextStackIndex
+		setIndexSelector: 	#toggleContextStackIndex:
+		keystrokeActionSelector: 	#contextStackKey:from:
+		autoDeselect: 	true
+		lastKeystrokeTime: 	0
+		lastKeystrokes: 	''
+		doubleClickSelector: 	nil
+		handlesBasicKeys: 	nil
+		potentialDropRow: 	nil
+		listMorph: 	a MulticolumnLazyListMorph(775946240)
+		hScrollRangeCache: 	nil
+		dragItemSelector: 	nil
+		dropItemSelector: 	nil
+		wantsDropSelector: 	nil
+		wrapSelector: 	#createColumnsFor:
+		searchedElement: 	nil
+		multipleSelection: 	nil
+		dragOnOrOff: 	nil
+		setSelectionListSelector: 	nil
+		getSelectionListSelector: 	nil
+		resetListSelector: 	nil
+		keystrokeSelector: 	nil
+		backgroundColoringBlockOrSelector: 	nil
+		separatorBlockOrSelector: 	nil
+		separatorSize: 	nil
+		separatorColor: 	nil
+		lastNonZeroIndex: 	nil
+		canMove: 	true
+		gapSize: 	10
+
+
+[:each :index | self wrapItem: each index: index] in PluggableMultiColumnListMorph>>getList
+	Receiver: a PluggableMultiColumnListMorph(781713408)
+	Arguments and temporary variables: 
+		each: 	'DefaultCommandLineHandler>>serve'
+		index: 	2
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (150@120)
+		owner: 	nil
+		submorphs: 	an Array(a TransformMorph(794034176))
+		fullBounds: 	nil
+		color: 	Color transparent
+		extension: 	nil
+		borderWidth: 	1
+		borderColor: 	Color black
+		model: 	a Debugger
+		open: 	false
+		accessor: 	nil
+		scrollBar: 	a ScrollBar(798228480)
+		scroller: 	a TransformMorph(794034176)
+		retractableScrollBar: 	false
+		scrollBarOnLeft: 	false
+		getMenuSelector: 	#contextStackMenu:
+		getMenuTitleSelector: 	nil
+		hasFocus: 	false
+		hScrollBar: 	a ScrollBar(167772160)
+		list: 	an OrderedCollection('DefaultCommandLineHandler>>simulateHeadlessForWin32...etc...
+		getListSelector: 	#contextStackList
+		getListSizeSelector: 	nil
+		getListElementSelector: 	nil
+		getIndexSelector: 	#contextStackIndex
+		setIndexSelector: 	#toggleContextStackIndex:
+		keystrokeActionSelector: 	#contextStackKey:from:
+		autoDeselect: 	true
+		lastKeystrokeTime: 	0
+		lastKeystrokes: 	''
+		doubleClickSelector: 	nil
+		handlesBasicKeys: 	nil
+		potentialDropRow: 	nil
+		listMorph: 	a MulticolumnLazyListMorph(775946240)
+		hScrollRangeCache: 	nil
+		dragItemSelector: 	nil
+		dropItemSelector: 	nil
+		wantsDropSelector: 	nil
+		wrapSelector: 	#createColumnsFor:
+		searchedElement: 	nil
+		multipleSelection: 	nil
+		dragOnOrOff: 	nil
+		setSelectionListSelector: 	nil
+		getSelectionListSelector: 	nil
+		resetListSelector: 	nil
+		keystrokeSelector: 	nil
+		backgroundColoringBlockOrSelector: 	nil
+		separatorBlockOrSelector: 	nil
+		separatorSize: 	nil
+		separatorColor: 	nil
+		lastNonZeroIndex: 	nil
+		canMove: 	true
+		gapSize: 	10
+
+
+OrderedCollection>>withIndexCollect:
+	Receiver: an OrderedCollection('DefaultCommandLineHandler>>simulateHeadlessForWin32' 'DefaultCommand...etc...
+	Arguments and temporary variables: 
+		elementAndIndexBlock: 	[:each :index | self wrapItem: each index: index]
+		newCollection: 	an OrderedCollection(#('DefaultCommandLineHandler' 'simulateHead...etc...
+		index: 	2
+	Receiver's instance variables: 
+		array: 	#('DefaultCommandLineHandler>>simulateHeadlessForWin32' 'DefaultCommandL...etc...
+		firstIndex: 	1
+		lastIndex: 	20
+
+
+OrderedCollection(SequenceableCollection)>>collectWithIndex:
+	Receiver: an OrderedCollection('DefaultCommandLineHandler>>simulateHeadlessForWin32' 'DefaultCommand...etc...
+	Arguments and temporary variables: 
+		elementAndIndexBlock: 	[:each :index | self wrapItem: each index: index]
+	Receiver's instance variables: 
+		array: 	#('DefaultCommandLineHandler>>simulateHeadlessForWin32' 'DefaultCommandL...etc...
+		firstIndex: 	1
+		lastIndex: 	20
+
+
+PluggableMultiColumnListMorph>>getList
+	Receiver: a PluggableMultiColumnListMorph(781713408)
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (150@120)
+		owner: 	nil
+		submorphs: 	an Array(a TransformMorph(794034176))
+		fullBounds: 	nil
+		color: 	Color transparent
+		extension: 	nil
+		borderWidth: 	1
+		borderColor: 	Color black
+		model: 	a Debugger
+		open: 	false
+		accessor: 	nil
+		scrollBar: 	a ScrollBar(798228480)
+		scroller: 	a TransformMorph(794034176)
+		retractableScrollBar: 	false
+		scrollBarOnLeft: 	false
+		getMenuSelector: 	#contextStackMenu:
+		getMenuTitleSelector: 	nil
+		hasFocus: 	false
+		hScrollBar: 	a ScrollBar(167772160)
+		list: 	an OrderedCollection('DefaultCommandLineHandler>>simulateHeadlessForWin32...etc...
+		getListSelector: 	#contextStackList
+		getListSizeSelector: 	nil
+		getListElementSelector: 	nil
+		getIndexSelector: 	#contextStackIndex
+		setIndexSelector: 	#toggleContextStackIndex:
+		keystrokeActionSelector: 	#contextStackKey:from:
+		autoDeselect: 	true
+		lastKeystrokeTime: 	0
+		lastKeystrokes: 	''
+		doubleClickSelector: 	nil
+		handlesBasicKeys: 	nil
+		potentialDropRow: 	nil
+		listMorph: 	a MulticolumnLazyListMorph(775946240)
+		hScrollRangeCache: 	nil
+		dragItemSelector: 	nil
+		dropItemSelector: 	nil
+		wantsDropSelector: 	nil
+		wrapSelector: 	#createColumnsFor:
+		searchedElement: 	nil
+		multipleSelection: 	nil
+		dragOnOrOff: 	nil
+		setSelectionListSelector: 	nil
+		getSelectionListSelector: 	nil
+		resetListSelector: 	nil
+		keystrokeSelector: 	nil
+		backgroundColoringBlockOrSelector: 	nil
+		separatorBlockOrSelector: 	nil
+		separatorSize: 	nil
+		separatorColor: 	nil
+		lastNonZeroIndex: 	nil
+		canMove: 	true
+		gapSize: 	10
+
+
+PluggableMultiColumnListMorph>>getListRow:
+	Receiver: a PluggableMultiColumnListMorph(781713408)
+	Arguments and temporary variables: 
+		row: 	11
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (150@120)
+		owner: 	nil
+		submorphs: 	an Array(a TransformMorph(794034176))
+		fullBounds: 	nil
+		color: 	Color transparent
+		extension: 	nil
+		borderWidth: 	1
+		borderColor: 	Color black
+		model: 	a Debugger
+		open: 	false
+		accessor: 	nil
+		scrollBar: 	a ScrollBar(798228480)
+		scroller: 	a TransformMorph(794034176)
+		retractableScrollBar: 	false
+		scrollBarOnLeft: 	false
+		getMenuSelector: 	#contextStackMenu:
+		getMenuTitleSelector: 	nil
+		hasFocus: 	false
+		hScrollBar: 	a ScrollBar(167772160)
+		list: 	an OrderedCollection('DefaultCommandLineHandler>>simulateHeadlessForWin32...etc...
+		getListSelector: 	#contextStackList
+		getListSizeSelector: 	nil
+		getListElementSelector: 	nil
+		getIndexSelector: 	#contextStackIndex
+		setIndexSelector: 	#toggleContextStackIndex:
+		keystrokeActionSelector: 	#contextStackKey:from:
+		autoDeselect: 	true
+		lastKeystrokeTime: 	0
+		lastKeystrokes: 	''
+		doubleClickSelector: 	nil
+		handlesBasicKeys: 	nil
+		potentialDropRow: 	nil
+		listMorph: 	a MulticolumnLazyListMorph(775946240)
+		hScrollRangeCache: 	nil
+		dragItemSelector: 	nil
+		dropItemSelector: 	nil
+		wantsDropSelector: 	nil
+		wrapSelector: 	#createColumnsFor:
+		searchedElement: 	nil
+		multipleSelection: 	nil
+		dragOnOrOff: 	nil
+		setSelectionListSelector: 	nil
+		getSelectionListSelector: 	nil
+		resetListSelector: 	nil
+		keystrokeSelector: 	nil
+		backgroundColoringBlockOrSelector: 	nil
+		separatorBlockOrSelector: 	nil
+		separatorSize: 	nil
+		separatorColor: 	nil
+		lastNonZeroIndex: 	nil
+		canMove: 	true
+		gapSize: 	10
+
+
+MulticolumnLazyListMorph>>getListItem:
+	Receiver: a MulticolumnLazyListMorph(775946240)
+	Arguments and temporary variables: 
+		index: 	11
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (170@280)
+		owner: 	a TransformMorph(794034176)
+		submorphs: 	#()
+		fullBounds: 	nil
+		color: 	Color black
+		extension: 	a MorphExtension (782237696)
+		listItems: 	#(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil ni...etc...
+		font: 	a StrikeFont(Bitmap DejaVu Sans 9 14)
+		selectedRow: 	nil
+		selectedRows: 	a PluggableSet()
+		listSource: 	a PluggableMultiColumnListMorph(781713408)
+		maxWidth: 	356
+		columnWidths: 	nil
+
+
+MulticolumnLazyListMorph>>hUnadjustedScrollRange
+	Receiver: a MulticolumnLazyListMorph(775946240)
+	Arguments and temporary variables: 
+		itemsToCheck: 	20
+		item: 	#('[...] in SmalltalkImage' 'executeDeferredStartupActions:')
+		index: 	11
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (170@280)
+		owner: 	a TransformMorph(794034176)
+		submorphs: 	#()
+		fullBounds: 	nil
+		color: 	Color black
+		extension: 	a MorphExtension (782237696)
+		listItems: 	#(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil ni...etc...
+		font: 	a StrikeFont(Bitmap DejaVu Sans 9 14)
+		selectedRow: 	nil
+		selectedRows: 	a PluggableSet()
+		listSource: 	a PluggableMultiColumnListMorph(781713408)
+		maxWidth: 	356
+		columnWidths: 	nil
+
+
+MulticolumnLazyListMorph(LazyListMorph)>>adjustWidth
+	Receiver: a MulticolumnLazyListMorph(775946240)
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (170@280)
+		owner: 	a TransformMorph(794034176)
+		submorphs: 	#()
+		fullBounds: 	nil
+		color: 	Color black
+		extension: 	a MorphExtension (782237696)
+		listItems: 	#(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil ni...etc...
+		font: 	a StrikeFont(Bitmap DejaVu Sans 9 14)
+		selectedRow: 	nil
+		selectedRows: 	a PluggableSet()
+		listSource: 	a PluggableMultiColumnListMorph(781713408)
+		maxWidth: 	356
+		columnWidths: 	nil
+
+
+MulticolumnLazyListMorph(LazyListMorph)>>listChanged
+	Receiver: a MulticolumnLazyListMorph(775946240)
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (170@280)
+		owner: 	a TransformMorph(794034176)
+		submorphs: 	#()
+		fullBounds: 	nil
+		color: 	Color black
+		extension: 	a MorphExtension (782237696)
+		listItems: 	#(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil ni...etc...
+		font: 	a StrikeFont(Bitmap DejaVu Sans 9 14)
+		selectedRow: 	nil
+		selectedRows: 	a PluggableSet()
+		listSource: 	a PluggableMultiColumnListMorph(781713408)
+		maxWidth: 	356
+		columnWidths: 	nil
+
+
+MulticolumnLazyListMorph>>listChanged
+	Receiver: a MulticolumnLazyListMorph(775946240)
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (170@280)
+		owner: 	a TransformMorph(794034176)
+		submorphs: 	#()
+		fullBounds: 	nil
+		color: 	Color black
+		extension: 	a MorphExtension (782237696)
+		listItems: 	#(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil ni...etc...
+		font: 	a StrikeFont(Bitmap DejaVu Sans 9 14)
+		selectedRow: 	nil
+		selectedRows: 	a PluggableSet()
+		listSource: 	a PluggableMultiColumnListMorph(781713408)
+		maxWidth: 	356
+		columnWidths: 	nil
+
+
+PluggableMultiColumnListMorph(PluggableListMorph)>>updateList
+	Receiver: a PluggableMultiColumnListMorph(781713408)
+	Arguments and temporary variables: 
+		index: 	nil
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (150@120)
+		owner: 	nil
+		submorphs: 	an Array(a TransformMorph(794034176))
+		fullBounds: 	nil
+		color: 	Color transparent
+		extension: 	nil
+		borderWidth: 	1
+		borderColor: 	Color black
+		model: 	a Debugger
+		open: 	false
+		accessor: 	nil
+		scrollBar: 	a ScrollBar(798228480)
+		scroller: 	a TransformMorph(794034176)
+		retractableScrollBar: 	false
+		scrollBarOnLeft: 	false
+		getMenuSelector: 	#contextStackMenu:
+		getMenuTitleSelector: 	nil
+		hasFocus: 	false
+		hScrollBar: 	a ScrollBar(167772160)
+		list: 	an OrderedCollection('DefaultCommandLineHandler>>simulateHeadlessForWin32...etc...
+		getListSelector: 	#contextStackList
+		getListSizeSelector: 	nil
+		getListElementSelector: 	nil
+		getIndexSelector: 	#contextStackIndex
+		setIndexSelector: 	#toggleContextStackIndex:
+		keystrokeActionSelector: 	#contextStackKey:from:
+		autoDeselect: 	true
+		lastKeystrokeTime: 	0
+		lastKeystrokes: 	''
+		doubleClickSelector: 	nil
+		handlesBasicKeys: 	nil
+		potentialDropRow: 	nil
+		listMorph: 	a MulticolumnLazyListMorph(775946240)
+		hScrollRangeCache: 	nil
+		dragItemSelector: 	nil
+		dropItemSelector: 	nil
+		wantsDropSelector: 	nil
+		wrapSelector: 	#createColumnsFor:
+		searchedElement: 	nil
+		multipleSelection: 	nil
+		dragOnOrOff: 	nil
+		setSelectionListSelector: 	nil
+		getSelectionListSelector: 	nil
+		resetListSelector: 	nil
+		keystrokeSelector: 	nil
+		backgroundColoringBlockOrSelector: 	nil
+		separatorBlockOrSelector: 	nil
+		separatorSize: 	nil
+		separatorColor: 	nil
+		lastNonZeroIndex: 	nil
+		canMove: 	true
+		gapSize: 	10
+
+
+PluggableMultiColumnListMorph>>on:list:selected:changeSelected:menu:keystroke:wrapSelector:
+	Receiver: a PluggableMultiColumnListMorph(781713408)
+	Arguments and temporary variables: 
+		anObject: 	a Debugger
+		getListSel: 	#contextStackList
+		getSelectionSel: 	#contextStackIndex
+		setSelectionSel: 	#toggleContextStackIndex:
+		getMenuSel: 	#contextStackMenu:
+		keyActionSel: 	#contextStackKey:from:
+		wrapSel: 	#createColumnsFor:
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (150@120)
+		owner: 	nil
+		submorphs: 	an Array(a TransformMorph(794034176))
+		fullBounds: 	nil
+		color: 	Color transparent
+		extension: 	nil
+		borderWidth: 	1
+		borderColor: 	Color black
+		model: 	a Debugger
+		open: 	false
+		accessor: 	nil
+		scrollBar: 	a ScrollBar(798228480)
+		scroller: 	a TransformMorph(794034176)
+		retractableScrollBar: 	false
+		scrollBarOnLeft: 	false
+		getMenuSelector: 	#contextStackMenu:
+		getMenuTitleSelector: 	nil
+		hasFocus: 	false
+		hScrollBar: 	a ScrollBar(167772160)
+		list: 	an OrderedCollection('DefaultCommandLineHandler>>simulateHeadlessForWin32...etc...
+		getListSelector: 	#contextStackList
+		getListSizeSelector: 	nil
+		getListElementSelector: 	nil
+		getIndexSelector: 	#contextStackIndex
+		setIndexSelector: 	#toggleContextStackIndex:
+		keystrokeActionSelector: 	#contextStackKey:from:
+		autoDeselect: 	true
+		lastKeystrokeTime: 	0
+		lastKeystrokes: 	''
+		doubleClickSelector: 	nil
+		handlesBasicKeys: 	nil
+		potentialDropRow: 	nil
+		listMorph: 	a MulticolumnLazyListMorph(775946240)
+		hScrollRangeCache: 	nil
+		dragItemSelector: 	nil
+		dropItemSelector: 	nil
+		wantsDropSelector: 	nil
+		wrapSelector: 	#createColumnsFor:
+		searchedElement: 	nil
+		multipleSelection: 	nil
+		dragOnOrOff: 	nil
+		setSelectionListSelector: 	nil
+		getSelectionListSelector: 	nil
+		resetListSelector: 	nil
+		keystrokeSelector: 	nil
+		backgroundColoringBlockOrSelector: 	nil
+		separatorBlockOrSelector: 	nil
+		separatorSize: 	nil
+		separatorColor: 	nil
+		lastNonZeroIndex: 	nil
+		canMove: 	true
+		gapSize: 	10
+
+
+PluggableMultiColumnListMorph class>>on:list:selected:changeSelected:menu:keystroke:wrapSelector:
+	Receiver: PluggableMultiColumnListMorph
+	Arguments and temporary variables: 
+		anObject: 	a Debugger
+		getListSel: 	#contextStackList
+		getSelectionSel: 	#contextStackIndex
+		setSelectionSel: 	#toggleContextStackIndex:
+		getMenuSel: 	#contextStackMenu:
+		keyActionSel: 	#contextStackKey:from:
+		wrapSel: 	#createColumnsFor:
+	Receiver's instance variables: 
+		superclass: 	PluggableListMorph
+		methodDict: 	a MethodDictionary(#basicKeyPressed:->PluggableMultiColumnListMorph...etc...
+		format: 	234
+		layout: 	nil
+		instanceVariables: 	#('gapSize')
+		organization: 	a ClassOrganizer
+		subclasses: 	nil
+		name: 	#PluggableMultiColumnListMorph
+		classPool: 	nil
+		sharedPools: 	nil
+		environment: 	a SystemDictionary(lots of globals)
+		category: 	#'Morphic-Pluggable Widgets'
+		traitComposition: 	nil
+		localSelectors: 	nil
+
+
+Debugger>>buildListOfElementsFor:
+	Receiver: a Debugger
+	Arguments and temporary variables: 
+		aDebugger: 	a Debugger
+	Receiver's instance variables: 
+		dependents: 	a DependentsArray(a SystemWindow(621019136) a PluggableMultiColumnL...etc...
+		contents: 	nil
+		currentCompiledMethod: 	nil
+		contentsSymbol: 	nil
+		interruptedProcess: 	a Process in DefaultCommandLineHandler>>simulateHeadlessFor...etc...
+		interruptedController: 	nil
+		contextStack: 	an OrderedCollection(DefaultCommandLineHandler>>simulateHeadlessF...etc...
+		contextStackTop: 	DefaultCommandLineHandler>>simulateHeadlessForWin32
+		contextStackIndex: 	0
+		contextStackList: 	an OrderedCollection('DefaultCommandLineHandler>>simulateHead...etc...
+		receiverInspector: 	an Inspector
+		contextVariablesInspector: 	a ContextVariablesInspector
+		externalInterrupt: 	false
+		proceedValue: 	nil
+		selectingPC: 	true
+		savedCursor: 	nil
+		errorWasInUIProcess: 	false
+		labelString: 	nil
+		widget: 	nil
+
+
+Debugger>>openFullMorphicLabel:
+	Receiver: a Debugger
+	Arguments and temporary variables: 
+		aLabelString: 	'User Interrupt'
+		window: 	a SystemWindow(621019136)
+		aListMorph: 	nil
+		oldContextStackIndex: 	1
+		label: 	'User Interrupt'
+	Receiver's instance variables: 
+		dependents: 	a DependentsArray(a SystemWindow(621019136) a PluggableMultiColumnL...etc...
+		contents: 	nil
+		currentCompiledMethod: 	nil
+		contentsSymbol: 	nil
+		interruptedProcess: 	a Process in DefaultCommandLineHandler>>simulateHeadlessFor...etc...
+		interruptedController: 	nil
+		contextStack: 	an OrderedCollection(DefaultCommandLineHandler>>simulateHeadlessF...etc...
+		contextStackTop: 	DefaultCommandLineHandler>>simulateHeadlessForWin32
+		contextStackIndex: 	0
+		contextStackList: 	an OrderedCollection('DefaultCommandLineHandler>>simulateHead...etc...
+		receiverInspector: 	an Inspector
+		contextVariablesInspector: 	a ContextVariablesInspector
+		externalInterrupt: 	false
+		proceedValue: 	nil
+		selectingPC: 	true
+		savedCursor: 	nil
+		errorWasInUIProcess: 	false
+		labelString: 	nil
+		widget: 	nil
+
+
+Debugger>>openFullNoSuspendLabel:
+	Receiver: a Debugger
+	Arguments and temporary variables: 
+		aString: 	'User Interrupt'
+	Receiver's instance variables: 
+		dependents: 	a DependentsArray(a SystemWindow(621019136) a PluggableMultiColumnL...etc...
+		contents: 	nil
+		currentCompiledMethod: 	nil
+		contentsSymbol: 	nil
+		interruptedProcess: 	a Process in DefaultCommandLineHandler>>simulateHeadlessFor...etc...
+		interruptedController: 	nil
+		contextStack: 	an OrderedCollection(DefaultCommandLineHandler>>simulateHeadlessF...etc...
+		contextStackTop: 	DefaultCommandLineHandler>>simulateHeadlessForWin32
+		contextStackIndex: 	0
+		contextStackList: 	an OrderedCollection('DefaultCommandLineHandler>>simulateHead...etc...
+		receiverInspector: 	an Inspector
+		contextVariablesInspector: 	a ContextVariablesInspector
+		externalInterrupt: 	false
+		proceedValue: 	nil
+		selectingPC: 	true
+		savedCursor: 	nil
+		errorWasInUIProcess: 	false
+		labelString: 	nil
+		widget: 	nil
+
+
+[debugger
+		process: process
+		controller: nil
+		context: context.
+	bool
+		ifTrue: [debugger openFullNoSuspendLabel: title]
+		ifFalse: [debugger openNotifierContents: contentsStringOrNil label: title].
+	debugger errorWasInUIProcess: errorWasInUIProcess] in [[debugger
+		process: process
+		controller: nil
+		context: context.
+	bool
+		ifTrue: [debugger openFullNoSuspendLabel: title]
+		ifFalse: [debugger openNotifierContents: contentsStringOrNil label: title].
+	debugger errorWasInUIProcess: errorWasInUIProcess]
+		on: Error
+		do: [:ex | Smalltalk tools debugger primitiveError: 'Orginal error: ' , title asString , '.
+	Smalltalk tools debugger error: '
+					, ([ex description]
+							on: Error
+							do: ['a ' , ex class printString]) , ':']] in MorphicUIManager>>openDebuggerOn:context:label:contents:fullView:
+	Receiver: a MorphicUIManager
+	Arguments and temporary variables: 
+		process: 	a Process in DefaultCommandLineHandler>>simulateHeadlessForWin32
+		context: 	DefaultCommandLineHandler>>simulateHeadlessForWin32
+		title: 	'User Interrupt'
+		contentsStringOrNil: 	nil
+		bool: 	true
+		errorWasInUIProcess: 	true
+		debugger: 	a Debugger
+	Receiver's instance variables: 
+		interactiveParser: 	nil
+
+
+BlockClosure>>on:do:
+	Receiver: [debugger
+		process: process
+		controller: nil
+		context: context.
+	bool
+		ifTrue: [debugg...etc...
+	Arguments and temporary variables: 
+		exception: 	Error
+		handlerAction: 	[:ex | Smalltalk tools debugger primitiveError: 'Orginal error: ...etc...
+		handlerActive: 	true
+	Receiver's instance variables: 
+		outerContext: 	[[debugger
+		process: process
+		controller: nil
+		context: contex...etc...
+		startpc: 	176
+		numArgs: 	0
+
+
+[[debugger
+		process: process
+		controller: nil
+		context: context.
+	bool
+		ifTrue: [debugger openFullNoSuspendLabel: title]
+		ifFalse: [debugger openNotifierContents: contentsStringOrNil label: title].
+	debugger errorWasInUIProcess: errorWasInUIProcess]
+		on: Error
+		do: [:ex | Smalltalk tools debugger primitiveError: 'Orginal error: ' , title asString , '.
+	Smalltalk tools debugger error: '
+					, ([ex description]
+							on: Error
+							do: ['a ' , ex class printString]) , ':']] in MorphicUIManager>>openDebuggerOn:context:label:contents:fullView:
+	Receiver: a MorphicUIManager
+	Arguments and temporary variables: 
+		process: 	a Process in DefaultCommandLineHandler>>simulateHeadlessForWin32
+		context: 	DefaultCommandLineHandler>>simulateHeadlessForWin32
+		title: 	'User Interrupt'
+		contentsStringOrNil: 	nil
+		bool: 	true
+		errorWasInUIProcess: 	true
+		debugger: 	a Debugger
+	Receiver's instance variables: 
+		interactiveParser: 	nil
+
+
+WorldState>>runStepMethodsIn:
+	Receiver: a WorldState
+	Arguments and temporary variables: 
+		aWorld: 	a PasteUpMorph(425197568) [world]
+		queue: 	WaitfreeQueue with 3 items
+		nextInQueue: 	[[debugger
+		process: process
+		controller: nil
+		context: context...etc...
+	Receiver's instance variables: 
+		hands: 	an Array(a HandMorph(843055104))
+		viewBox: 	(0@0) corner: (1272@736)
+		canvas: 	a FormCanvas on: DisplayScreen(1272x736x32)
+		damageRecorder: 	a DamageRecorder
+		stepList: 	a Heap(StepMessage(#stepAt: -> a DropListMorph(968097792))(a DropList...etc...
+		lastStepTime: 	586389
+		lastStepMessage: 	nil
+		lastCycleTime: 	63680
+		alarms: 	a Heap()
+		lastAlarmTime: 	586389
+		menuBuilder: 	a PragmaMenuBuilder ( nil ) 
+
+
+PasteUpMorph>>runStepMethods
+	Receiver: a PasteUpMorph(425197568) [world]
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (1272@736)
+		owner: 	nil
+		submorphs: 	an Array(a TaskbarMorph(984088576) a SystemWindow(961544192) a Nauti...etc...
+		fullBounds: 	(0@0) corner: (1272@736)
+		color: 	(Color r: 0.97 g: 0.98 b: 1.0)
+		extension: 	a MorphExtension (666632192) [eventHandler = an EventHandler]  [othe...etc...
+		borderWidth: 	0
+		borderColor: 	(Color r: 0.03 g: 0.02 b: 0.0)
+		backgroundMorph: 	nil
+		worldState: 	a WorldState
+		griddingOn: 	nil
+
+
+WorldState>>doOneCycleNowFor:
+	Receiver: a WorldState
+	Arguments and temporary variables: 
+		aWorld: 	a PasteUpMorph(425197568) [world]
+	Receiver's instance variables: 
+		hands: 	an Array(a HandMorph(843055104))
+		viewBox: 	(0@0) corner: (1272@736)
+		canvas: 	a FormCanvas on: DisplayScreen(1272x736x32)
+		damageRecorder: 	a DamageRecorder
+		stepList: 	a Heap(StepMessage(#stepAt: -> a DropListMorph(968097792))(a DropList...etc...
+		lastStepTime: 	586389
+		lastStepMessage: 	nil
+		lastCycleTime: 	63680
+		alarms: 	a Heap()
+		lastAlarmTime: 	586389
+		menuBuilder: 	a PragmaMenuBuilder ( nil ) 
+
+
+WorldState>>doOneCycleFor:
+	Receiver: a WorldState
+	Arguments and temporary variables: 
+		aWorld: 	a PasteUpMorph(425197568) [world]
+	Receiver's instance variables: 
+		hands: 	an Array(a HandMorph(843055104))
+		viewBox: 	(0@0) corner: (1272@736)
+		canvas: 	a FormCanvas on: DisplayScreen(1272x736x32)
+		damageRecorder: 	a DamageRecorder
+		stepList: 	a Heap(StepMessage(#stepAt: -> a DropListMorph(968097792))(a DropList...etc...
+		lastStepTime: 	586389
+		lastStepMessage: 	nil
+		lastCycleTime: 	63680
+		alarms: 	a Heap()
+		lastAlarmTime: 	586389
+		menuBuilder: 	a PragmaMenuBuilder ( nil ) 
+
+
+PasteUpMorph>>doOneCycle
+	Receiver: a PasteUpMorph(425197568) [world]
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		bounds: 	(0@0) corner: (1272@736)
+		owner: 	nil
+		submorphs: 	an Array(a TaskbarMorph(984088576) a SystemWindow(961544192) a Nauti...etc...
+		fullBounds: 	(0@0) corner: (1272@736)
+		color: 	(Color r: 0.97 g: 0.98 b: 1.0)
+		extension: 	a MorphExtension (666632192) [eventHandler = an EventHandler]  [othe...etc...
+		borderWidth: 	0
+		borderColor: 	(Color r: 0.03 g: 0.02 b: 0.0)
+		backgroundMorph: 	nil
+		worldState: 	a WorldState
+		griddingOn: 	nil
+
+
+[[World doOneCycle.
+	Processor yield.
+	false] whileFalse.
+	nil] in MorphicUIManager>>spawnNewProcess
+	Receiver: a MorphicUIManager
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		interactiveParser: 	nil
+
+
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+	Receiver: [[World doOneCycle.
+	Processor yield.
+	false] whileFalse.
+	nil]
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		outerContext: 	MorphicUIManager>>spawnNewProcess
+		startpc: 	65
+		numArgs: 	0
+
+
+
+--- The full stack ---
+Array(SequenceableCollection)>>at:ifAbsent:
+EncodedCharSet class>>charsetAt:
+Character>>characterSet
+Character>>isLetter
+ByteSymbol(String)>>numArgs
+PluggableMultiColumnListMorph(PluggableListMorph)>>wrapItem:index:
+[:each :index | self wrapItem: each index: index] in PluggableMultiColumnListMorph>>getList
+OrderedCollection>>withIndexCollect:
+OrderedCollection(SequenceableCollection)>>collectWithIndex:
+PluggableMultiColumnListMorph>>getList
+PluggableMultiColumnListMorph>>getListRow:
+MulticolumnLazyListMorph>>getListItem:
+MulticolumnLazyListMorph>>hUnadjustedScrollRange
+MulticolumnLazyListMorph(LazyListMorph)>>adjustWidth
+MulticolumnLazyListMorph(LazyListMorph)>>listChanged
+MulticolumnLazyListMorph>>listChanged
+PluggableMultiColumnListMorph(PluggableListMorph)>>updateList
+PluggableMultiColumnListMorph>>on:list:selected:changeSelected:menu:keystroke:wrapSelector:
+PluggableMultiColumnListMorph class>>on:list:selected:changeSelected:menu:keystroke:wrapSelector:
+Debugger>>buildListOfElementsFor:
+Debugger>>openFullMorphicLabel:
+Debugger>>openFullNoSuspendLabel:
+[debugger
+		process: process
+		controller: nil
+		context: context.
+	bool
+		ifTrue: [debugger openFullNoSuspendLabel: title]
+		ifFalse: [debugger openNotifierContents: contentsStringOrNil label: title].
+	debugger errorWasInUIProcess: errorWasInUIProcess] in [[debugger
+		process: process
+		controller: nil
+		context: context.
+	bool
+		ifTrue: [debugger openFullNoSuspendLabel: title]
+		ifFalse: [debugger openNotifierContents: contentsStringOrNil label: title].
+	debugger errorWasInUIProcess: errorWasInUIProcess]
+		on: Error
+		do: [:ex | Smalltalk tools debugger primitiveError: 'Orginal error: ' , title asString , '.
+	Smalltalk tools debugger error: '
+					, ([ex description]
+							on: Error
+							do: ['a ' , ex class printString]) , ':']] in MorphicUIManager>>openDebuggerOn:context:label:contents:fullView:
+BlockClosure>>on:do:
+[[debugger
+		process: process
+		controller: nil
+		context: context.
+	bool
+		ifTrue: [debugger openFullNoSuspendLabel: title]
+		ifFalse: [debugger openNotifierContents: contentsStringOrNil label: title].
+	debugger errorWasInUIProcess: errorWasInUIProcess]
+		on: Error
+		do: [:ex | Smalltalk tools debugger primitiveError: 'Orginal error: ' , title asString , '.
+	Smalltalk tools debugger error: '
+					, ([ex description]
+							on: Error
+							do: ['a ' , ex class printString]) , ':']] in MorphicUIManager>>openDebuggerOn:context:label:contents:fullView:
+WorldState>>runStepMethodsIn:
+PasteUpMorph>>runStepMethods
+WorldState>>doOneCycleNowFor:
+WorldState>>doOneCycleFor:
+PasteUpMorph>>doOneCycle
+[[World doOneCycle.
+	Processor yield.
+	false] whileFalse.
+	nil] in MorphicUIManager>>spawnNewProcess
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+-------------------------------------------------------------------------------
+
+THERE_BE_DRAGONS_HERE
+User Interrupt
+28 November 2013 5:00:33.866 pm
+
+VM: Win32 - IX86 - 5.1 - NBCoInterpreter NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+NBCogit NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+git://gitorious.org/cogvm/blessed.git Commit: 412abef33cbed05cf1d75329e451d71c0c6aa5a7 Date: 2013-03-13 17:48:50 +0100 By: Esteban Lorenzano <estebanlm@gmail.com> Jenkins build #14535
+
+Image: Pharo2.0 [Latest update: #20624]
+
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+	Receiver: [[World doOneCycle.
+	Processor yield.
+	false] whileFalse.
+	nil]
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		outerContext: 	MorphicUIManager>>spawnNewProcess
+		startpc: 	65
+		numArgs: 	0
+
+
+
+--- The full stack ---
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+-------------------------------------------------------------------------------
+
+THERE_BE_DRAGONS_HERE
+User Interrupt
+28 November 2013 5:00:33.881 pm
+
+VM: Win32 - IX86 - 5.1 - NBCoInterpreter NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+NBCogit NativeBoost-CogPlugin-EstebanLorenzano.18 uuid: a53445f9-c0c0-4015-97a3-be7db8d9ed6b Mar 13 2013
+git://gitorious.org/cogvm/blessed.git Commit: 412abef33cbed05cf1d75329e451d71c0c6aa5a7 Date: 2013-03-13 17:48:50 +0100 By: Esteban Lorenzano <estebanlm@gmail.com> Jenkins build #14535
+
+Image: Pharo2.0 [Latest update: #20624]
+
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+	Receiver: [[World doOneCycle.
+	Processor yield.
+	false] whileFalse.
+	nil]
+	Arguments and temporary variables: 
+
+	Receiver's instance variables: 
+		outerContext: 	MorphicUIManager>>spawnNewProcess
+		startpc: 	65
+		numArgs: 	0
+
+
+
+--- The full stack ---
+[self value.
+	Processor terminateActive] in BlockClosure>>newProcess
+-------------------------------------------------------------------------------
+
