@@ -1,3 +1,7 @@
+var pharoUrl = "localhost:8080/";
+var snapUrl = pharoUrl + "s4a.html";
+var webSocketUrl= "ws://localhost:4001/s4a";
+
 var analogReadings = [];
 var digitalReadings = [];
 var analogReadingThreadId;
@@ -17,7 +21,7 @@ var arduinoTypes = {
 	"Mega 2560"					: "ArduinoMega2560",
 	"Bluetooth"					: "ArduinoBT",
 	"Duemilanove w/ atmega328"	: "ArduinoATmega328",
-}
+};
 var boardSpecs = {
 	"analogPins"	: {},
 	"digitalPins"	: {},
@@ -26,7 +30,7 @@ var boardSpecs = {
 
 // WebSocket
 
-var socket = new WebSocket("ws://localhost:4001/s4a");
+var socket = new WebSocket(webSocketUrl);
 var webSocketRefreshInterval = 10; //milliseconds
 
 
