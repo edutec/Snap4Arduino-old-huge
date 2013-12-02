@@ -35,7 +35,7 @@ Process.prototype.reportDigitalReading = function (pin) {
 };
 
 Process.prototype.connectArduino = function (type, port) {
-	if (this.reportURL('localhost:8080/connect?port=' + port + '&type=' + type) === 'OK') {
+	if (this.reportURL(pharoUrl + 'connect?port=' + port + '&type=' + type) === 'OK') {
 		socket.send("boardSpecs");
 		inform("Board connected", "An Arduino board has been connected.\nHappy prototyping!");
 	} 
@@ -89,7 +89,7 @@ Process.prototype.setPinMode = function (pin, mode) {
 		break;
 	}
 
-	if (this.reportURL('localhost:8080/digitalPinMode?pin=' + pin + '&mode=' + modeChar) === 'OK') {
+	if (this.reportURL(pharoUrl + 'digitalPinMode?pin=' + pin + '&mode=' + modeChar) === 'OK') {
 		return true; 
 	} 
 }
