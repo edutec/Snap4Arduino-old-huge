@@ -124,7 +124,7 @@ PrototypeHatBlockMorph*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.objects = '2013-November-15';
+modules.objects = '2013-December-19';
 
 var SpriteMorph;
 var StageMorph;
@@ -1680,7 +1680,9 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(watcherToggle('getLastAnswer'));
         blocks.push(block('getLastAnswer'));
         blocks.push('-');
+        blocks.push(watcherToggle('reportMouseX'));
         blocks.push(block('reportMouseX'));
+        blocks.push(watcherToggle('reportMouseY'));
         blocks.push(block('reportMouseY'));
         blocks.push(block('reportMouseDown'));
         blocks.push('-');
@@ -3046,6 +3048,24 @@ SpriteMorph.prototype.getLastAnswer = function () {
     return this.parentThatIsA(StageMorph).lastAnswer;
 };
 
+// SpriteMorph mouse coordinates
+
+SpriteMorph.prototype.reportMouseX = function () {
+    var stage = this.parentThatIsA(StageMorph);
+    if (stage) {
+        return stage.reportMouseX();
+    }
+    return 0;
+};
+
+SpriteMorph.prototype.reportMouseY = function () {
+    var stage = this.parentThatIsA(StageMorph);
+    if (stage) {
+        return stage.reportMouseY();
+    }
+    return 0;
+};
+
 // SpriteMorph variable watchers (for palette checkbox toggling)
 
 SpriteMorph.prototype.findVariableWatcher = function (varName) {
@@ -3373,12 +3393,14 @@ SpriteMorph.prototype.thumbnail = function (extentPoint) {
         ctx = trg.getContext('2d');
 
     ctx.save();
-    ctx.scale(scale, scale);
-    ctx.drawImage(
-        src,
-        Math.floor(xOffset / scale),
-        Math.floor(yOffset / scale)
-    );
+    if (src.width && src.height) {
+        ctx.scale(scale, scale);
+        ctx.drawImage(
+            src,
+            Math.floor(xOffset / scale),
+            Math.floor(yOffset / scale)
+        );
+    }
     return trg;
 };
 
@@ -3947,6 +3969,24 @@ StageMorph.prototype.getLastMessage = function () {
     return this.lastMessage || '';
 };
 
+// StageMorph Mouse Corridnates
+
+StageMorph.prototype.reportMouseX = function () {
+    var world = this.world();
+    if (world) {
+        return (world.hand.position().x - this.center().x) / this.scale;
+    }
+    return 0;
+};
+
+StageMorph.prototype.reportMouseY = function () {
+    var world = this.world();
+    if (world) {
+        return (this.center().y - world.hand.position().y) / this.scale;
+    }
+    return 0;
+};
+
 // StageMorph drag & drop
 
 StageMorph.prototype.wantsDropOf = function (aMorph) {
@@ -4052,6 +4092,9 @@ StageMorph.prototype.processKeyEvent = function (event, action) {
     switch (event.keyCode) {
     case 13:
         keyName = 'enter';
+        if (event.ctrlKey || event.metaKey) {
+            keyName = 'ctrl enter';
+        }
         break;
     case 27:
         keyName = 'esc';
@@ -4084,7 +4127,7 @@ StageMorph.prototype.fireKeyEvent = function (key) {
         myself = this;
 
     this.keysPressed[evt] = true;
-    if (evt === 'enter') {
+    if (evt === 'ctrl enter') {
         return this.fireGreenFlagEvent();
     }
     if (evt === 'esc') {
@@ -4337,7 +4380,9 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(watcherToggle('getLastAnswer'));
         blocks.push(block('getLastAnswer'));
         blocks.push('-');
+        blocks.push(watcherToggle('reportMouseX'));
         blocks.push(block('reportMouseX'));
+        blocks.push(watcherToggle('reportMouseY'));
         blocks.push(block('reportMouseY'));
         blocks.push(block('reportMouseDown'));
         blocks.push('-');
@@ -4641,7 +4686,8 @@ StageMorph.prototype.thumbnail = function (extentPoint, excludedSprite) {
         ),
         trg = newCanvas(extentPoint),
         ctx = trg.getContext('2d'),
-        fb;
+        fb,
+        fimg;
 
     ctx.scale(scale, scale);
     ctx.drawImage(
@@ -4659,11 +4705,14 @@ StageMorph.prototype.thumbnail = function (extentPoint, excludedSprite) {
     this.children.forEach(function (morph) {
         if (morph !== excludedSprite) {
             fb = morph.fullBounds();
-            ctx.drawImage(
-                morph.fullImage(),
-                fb.origin.x - myself.bounds.origin.x,
-                fb.origin.y - myself.bounds.origin.y
-            );
+            fimg = morph.fullImage();
+            if (fimg.width && fimg.height) {
+                ctx.drawImage(
+                    morph.fullImage(),
+                    fb.origin.x - myself.bounds.origin.x,
+                    fb.origin.y - myself.bounds.origin.y
+                );
+            }
         }
     });
     return trg;
@@ -5995,7 +6044,8 @@ WatcherMorph.prototype.object = function () {
 
 WatcherMorph.prototype.isGlobal = function (selector) {
     return contains(
-        ['getTimer', 'getLastAnswer', 'getTempo', 'getLastMessage'],
+        ['getLastAnswer', 'getLastMessage', 'getTempo', 'getTimer',
+             'reportMouseX', 'reportMouseY'],
         selector
     );
 };

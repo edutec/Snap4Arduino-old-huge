@@ -2007,7 +2007,7 @@ ______
 * Blocks: Prevent „hide“ menu option for non-palette template blocks
 * new Catalan translation! Yay, thanks, Bernat Romagosa Carrasquer!!
 
-132226
+131126
 ------
 * Cloud: fixed #125 (encode email address when signing up), thanks, Nathan!
 * Threads: fixed #207 (stricter comparison of strings vs. numbers). Some edge cases remain, such as empty string equals zero and disregarding trailing / leading blanks. These are intentional. Please don’t nitpick and spare me the fundamentalism :-)
@@ -2018,3 +2018,29 @@ ______
 * Threads: fixed #179 - don’t identify primitive (static) C-Slots as implicit formal parameters
 * Threads: fixed #249 - preserve variable value types with edge cases (empty string, Boolean false)
 * Threads: fixed #133 - preserve edge-cased argument types (empty string, Boolean false)
+* Fixed issue #244 (relabelling now preserves empty input slots), thanks, Nathan!
+
+131204
+------
+* Threads: handle text comparisons case-insensitive (again)
+* Lists: harmonize equality testing and List CONTAINS testing
+* French translation update, thanks, Martin!
+* Threads: fixed #261 (less tolerant null-value-to-number-coercion)
+
+131205
+------
+* Threads: fixed literal-to-non-literal zero-value comparison bug
+* Objects: fixed #264 (mapped <ctrl-enter> to green-flag instead of <enter>)
+
+131211
+------
+* Threads: accept lists as inputs to the green (text) LENGTH OF reporter
+
+131212
+------
+* Objects, Morphic: fixed #277, #279 (blitting null-canvasses fails)
+
+131219
+------
+* Objects: stage watchers for „mouse x“ and „mouse y“ sensing reporters. Thanks, Michael!
+* Store: fixed saving/loading/localisation of new mouse coordinate stage watchers
