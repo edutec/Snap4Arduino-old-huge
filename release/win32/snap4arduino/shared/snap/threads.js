@@ -83,7 +83,7 @@ ArgLabelMorph, localize, XML_Element, hex_sha512*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.threads = '2013-November-26';
+modules.threads = '2013-December-11';
 
 var ThreadManager;
 var Process;
@@ -98,20 +98,24 @@ function snapEquals(a, b) {
         }
         return false;
     }
+
     var x = +a,
-        y = +b;
-    if (isNaN(x) || isNaN(y)) {
+        y = +b,
+        specials = [true, false, ''];
+
+    // check for special values before coercing to numbers
+    if (isNaN(x) || isNaN(y) ||
+            [a, b].some(function (any) {return contains(specials, any) ||
+                  (isString(any) && (any.indexOf(' ') > -1)); })) {
         x = a;
         y = b;
     }
-    /*
-      // handle text comparision text-insensitive.
-      // I think this is a pedagogical feature for novices,
-      // but some teachers disagree. Commented out for now.
+
+    // handle text comparision text-insensitive.
     if (isString(x) && isString(y)) {
         return x.toLowerCase() === y.toLowerCase();
     }
-    */
+
     return x === y;
 }
 
@@ -2054,6 +2058,9 @@ Process.prototype.reportLetter = function (idx, string) {
 };
 
 Process.prototype.reportStringSize = function (string) {
+    if (string instanceof List) { // catch a common user error
+        return string.length();
+    }
     var str = (string || '').toString();
     return str.length;
 };
