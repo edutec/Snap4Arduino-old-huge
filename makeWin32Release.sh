@@ -13,3 +13,6 @@ cp -R bin/win32 release/win32/snap4arduino/bin
 cp Snap4Arduino.exe release/win32/snap4arduino/
 cp -R icons release/win32/snap4arduino/
 cp -R README.md release/win32/snap4arduino/
+cd release/win32
+zip -r snap4arduino snap4arduino
+cd ../..
