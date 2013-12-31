@@ -13,3 +13,6 @@ cp -R bin/gnu release/gnu/snap4arduino/bin
 cp snap4arduino release/gnu/snap4arduino/
 cp -R icons release/gnu/snap4arduino/
 cp -R README.md release/gnu/snap4arduino/
+cd release/gnu
+tar -zcvf snap4arduino.tar.gz snap4arduino
+cd ../..
