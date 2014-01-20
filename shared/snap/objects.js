@@ -9,7 +9,7 @@
     written by Jens Mönig
     jens@moenig.org
 
-    Copyright (C) 2013 by Jens Mönig
+    Copyright (C) 2014 by Jens Mönig
 
     This file is part of Snap!.
 
@@ -124,7 +124,7 @@ PrototypeHatBlockMorph*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.objects = '2013-December-19';
+modules.objects = '2014-January-09';
 
 var SpriteMorph;
 var StageMorph;
@@ -581,6 +581,9 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'control',
             spec: 'if %b %c else %c'
         },
+
+    /* migrated to a newer block version:
+
         doStop: {
             type: 'command',
             category: 'control',
@@ -590,6 +593,18 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'command',
             category: 'control',
             spec: 'stop all %stop'
+        },
+    */
+
+        doStopThis: {
+            type: 'command',
+            category: 'control',
+            spec: 'stop %stopChoices'
+        },
+        doStopOthers: {
+            type: 'command',
+            category: 'control',
+            spec: 'stop %stopOthersChoices'
         },
         doRun: {
             type: 'command',
@@ -630,11 +645,13 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'control',
             spec: 'report %s'
         },
-        doStopBlock: {
+    /*
+        doStopBlock: { // migrated to a newer block version
             type: 'command',
             category: 'control',
             spec: 'stop block'
         },
+    */
         doCallCC: {
             type: 'command',
             category: 'control',
@@ -1079,6 +1096,25 @@ SpriteMorph.prototype.initBlocks = function () {
 
 SpriteMorph.prototype.initBlocks();
 
+SpriteMorph.prototype.initBlockMigrations = function () {
+    SpriteMorph.prototype.blockMigrations = {
+        doStopAll: {
+            selector: 'doStopThis',
+            inputs: [['all']]
+        },
+        doStop: {
+            selector: 'doStopThis',
+            inputs: [['this script']]
+        },
+        doStopBlock: {
+            selector: 'doStopThis',
+            inputs: [['this block']]
+        }
+    };
+};
+
+SpriteMorph.prototype.initBlockMigrations();
+
 SpriteMorph.prototype.blockAlternatives = {
     // motion:
     turn: ['turnLeft'],
@@ -1125,9 +1161,6 @@ SpriteMorph.prototype.blockAlternatives = {
     receiveClick: ['receiveGo'],
     doBroadcast: ['doBroadcastAndWait'],
     doBroadcastAndWait: ['doBroadcast'],
-    doStopBlock: ['doStop', 'doStopAll'],
-    doStop: ['doStopBlock', 'doStopAll'],
-    doStopAll: ['doStopBlock', 'doStop'],
 
     // sensing:
     getLastAnswer: ['getTimer'],
@@ -1407,8 +1440,9 @@ SpriteMorph.prototype.colorFiltered = function (aColor) {
 // SpriteMorph block instantiation
 
 SpriteMorph.prototype.blockForSelector = function (selector, setDefaults) {
-    var info, block, defaults, inputs, i;
-    info = this.blocks[selector];
+    var migration, info, block, defaults, inputs, i;
+    migration = this.blockMigrations[selector];
+    info = this.blocks[migration ? migration.selector : selector];
     if (!info) {return null; }
     block = info.type === 'command' ? new CommandBlockMorph()
         : info.type === 'hat' ? new HatBlockMorph()
@@ -1421,8 +1455,8 @@ SpriteMorph.prototype.blockForSelector = function (selector, setDefaults) {
         block.isStatic = true;
     }
     block.setSpec(localize(info.spec));
-    if (setDefaults && info.defaults) {
-        defaults = info.defaults;
+    if ((setDefaults && info.defaults) || (migration && migration.inputs)) {
+        defaults = migration ? migration.inputs : info.defaults;
         block.defaults = defaults;
         inputs = block.inputs();
         if (inputs[0] instanceof MultiArgMorph) {
@@ -1646,9 +1680,14 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('doReport'));
         blocks.push('-');
+    /*
+    // old STOP variants, migrated to a newer version, now redundant
         blocks.push(block('doStopBlock'));
         blocks.push(block('doStop'));
         blocks.push(block('doStopAll'));
+    */
+        blocks.push(block('doStopThis'));
+        blocks.push(block('doStopOthers'));
         blocks.push('-');
         blocks.push(block('doRun'));
         blocks.push(block('fork'));
@@ -4352,9 +4391,14 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('doReport'));
         blocks.push('-');
+    /*
+    // old STOP variants, migrated to a newer version, now redundant
         blocks.push(block('doStopBlock'));
         blocks.push(block('doStop'));
         blocks.push(block('doStopAll'));
+    */
+        blocks.push(block('doStopThis'));
+        blocks.push(block('doStopOthers'));
         blocks.push('-');
         blocks.push(block('doRun'));
         blocks.push(block('fork'));
@@ -5263,7 +5307,10 @@ Costume.prototype.edit = function (aWorld, anIDE, isnew, oncancel, onsubmit) {
         function (img, rc) {
             myself.contents = img;
             myself.rotationCenter = rc;
-            myself.shrinkWrap();
+            if (anIDE.currentSprite instanceof SpriteMorph) {
+                // don't shrinkwrap stage costumes
+                myself.shrinkWrap();
+            }
             myself.version = Date.now();
             aWorld.changed();
             if (anIDE) {
