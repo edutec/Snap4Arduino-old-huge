@@ -6,11 +6,18 @@ if test $# -gt 0; then
 			--dev)
                                 ./bin/gnu/CogVM shared/Pharo2.0.image
 			;;
+			--version)
+                                ./bin/gnu/CogVM shared/Pharo2.0.image --version
+			;;
 			--debug)
                                 ./bin/gnu/CogVM -vm-display-null shared/Pharo2.0.image --debug
 			;;
 			*)
-				echo "Usage: $0 [--debug]"
+				echo "Usage"
+				echo "====="
+				echo "Debug mode:		$0 [--debug]"
+				echo "Development mode:	$0 [--dev]"
+				echo "Query version:	$0 [--version]"
 			;;
 		esac
 	done

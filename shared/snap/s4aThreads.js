@@ -66,8 +66,8 @@ Process.prototype.digitalWrite = function (pin, boolenValue) {
 	socket.send("digitalWrite&" + pin + "&" + value);
 }
 
-Process.prototype.Write = function (pin, value) {
-	socket.send("servoWrite&" + pin + "&" + value);
+Process.prototype.pwmWrite = function (pin, value) {
+	socket.send("pwmWrite&" + pin + "&" + value);
 }
 
 Process.prototype.setPinMode = function (pin, mode) {
