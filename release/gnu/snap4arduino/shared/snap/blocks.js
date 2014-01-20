@@ -9,7 +9,7 @@
     written by Jens Mönig
     jens@moenig.org
 
-    Copyright (C) 2013 by Jens Mönig
+    Copyright (C) 2014 by Jens Mönig
 
     This file is part of Snap!.
 
@@ -155,7 +155,7 @@ DialogBoxMorph, BlockInputFragmentMorph, PrototypeHatBlockMorph, Costume*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.blocks = '2013-November-26';
+modules.blocks = '2014-January-09';
 
 var SyntaxElementMorph;
 var BlockMorph;
@@ -996,7 +996,6 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 'attributesMenu',
                 true
             );
-            part.isStatic = true;
             break;
         case '%fun':
             part = new InputSlotMorph(
@@ -1037,6 +1036,33 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 true
             );
             part.setContents(['encode URI']);
+            break;
+        case '%stopChoices':
+            part = new InputSlotMorph(
+                null,
+                false,
+                {
+                    'all' : ['all'],
+                    'this script' : ['this script'],
+                    'this block' : ['this block']
+                },
+                true
+            );
+            part.setContents(['all']);
+            part.isStatic = true;
+            break;
+        case '%stopOthersChoices':
+            part = new InputSlotMorph(
+                null,
+                false,
+                {
+                    'all but this script' : ['all but this script'],
+                    'other scripts in sprite' : ['other scripts in sprite']
+                },
+                true
+            );
+            part.setContents(['all but this script']);
+            part.isStatic = true;
             break;
         case '%typ':
             part = new InputSlotMorph(
@@ -3267,6 +3293,7 @@ CommandBlockMorph.prototype.snap = function () {
 
 CommandBlockMorph.prototype.isStop = function () {
     return ([
+        'doStopThis',
         'doStop',
         'doStopBlock',
         'doStopAll',
@@ -6302,6 +6329,8 @@ InputSlotMorph.prototype.dropDownMenu = function () {
         if (Object.prototype.hasOwnProperty.call(choices, key)) {
             if (key[0] === '~') {
                 menu.addLine();
+            // } else if (key.indexOf('§_def') === 0) {
+            //     menu.addItem(choices[key].blockInstance(), choices[key]);
             } else {
                 menu.addItem(key, choices[key]);
             }
@@ -6518,6 +6547,11 @@ InputSlotMorph.prototype.attributesMenu = function () {
             dict[name] = name;
         });
     }
+    /*
+    obj.customBlocks.forEach(function (def, i) {
+        dict['§_def' + i] = def
+    });
+    */
     return dict;
 };
 
