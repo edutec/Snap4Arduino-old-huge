@@ -8,24 +8,26 @@ var analogReadingThreadId;
 var digitalReadingThreadId;
 var serialPortNames = {};
 var arduinoTypes = {
-	"Mini"						: "ArduinoMini",
-	"Pro w/ atmega168"			: "ArduinoPro",
-	"Mega"						: "ArduinoMega",
-	"Ng or older w/ atmega8"	: "ArduinoATmega8",
-	"Uno"						: "ArduinoUNO",
-	"Lilypad w/ atmega328"		: "ArduinoLilyPad328",
-	"Lilypad w/ atmega168"		: "ArduinoLilyPad",
-	"Ng or older w/ atmega168"	: "ArduinoATmega168",
-	"Pro w/ atmega328"			: "ArduinoPro328",
-	"Diecimila w/ atmega168"	: "ArduinoDiecimila",
-	"Mega 2560"					: "ArduinoMega2560",
-	"Bluetooth"					: "ArduinoBT",
-	"Duemilanove w/ atmega328"	: "ArduinoATmega328",
+	"Mini"                     : "ArduinoMini",
+	"Pro w/ atmega168"         : "ArduinoPro",
+	"Mega"                     : "ArduinoMega",
+	"Ng or older w/ atmega8"   : "ArduinoATmega8",
+	"Uno"                      : "ArduinoUNO",
+	"Lilypad w/ atmega328"     : "ArduinoLilyPad328",
+	"Lilypad w/ atmega168"     : "ArduinoLilyPad",
+	"Ng or older w/ atmega168" : "ArduinoATmega168",
+	"Pro w/ atmega328"         : "ArduinoPro328",
+	"Diecimila w/ atmega168"   : "ArduinoDiecimila",
+	"Mega 2560"                : "ArduinoMega2560",
+	"Bluetooth"                : "ArduinoBT",
+	"Duemilanove w/ atmega328" : "ArduinoATmega328",
 };
+
 var boardSpecs = {
-	"analogPins"	: {},
-	"digitalPins"	: {},
-	"servoPins"		: {}
+	"analogPins"  : {},
+	"digitalPins" : {},
+	"servoPins"   : {},
+	"pwmPins"     : {}
 };
 
 // WebSocket
@@ -63,7 +65,7 @@ socket.onclose = function() {
 
 function initializeAll() {
 	socket.send('greetings'); // will send a greeting back if no board is already connected. If it is, will send the boardSpecs
-	setInterval(updateState, webSocketRefreshInterval*15); // we don't need to keep state too updated, so 15 times slower than real-time is more than ok
+	setInterval(updateState, webSocketRefreshInterval * 15); // we don't need to keep state too updated, so 15 times slower than realtime is more than ok
 }
 
 function releaseAll() {
@@ -88,5 +90,3 @@ function updateState() {
 function inform(title, message) {
 	(new DialogBoxMorph()).inform(title, message, world);
 }
-
-

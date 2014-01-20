@@ -9,7 +9,7 @@
     written by Jens Mönig
     jens@moenig.org
 
-    Copyright (C) 2013 by Jens Mönig
+    Copyright (C) 2014 by Jens Mönig
 
     This file is part of Snap!.
 
@@ -83,7 +83,7 @@ ArgLabelMorph, localize, XML_Element, hex_sha512*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.threads = '2013-December-11';
+modules.threads = '2014-January-10';
 
 var ThreadManager;
 var Process;
@@ -151,15 +151,19 @@ ThreadManager.prototype.startProcess = function (block, isThreadSafe) {
     return newProc;
 };
 
-ThreadManager.prototype.stopAll = function () {
+ThreadManager.prototype.stopAll = function (excpt) {
+    // excpt is optional
     this.processes.forEach(function (proc) {
-        proc.stop();
+        if (proc !== excpt) {
+            proc.stop();
+        }
     });
 };
 
-ThreadManager.prototype.stopAllForReceiver = function (rcvr) {
+ThreadManager.prototype.stopAllForReceiver = function (rcvr, excpt) {
+    // excpt is optional
     this.processes.forEach(function (proc) {
-        if (proc.homeContext.receiver === rcvr) {
+        if (proc.homeContext.receiver === rcvr && proc !== excpt) {
             proc.stop();
             if (rcvr.isClone) {
                 proc.isDead = true;
@@ -1368,6 +1372,44 @@ Process.prototype.doStopAll = function () {
     }
 };
 
+Process.prototype.doStopThis = function (choice) {
+    switch (this.inputOption(choice)) {
+    case 'all':
+        this.doStopAll();
+        break;
+    case 'this script':
+        this.doStop();
+        break;
+    case 'this block':
+        this.doStopBlock();
+        break;
+    default:
+        nop();
+    }
+};
+
+Process.prototype.doStopOthers = function (choice) {
+    var stage;
+    if (this.homeContext.receiver) {
+        stage = this.homeContext.receiver.parentThatIsA(StageMorph);
+        if (stage) {
+            switch (this.inputOption(choice)) {
+            case 'all but this script':
+                stage.threads.stopAll(this);
+                break;
+            case 'other scripts in sprite':
+                stage.threads.stopAllForReceiver(
+                    this.homeContext.receiver,
+                    this
+                );
+                break;
+            default:
+                nop();
+            }
+        }
+    }
+};
+
 Process.prototype.doWarp = function (body) {
     // execute my contents block atomically (more or less)
     var outer = this.context.outerContext, // for tail call elimination
@@ -2377,6 +2419,9 @@ Process.prototype.reportAttributeOf = function (attribute, name) {
             thatObj = this.getOtherObject(name, thisObj, stage);
         }
         if (thatObj) {
+            if (attribute instanceof Context) {
+                return this.reportContextFor(attribute, thatObj);
+            }
             if (isString(attribute)) {
                 return thatObj.variables.getVar(attribute);
             }
@@ -2399,6 +2444,18 @@ Process.prototype.reportAttributeOf = function (attribute, name) {
         }
     }
     return '';
+};
+
+Process.prototype.reportContextFor = function (context, otherObj) {
+    // Private - return a copy of the context
+    // and bind it to another receiver
+    var result = copy(context);
+    result.receiver = otherObj;
+    if (result.outerContext) {
+        result.outerContext = copy(result.outerContext);
+        result.outerContext.receiver = otherObj;
+    }
+    return result;
 };
 
 Process.prototype.reportMouseX = function () {
