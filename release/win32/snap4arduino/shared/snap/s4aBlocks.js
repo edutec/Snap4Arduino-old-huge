@@ -15,7 +15,7 @@ function overridenLabelPart(spec) {
 				} 
 				);
 			part.setContents(Object.keys(serialPortNames)[0]);
-		break;
+			break;
 		case '%arduinoType':
 			part = new InputSlotMorph(
 				null,
@@ -24,7 +24,7 @@ function overridenLabelPart(spec) {
 				true
 				);
 			part.setContents('ArduinoUNO');
-		break; 
+			break; 
 		case '%servoValue':
 			part = new InputSlotMorph(
 				null,
@@ -37,7 +37,7 @@ function overridenLabelPart(spec) {
 				}
 				);
 			part.setContents(['clockwise']);
-		break;
+			break;
 		case '%pinMode':
 			part = new InputSlotMorph(
 				null,
@@ -51,7 +51,7 @@ function overridenLabelPart(spec) {
 				true
 				);
 			part.setContents(['servo']);
-		break;
+			break;
 		case '%servoPin':
 			part = new InputSlotMorph(
 				null,
@@ -59,7 +59,7 @@ function overridenLabelPart(spec) {
 				function() { return boardSpecs.servoPins },
 				true
 				);
-		break;
+			break;
 		case '%pwmPin':
 			part = new InputSlotMorph(
 				null,
@@ -67,8 +67,7 @@ function overridenLabelPart(spec) {
 				function() { return boardSpecs.pwmPins },
 				true
 				);
-		break;
-
+			break;
 		case '%analogPin':
 			part = new InputSlotMorph(
 				null,
@@ -76,7 +75,7 @@ function overridenLabelPart(spec) {
 				function() { return boardSpecs.analogPins },
 				true
 				);
-		break;
+			break;
 		case '%digitalPin':
 			part = new InputSlotMorph(
 				null,
@@ -84,7 +83,7 @@ function overridenLabelPart(spec) {
 				function() { return boardSpecs.digitalPins },
 				true
 				);
-		break;
+			break;
 		default:
 			part = SyntaxElementMorph.prototype.originalLabelPart(spec);
 		}
