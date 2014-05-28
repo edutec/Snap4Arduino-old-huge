@@ -45,10 +45,10 @@ Process.prototype.servoWrite = function (pin, value) {
 	var numericValue;
 	switch (value[0]) {
 		case "clockwise":
-			numericValue = 1200;
+			numericValue = 1750;
 		break;
 		case "counter-clockwise":
-			numericValue = 1700;
+			numericValue = 1250;
 		break;
 		case "stopped":
 			numericValue = 1500;
