@@ -69,13 +69,13 @@ function overridenLabelPart(spec) {
 				);
 			break;
 		case '%analogPin':
-			part = new InputSlotMorph(
-				null,
-				true,
+            part = new InputSlotMorph(
+                null,
+                true,
 				function() { return boardSpecs.analogPins },
 				true
-				);
-			break;
+            );
+            break;
 		case '%digitalPin':
 			part = new InputSlotMorph(
 				null,
