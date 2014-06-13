@@ -8,8 +8,8 @@
     "toolbar": false,
     "frame": true,
     "position": "mouse",
-    "min_width": 1024,
-    "min_height": 768
+    "min_width": 800,
+    "min_height": 600
   },
   "dependencies": {
     "firmata": "~0.3.3"
