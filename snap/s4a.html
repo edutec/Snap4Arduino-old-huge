@@ -33,11 +33,11 @@
 		<script type="text/javascript">
 			var board;
 			var firmata = require('firmata');
-			process.on('uncaughtException' ,function(err){
+/*			process.on('uncaughtException' ,function(err){
         		console.error('uncaughtException:', err);
         		console.error(err.stack);
 				process.exit(1);
-    		});
+    		});*/
 			var world;
 			window.onload = function () {
 				world = new WorldMorph(document.getElementById('world'));

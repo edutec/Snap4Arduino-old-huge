@@ -1,9 +1,9 @@
 #!/bin/sh
 cd snap
-rm -R node_modules
+rm -Rf node_modules
 cp -R modules/win32/* .
 mv modules ..
-zip -r win32.nw *
-mv win32.nw ..
+zip -r app.nw *
+mv app.nw ../release/win32
 mv ../modules .
 cd ..
