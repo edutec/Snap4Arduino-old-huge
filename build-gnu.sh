@@ -1,9 +1,9 @@
 #!/bin/sh
 cd snap
-rm -R node_modules
+rm -Rf node_modules
 cp -R modules/gnu/* .
 mv modules ..
-zip -r gnu.nw *
-mv gnu.nw ..
+zip -r app.nw *
+mv app.nw ../release/gnu
 mv ../modules .
 cd ..
