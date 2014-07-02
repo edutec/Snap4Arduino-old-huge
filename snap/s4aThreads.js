@@ -39,7 +39,6 @@ Process.prototype.setPinMode = function (pin, mode) {
 	}
 	if (board.pins[pin].mode === val) {
 		this.context.pinSet = true;
-		console.log('pin ' + pin + ' set to mode ' + mode);
 		return null;
 	}
 	this.pushContext('doYield');
@@ -63,43 +62,21 @@ Process.prototype.servoWrite = function (pin, value) {
 		break;
 	}
 	board.servoWrite(pin, numericValue);
-	console.log('servo value ' + numericValue + ' written to pin ' + pin);
 	return null;
 }
 
 Process.prototype.reportAnalogReading = function (pin) {
-	var myself = this;
-	if (board.analogReadings[pin] === undefined && myself.context.startedReading === undefined) {
-		myself.context.startedReading = true;
+	if (board.pins[board.analogPins[pin]].mode != board.MODES.ANALOG) {
 		board.pinMode(board.analogPins[pin],board.MODES.ANALOG);
-		board.analogRead(pin, function(val) {
-			board.analogReadings[pin] = val;
-		});
-		return 0;
-	} else if (board.analogReadings[pin]) {
-		return board.analogReadings[pin];
-	} 
-	this.pushContext('doYield');
-	this.pushContext();
+	}
+	return board.pins[board.analogPins[pin]].value;
 };
 	
 Process.prototype.reportDigitalReading = function (pin) {
-
-	// REVIEW!!
-
-	var myself = this;
-	if (board.digitalReadings[pin] === undefined && myself.context.startedReading === undefined) {
-		myself.context.startedReading = true;
-		board.pinMode(board.digitalPins[pin],board.MODES.INPUT);
-		board.digitalRead(pin, function(val) {
-			board.digitalReadings[pin] = (val == 1);
-		});
-		return 0;
-	} else if (board.digitalReadings[pin] != undefined) {
-		return board.digitalReadings[pin];
-	} 
-	this.pushContext('doYield');
-	this.pushContext();
+	if (board.pins[pin].mode != board.MODES.INPUT) {
+		board.pinMode(pin,board.MODES.INPUT);
+	}
+	return board.pins[pin].value == 1;
 };
 
 
@@ -107,14 +84,10 @@ Process.prototype.digitalWrite = function (pin, booleanValue) {
 	var val;
 	if (booleanValue) { val = board.HIGH } else { val = board.LOW };
 	board.digitalWrite(pin, val);
-	console.log('digital value ' + booleanValue + ' written to pin ' + pin);
 	return null;
 }
 
 Process.prototype.pwmWrite = function (pin, value) {
 	board.analogWrite(pin, value);
-	console.log('pwm value ' + value + ' written to pin ' + pin);
 	return null;
 }
-
-
