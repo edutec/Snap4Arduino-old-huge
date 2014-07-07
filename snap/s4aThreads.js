@@ -8,8 +8,6 @@ Process.prototype.connectArduino = function (port) {
 				return 
 			} else {
 				console.log('An Arduino board has been connected. Happy prototyping!');
-				board.analogReadings = [];
-				board.digitalReadings = [];
 			}
 		});
 	}
