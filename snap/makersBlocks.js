@@ -1,4 +1,4 @@
-
+'use strict';
 
 SyntaxElementMorph.prototype.originalLabelPart_Makers = SyntaxElementMorph.prototype.labelPart;
 
@@ -24,5 +24,5 @@ function overridenLabelPart(spec) {
 	return part;
 }
 
-SyntaxElementMorph.prototype.labelPart = overridenLabelPart
+SyntaxElementMorph.prototype.labelPart = overridenLabelPart;
 

@@ -1,3 +1,4 @@
+'use strict';
 /**
 * Makers extension for Snap4Arduino
 * We create an additional block group - makers - with specific functions for the Makers shield for arduino
