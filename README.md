@@ -14,6 +14,9 @@ First Makers combines hardware (an Arduino shield) software (Scratch & Snap 4 Ar
 Makers Shield 
 ![alt text](https://github.com/elaval/Snap4Arduino/blob/makers/images/tide_makers.jpg "Tide Makers first prototype")
 
+Software interface (running on Mac) 
+![alt text](https://github.com/elaval/Snap4Arduino/blob/makers/images/screen1.jpg "S4A4Makers interface")
+
 The initiative is under development and will be promptly announced to the public.
 
 
