@@ -7,10 +7,12 @@ The Makers branch (Snap4Arduino4Makers) is a derivate with new functionality for
 
 - Autodetection of an Arduino board at startup (no need to specify port path)
 - Mac (OSX) version
-- New "Makers" block group which includes: 
--- "auto connect arduino", "diconnect arduino", "
+- New "Makers" block group which includes: "auto connect arduino", "diconnect arduino", "is arduino connected", "led on", "led off", "switch", "temperature", "sound", "light", "potentiometer"
 
 First Makers combines hardware (an Arduino shield) software (Scratch & Snap 4 Arduino modules and examples) and turorials for teachers & students.
+
+Makers Shield 
+![alt text](https://github.com/elaval/Snap4Arduino/blob/makers/images/tide_makers.jpg "Tide Makers first prototype")
 
 The initiative is under development and will be promptly announced to the public.
 
