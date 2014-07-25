@@ -34,6 +34,7 @@ Quick start
 In order to use Snap4Arduino4Makers, you need to
 
 1) Donwload the software
+
 For Mac: https://github.com/elaval/Snap4Arduino/blob/makers/release/osx/Snap4Arduino.dmg
 
 (Win versions still don't have the installer configured & built, if you know how to deal with it, you can access the components here:https://github.com/elaval/Snap4Arduino/tree/makers/release/win32)
