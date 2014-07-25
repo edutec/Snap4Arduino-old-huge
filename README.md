@@ -58,8 +58,9 @@ Known problems
 --
 This is not a stable version of the software and you might find some problems:
 
-- The alert box when an Arduino is connected works well on Mac but not on Windows (the Ok button is semi hidden and you neet to click it to start working)
-- 
+- The alert box when an Arduino is connected works well on Mac but not on Windows (the Ok button is semi hidden and you neet to click it to start working).
+- The initial Window size is smaller than required (but is adjusts itslef to the right size when you move it or resize it).
+- The board connection functionality is still under heavy exploration/development and might not be stable.  If you have problems you might need to quit the program, disconnect.
 
 
 First Makers Team
