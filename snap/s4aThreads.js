@@ -4,10 +4,10 @@ Process.prototype.connectArduino = function (port) {
 		board = new firmata.Board(port, function(err) { 
 			myself.context.boardConnected = true;
 			if (err) { 
-				console.log(err); 
+				inform('Error!', err); 
 				return 
 			} else {
-				console.log('An Arduino board has been connected. Happy prototyping!');
+				inform('Board connected', 'An Arduino board has been connected. Happy prototyping!');
 			}
 		});
 	}
