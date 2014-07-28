@@ -13,8 +13,6 @@ Process.prototype.connectArduino = function (port) {
 		});
 	} else if (myself.context.boardConnected) { 
 		return 
-	} else {
-		console.log(board);
 	};
 	this.pushContext('doYield');
 	this.pushContext();
