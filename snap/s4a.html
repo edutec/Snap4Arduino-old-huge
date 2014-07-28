@@ -2,22 +2,34 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Snap4Arduino 1.0.1-alpha</title>
+		<title>Snap4Arduino Makers version 0.0.1-pre-alpha</title>
         <link rel="shortcut icon" href="http://snap.berkeley.edu/fav3.gif" type="image/gif">
 		<script type="text/javascript" src="morphic.js"></script>
 		<script type="text/javascript" src="widgets.js"></script>
 		<script type="text/javascript" src="blocks.js"></script>
+		<!-- <Makers>  -->
+		<script type="text/javascript" src="makers.js"></script>
+		<!-- </Makers> -->
 		<!-- <Snap4Arduino> -->
 		<script type="text/javascript" src="s4aBlocks.js"></script>
 		<!-- </Snap4Arduino> -->
+		<!-- <Makers>  -->
+		<script type="text/javascript" src="makersBlocks.js"></script>
+		<!-- </Makers> -->
 		<script type="text/javascript" src="threads.js"></script>
 		<!-- <Snap4Arduino> -->
 		<script type="text/javascript" src="s4aThreads.js"></script>
 		<!-- </Snap4Arduino> -->
+		<!-- <Makers>  -->
+		<script type="text/javascript" src="makersThreads.js"></script>
+		<!-- </Makers> -->
 		<script type="text/javascript" src="objects.js"></script>
 		<!-- <Snap4Arduino> -->
 		<script type="text/javascript" src="s4aObjects.js"></script>
 		<!-- </Snap4Arduino> -->
+		<!-- <Makers>  -->
+		<script type="text/javascript" src="makersObjects.js"></script>
+		<!-- </Makers> -->
 		<script type="text/javascript" src="gui.js"></script>
 		<!-- <Snap4Arduino> -->
 		<script type="text/javascript" src="s4aGui.js"></script>
@@ -33,6 +45,7 @@
 		<script type="text/javascript">
 			var board;
 			var firmata = require('firmata');
+			MakerApp.makersStartArduinoAutoConnect();
 /*			process.on('uncaughtException' ,function(err){
         		console.error('uncaughtException:', err);
         		console.error(err.stack);
