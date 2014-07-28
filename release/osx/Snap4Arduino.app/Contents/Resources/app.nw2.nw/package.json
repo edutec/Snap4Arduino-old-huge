@@ -5,13 +5,11 @@
   "window": {
     "title": "Snap4Arduino",
     "icon": "s4a.ico",
-    "toolbar": true,
+    "toolbar": false,
     "frame": true,
     "position": "mouse",
     "min_width": 960,
-    "min_height": 640,
-    "width": 960,
-    "height": 640
+    "min_height": 640
   },
   "dependencies": {
     "firmata": "~0.3.3"

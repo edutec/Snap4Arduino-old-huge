@@ -39,28 +39,6 @@ SpriteMorph.prototype.blockColor = {
 
 // Definition of our new primitive blocks
 function overridenBlockTemplates(category) {
-	SpriteMorph.prototype.blocks.autoConnectArduino =
-	{
-		type: 'command',
-		category: 'arduino',
-		spec: 'auto connect arduino'
-	};
-
-	SpriteMorph.prototype.blocks.disConnectArduino =
-	{
-		type: 'command',
-		category: 'arduino',
-		spec: 'disconnect arduino'
-	};
-
-	SpriteMorph.prototype.blocks.connectedArduino =
-	{
-		type: 'reporter',
-		category: 'arduino',
-		spec: 'arduino is connected'
-	};
-
-
 	SpriteMorph.prototype.blocks.reportAnalogReading = 
 	{
        	type: 'reporter',
@@ -81,7 +59,6 @@ function overridenBlockTemplates(category) {
 		category: 'arduino',
 		spec: 'connect arduino at %port'
 	};
-
 
 	SpriteMorph.prototype.blocks.setPinMode =
 	{
@@ -124,9 +101,6 @@ function overridenBlockTemplates(category) {
 
 	if (category === 'arduino') {
         blocks.push(blockBySelector('connectArduino'));
-        blocks.push(blockBySelector('autoConnectArduino'));
-        blocks.push(blockBySelector('disConnectArduino'));
-        blocks.push(blockBySelector('connectedArduino'));
 		blocks.push('-');
         blocks.push(blockBySelector('setPinMode'));
 		blocks.push('-');
