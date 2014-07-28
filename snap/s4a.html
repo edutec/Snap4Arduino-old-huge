@@ -44,6 +44,9 @@
 				new IDE_Morph().openIn(world);
 				setInterval(loop, 1);
 			};
+
+			function inform(title, message) { (new DialogBoxMorph()).inform(title, message, world) };
+
 			function loop() {
 				world.doOneCycle();
 			}
