@@ -125,7 +125,7 @@ PrototypeHatBlockMorph*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.objects = '2014-Jun-06';
+modules.objects = '2014-July-25';
 
 var SpriteMorph;
 var StageMorph;
@@ -414,6 +414,12 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'looks',
             spec: 'go back %n layers',
             defaults: [1]
+        },
+        doScreenshot: {
+            type: 'command',
+            category: 'looks',
+            spec: 'save %imgsource as costume named %s',
+            defaults: [['pen trails'], localize('screenshot')]
         },
 
         // Looks - Debugging primitives for development mode
@@ -1018,6 +1024,11 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'split %s by %delim',
             defaults: [localize('hello') + ' ' + localize('world'), " "]
         },
+        reportJSFunction: { // experimental
+            type: 'reporter',
+            category: 'operators',
+            spec: 'JavaScript function ( %mult%s ) { %code }'
+        },
         reportTypeOf: { // only in dev mode for debugging
             dev: true,
             type: 'reporter',
@@ -1325,6 +1336,7 @@ SpriteMorph.prototype.init = function (globals) {
 
 SpriteMorph.prototype.fullCopy = function () {
     var c = SpriteMorph.uber.fullCopy.call(this),
+        myself = this,
         arr = [],
         cb;
 
@@ -1346,7 +1358,11 @@ SpriteMorph.prototype.fullCopy = function () {
         });
     });
     this.costumes.asArray().forEach(function (costume) {
-        arr.push(costume.copy());
+        var cst = costume.copy();
+        arr.push(cst);
+        if (costume === myself.costume) {
+            c.costume = cst;
+        }
     });
     c.costumes = new List(arr);
     arr = [];
@@ -1711,6 +1727,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
             blocks.push('-');
             blocks.push(block('log'));
             blocks.push(block('alert'));
+            blocks.push('-');
+            blocks.push(block('doScreenshot'));
         }
 
     /////////////////////////////////
@@ -1906,6 +1924,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('reportIsA'));
         blocks.push(block('reportIsIdentical'));
+        blocks.push('-');
+        blocks.push(block('reportJSFunction'));
 
     // for debugging: ///////////////
 
@@ -2270,6 +2290,11 @@ SpriteMorph.prototype.freshPalette = function (category) {
         }
     });
 
+    //layout
+
+    palette.scrollX(palette.padding);
+    palette.scrollY(palette.padding);
+
     Morph.prototype.trackChanges = oldFlag;
     return palette;
 };
@@ -2572,7 +2597,7 @@ SpriteMorph.prototype.userMenu = function () {
         menu = new MenuMorph(this);
 
     if (ide && ide.isAppMode) {
-        menu.addItem('help', 'nop');
+        // menu.addItem('help', 'nop');
         return menu;
     }
     menu.addItem("duplicate", 'duplicate');
@@ -3532,6 +3557,9 @@ SpriteMorph.prototype.toggleVariableWatcher = function (varName, isGlobal) {
     }
 
     // if no watcher exists, create a new one
+    if (isNil(isGlobal)) {
+        isGlobal = contains(this.variables.parentFrame.names(), varName);
+    }
     watcher = new WatcherMorph(
         varName,
         this.blockColor.variables,
@@ -4071,6 +4099,43 @@ SpriteMorph.prototype.reactToDropOf = function (morph, hand) {
     morph.slideBackTo(hand.grabOrigin);
 };
 
+// SpriteMorph screenshots
+
+SpriteMorph.prototype.newCostumeName = function (name, ignoredCostume) {
+    var ix = name.indexOf('('),
+        stem = (ix < 0) ? name : name.substring(0, ix),
+        count = 1,
+        newName = stem,
+        all = this.costumes.asArray().filter(
+            function (each) {return each !== ignoredCostume; }
+        ).map(
+            function (each) {return each.name; }
+        );
+    while (contains(all, newName)) {
+        count += 1;
+        newName = stem + '(' + count + ')';
+    }
+    return newName;
+};
+
+SpriteMorph.prototype.doScreenshot = function (imgSource, data) {
+    var canvas,
+        stage = this.parentThatIsA(StageMorph),
+        costume;
+    data = this.newCostumeName(data);
+    if (imgSource[0] === undefined) {
+        return;
+    }
+    if (imgSource[0] === "pen trails") {
+        canvas = stage.trailsCanvas;
+        costume = new Costume(canvas, data).copy(); // prevent mutation
+    } else if (imgSource[0] === "stage image") {
+        canvas = stage.fullImageClassic();
+        costume = new Costume(canvas, data);
+    }
+    this.addCostume(costume);
+};
+
 // SpriteHighlightMorph /////////////////////////////////////////////////
 
 // SpriteHighlightMorph inherits from Morph:
@@ -4576,6 +4641,9 @@ StageMorph.prototype.fireKeyEvent = function (key) {
     if (evt === 'ctrl f') {
         return this.parentThatIsA(IDE_Morph).currentSprite.searchBlocks();
     }
+    if (evt === 'ctrl n') {
+        return this.parentThatIsA(IDE_Morph).createNewProject();
+    }
     if (evt === 'ctrl o') {
         return this.parentThatIsA(IDE_Morph).openProjectsBrowser();
     }
@@ -4763,6 +4831,8 @@ StageMorph.prototype.blockTemplates = function (category) {
             blocks.push('-');
             blocks.push(block('log'));
             blocks.push(block('alert'));
+            blocks.push('-');
+            blocks.push(block('doScreenshot'));
         }
 
     /////////////////////////////////
@@ -4937,6 +5007,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('reportIsA'));
         blocks.push(block('reportIsIdentical'));
+        blocks.push('-');
+        blocks.push(block('reportJSFunction'));
 
     // for debugging: ///////////////
 
@@ -5108,7 +5180,7 @@ StageMorph.prototype.userMenu = function () {
         myself = this;
 
     if (ide && ide.isAppMode) {
-        menu.addItem('help', 'nop');
+        // menu.addItem('help', 'nop');
         return menu;
     }
     menu.addItem("edit", 'edit');
@@ -5235,6 +5307,12 @@ StageMorph.prototype.addVariable = SpriteMorph.prototype.addVariable;
 StageMorph.prototype.deleteVariable = SpriteMorph.prototype.deleteVariable;
 
 // StageMorph block rendering
+
+StageMorph.prototype.doScreenshot
+    = SpriteMorph.prototype.doScreenshot;
+
+StageMorph.prototype.newCostumeName
+    = SpriteMorph.prototype.newCostumeName;
 
 StageMorph.prototype.blockForSelector
     = SpriteMorph.prototype.blockForSelector;
@@ -5604,14 +5682,16 @@ SpriteBubbleMorph.prototype.fixLayout = function () {
 
 function Costume(canvas, name, rotationCenter) {
     this.contents = canvas || newCanvas();
-    this.shrinkToFit(this.maxExtent);
+    this.shrinkToFit(this.maxExtent());
     this.name = name || null;
     this.rotationCenter = rotationCenter || this.center();
     this.version = Date.now(); // for observer optimization
     this.loaded = null; // for de-serialization only
 }
 
-Costume.prototype.maxExtent = StageMorph.prototype.dimensions;
+Costume.prototype.maxExtent = function () {
+    return StageMorph.prototype.dimensions;
+};
 
 Costume.prototype.toString = function () {
     return 'a Costume(' + this.name + ')';
@@ -5896,7 +5976,7 @@ SVG_Costume.uber = Costume.prototype;
 
 function SVG_Costume(svgImage, name, rotationCenter) {
     this.contents = svgImage;
-    this.shrinkToFit(this.maxExtent);
+    this.shrinkToFit(this.maxExtent());
     this.name = name || null;
     this.rotationCenter = rotationCenter || this.center();
     this.version = Date.now(); // for observer optimization
@@ -5944,7 +6024,7 @@ CostumeEditorMorph.prototype.constructor = CostumeEditorMorph;
 CostumeEditorMorph.uber = Morph.prototype;
 
 // CostumeEditorMorph preferences settings:
-CostumeEditorMorph.prototype.size = Costume.prototype.maxExtent;
+CostumeEditorMorph.prototype.size = Costume.prototype.maxExtent();
 
 // CostumeEditorMorph instance creation
 
