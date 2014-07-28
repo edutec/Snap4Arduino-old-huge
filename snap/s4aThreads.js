@@ -8,12 +8,14 @@ Process.prototype.connectArduino = function (port) {
 				return 
 			} else {
 				inform('Board connected', 'An Arduino board has been connected. Happy prototyping!');
+				return
 			}
 		});
-	}
-	if (myself.context.boardConnected) {
-		return null;
-	}
+	} else if (myself.context.boardConnected) { 
+		return 
+	} else {
+		console.log(board);
+	};
 	this.pushContext('doYield');
 	this.pushContext();
 }
