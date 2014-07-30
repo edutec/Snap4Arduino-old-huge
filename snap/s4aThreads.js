@@ -7,6 +7,7 @@ Process.prototype.connectArduino = function (port) {
 			board = new firmata.Board(port, function(err) { 
 				if (!err) { 
 					sprite.connecting = false;
+					sprite.justConnected = true;
 					board.connected = true;
 					inform('Board connected', 'An Arduino board has been connected. Happy prototyping!');   
 				}
@@ -15,9 +16,13 @@ Process.prototype.connectArduino = function (port) {
 		}
 	}
 
+	if (sprite.justConnected) {
+		sprite.justConnected = undefined;
+		return;
+	}
+
 	if (board.connected) {
 		throw new Error('Board already connected');
-		return;
 	}
 
 	this.pushContext('doYield');
