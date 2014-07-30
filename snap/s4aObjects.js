@@ -60,6 +60,13 @@ function overridenBlockTemplates(category) {
 		spec: 'connect arduino at %port'
 	};
 
+	SpriteMorph.prototype.blocks.disconnectArduino =
+	{
+		type: 'command',
+		category: 'arduino',
+		spec: 'disconnect arduino'
+	};
+
 	SpriteMorph.prototype.blocks.setPinMode =
 	{
 		type: 'command',
@@ -101,6 +108,7 @@ function overridenBlockTemplates(category) {
 
 	if (category === 'arduino') {
         blocks.push(blockBySelector('connectArduino'));
+        blocks.push(blockBySelector('disconnectArduino'));
 		blocks.push('-');
         blocks.push(blockBySelector('setPinMode'));
 		blocks.push('-');
