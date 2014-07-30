@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Snap4Arduino 1.0.1-alpha</title>
+		<title>Snap4Arduino 1.0.1-pre-alpha</title>
         <link rel="shortcut icon" href="http://snap.berkeley.edu/fav3.gif" type="image/gif">
 		<script type="text/javascript" src="morphic.js"></script>
 		<script type="text/javascript" src="widgets.js"></script>
@@ -44,6 +44,9 @@
 				new IDE_Morph().openIn(world);
 				setInterval(loop, 1);
 			};
+
+			function inform(title, message) { (new DialogBoxMorph()).inform(title, message, world) };
+
 			function loop() {
 				world.doOneCycle();
 			}

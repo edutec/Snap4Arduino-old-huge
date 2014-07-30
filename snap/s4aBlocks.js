@@ -1,5 +1,6 @@
 var portList = [];
 var serialport = require('serialport');
+
 setInterval(function(){ 
 	portList = [];
 	serialport.list(function (err, ports) { if(ports){ ports.forEach(function(each) { portList[each.comName] = each.comName })}})}, 500);
@@ -31,11 +32,7 @@ function overridenLabelPart(spec) {
 				null,
 				false,
 				function() {
-					
-
 					return portList;
-
-					//require('fs').readdirSync('/dev/').filter(function(each){ return each.match('^ttyACM*|^ttyUSB*') }).map(function(each) { return '/dev/' + each }).forEach(function(each) { ports[each] = each });
 				} 
 				);
 			break;
