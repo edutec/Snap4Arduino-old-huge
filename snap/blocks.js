@@ -155,7 +155,7 @@ DialogBoxMorph, BlockInputFragmentMorph, PrototypeHatBlockMorph, Costume*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.blocks = '2014-June-06';
+modules.blocks = '2014-July-18';
 
 
 var SyntaxElementMorph;
@@ -665,6 +665,18 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
 
         // single-arg and specialized multi-arg slots:
         switch (spec) {
+        case '%imgsource':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'pen trails': ['pen trails'],
+                    'stage image': ['stage image']
+                },
+                true
+            );
+            part.setContents(['pen trails']);
+            break;
         case '%inputs':
             part = new MultiArgMorph('%s', 'with inputs');
             part.isStatic = false;
@@ -836,6 +848,7 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 null, // text
                 false, // numeric?
                 {
+                    'letter' : ['letter'],
                     'whitespace' : ['whitespace'],
                     'line' : ['line'],
                     'tab' : ['tab'],
@@ -1271,7 +1284,7 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
         case '%pause':
             part = new SymbolMorph('pause');
             part.size = this.fontSize;
-            part.color = new Color(160, 80, 0);
+            part.color = new Color(255, 220, 0);
             part.isProtectedLabel = true; // doesn't participate in zebraing
             part.shadowColor = this.color.darker(this.labelContrast);
             part.shadowOffset = MorphicPreferences.isFlat ?
@@ -2110,6 +2123,7 @@ BlockMorph.prototype.userMenu = function () {
     if (this.parentThatIsA(RingMorph)) {
         menu.addLine();
         menu.addItem("unringify", 'unringify');
+        menu.addItem("ringify", 'ringify');
         return menu;
     }
     if (this.parent instanceof ReporterSlotMorph
@@ -2156,16 +2170,18 @@ BlockMorph.prototype.developersMenu = function () {
 
 BlockMorph.prototype.hidePrimitive = function () {
     var ide = this.parentThatIsA(IDE_Morph),
+        dict,
         cat;
     if (!ide) {return; }
     StageMorph.prototype.hiddenPrimitives[this.selector] = true;
-    cat = {
+    dict = {
         doWarp: 'control',
         reifyScript: 'operators',
         reifyReporter: 'operators',
         reifyPredicate: 'operators',
         doDeclareVariables: 'variables'
-    }[this.selector] || this.category;
+    };
+    cat = dict[this.selector] || this.category;
     if (cat === 'lists') {cat = 'variables'; }
     ide.flushBlocksCache(cat);
     ide.refreshPalette();
@@ -3344,9 +3360,44 @@ CommandBlockMorph.prototype.isStop = function () {
 // CommandBlockMorph deleting
 
 CommandBlockMorph.prototype.userDestroy = function () {
+    if (this.nextBlock()) {
+        this.userDestroyJustThis();
+        return;
+    }
     var cslot = this.parentThatIsA(CSlotMorph);
     this.destroy();
     if (cslot) {
+        cslot.fixLayout();
+    }
+};
+
+CommandBlockMorph.prototype.userDestroyJustThis = function () {
+    // delete just this one block, reattach next block to the previous one,
+    var scripts = this.parentThatIsA(ScriptsMorph),
+        cs = this.parentThatIsA(CommandSlotMorph),
+        pb,
+        nb = this.nextBlock(),
+        above,
+        cslot = this.parentThatIsA(CSlotMorph);
+
+    if (this.parent) {
+        pb = this.parent.parentThatIsA(CommandBlockMorph);
+    }
+    if (pb && (pb.nextBlock() === this)) {
+        above = pb;
+    } else if (cs && (cs.nestedBlock() === this)) {
+        above = cs;
+    }
+    this.destroy();
+    if (nb) {
+        if (above instanceof CommandSlotMorph) {
+            above.nestedBlock(nb);
+        } else if (above instanceof CommandBlockMorph) {
+            above.nextBlock(nb);
+        } else {
+            scripts.add(nb);
+        }
+    } else if (cslot) {
         cslot.fixLayout();
     }
 };
@@ -6466,7 +6517,7 @@ InputSlotMorph.prototype.collidablesMenu = function () {
         allNames = [];
 
     stage.children.forEach(function (morph) {
-        if (morph instanceof SpriteMorph) {
+        if (morph instanceof SpriteMorph && !morph.isClone) {
             if (morph.name !== rcvr.name) {
                 allNames = allNames.concat(morph.name);
             }
