@@ -1,18 +1,42 @@
 Process.prototype.connectArduino = function (port) {
-	var myself = this;
-	if (board === undefined && myself.context.boardConnected === undefined) {
-		board = new firmata.Board(port, function(err) { 
-			myself.context.boardConnected = true;
-			if (err) { 
-				console.log(err); 
-				return 
-			} else {
-				console.log('An Arduino board has been connected. Happy prototyping!');
-			}
-		});
+    var sprite = this.homeContext.receiver;
+
+	if (!sprite.connecting) {
+		sprite.connecting = true;
+		if (board === undefined) {
+			board = new firmata.Board(port, function(err) { 
+				if (!err) { 
+					sprite.connecting = false;
+					sprite.justConnected = true;
+					board.connected = true;
+					inform('Board connected', 'An Arduino board has been connected. Happy prototyping!');   
+				}
+				return
+			})
+		}
 	}
-	if (myself.context.boardConnected) {
-		return null;
+
+	if (sprite.justConnected) {
+		sprite.justConnected = undefined;
+		return;
+	}
+
+	if (board.connected) {
+		throw new Error('Board already connected');
+	}
+
+	this.pushContext('doYield');
+	this.pushContext();
+}
+
+Process.prototype.disconnectArduino = function() {
+	if (board) {
+		board.sp.close( function() { 
+			board = undefined; 
+			return 
+		})
+	} else if (!board) {
+		throw new Error('No board connected')
 	}
 	this.pushContext('doYield');
 	this.pushContext();
@@ -23,10 +47,10 @@ Process.prototype.setPinMode = function (pin, mode) {
 	switch(mode[0]) {
 		case 'digital input': val = board.MODES.INPUT; break;
 		case 'digital output': val = board.MODES.OUTPUT; break;
-		// not used, but left it here anyway:
-		case 'analog input': val = board.MODES.ANALOG; break;
 		case 'PWM': val = board.MODES.PWM; break;
 		case 'servo': val = board.MODES.SERVO; break;
+		// not used, but left it here anyway:
+		case 'analog input': val = board.MODES.ANALOG; break;
 	}
 	if (this.context.pinSet === undefined) {
 		if (board.pins[pin].supportedModes.indexOf(val) > -1) {	
@@ -65,17 +89,30 @@ Process.prototype.servoWrite = function (pin, value) {
 
 Process.prototype.reportAnalogReading = function (pin) {
 	if (board.pins[board.analogPins[pin]].mode != board.MODES.ANALOG) {
-		board.pinMode(board.analogPins[pin],board.MODES.ANALOG);
+		board.pinMode(board.analogPins[pin], board.MODES.ANALOG);
 	}
-	return board.pins[board.analogPins[pin]].value;
-};
 	
+	// Ugly hack that fixes issue #5
+	// "say" block inside a "forever" loop shows only first reading on GNU/Linux and MS-Windows
+	// Until we find the source of the problem and a cleaner solution...
+	
+	if (!this.context.justRead) {
+        this.context.justRead = true;
+    } else {
+        this.context.justRead = false;
+		return board.pins[board.analogPins[pin]].value;
+    }
+
+	this.pushContext('doYield');
+	this.pushContext();
+}
+
 Process.prototype.reportDigitalReading = function (pin) {
 	if (board.pins[pin].mode != board.MODES.INPUT) {
-		board.pinMode(pin,board.MODES.INPUT);
+		board.pinMode(pin, board.MODES.INPUT);
 	}
 	return board.pins[pin].value == 1;
-};
+}
 
 
 Process.prototype.digitalWrite = function (pin, booleanValue) {
