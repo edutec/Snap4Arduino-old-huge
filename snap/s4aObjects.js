@@ -36,17 +36,17 @@ SpriteMorph.prototype.blockColor = {
     other: new Color(150, 150, 150)
 };
 
-// Create arduino object in the Sprite to encapsulate Arduino related properties
-SpriteMorph.prototype.arduino = {
-		board : undefined,		// Reference to arduino board - to be created by new firmata.Board()
-		connecting : false,		// Mark to avoid multiple attempts to connect
-		justconnected: false,	// Mark to avoid double attempts
-	};
-
-
 // Definition of our new primitive blocks
 function overridenBlockTemplates(category) {
 	var myself = this;
+
+	if (!this.arduino) {
+		this.arduino = {
+			board : undefined,		// Reference to arduino board - to be created by new firmata.Board()
+			connecting : false,		// Mark to avoid multiple attempts to connect
+			justconnected: false,	// Mark to avoid double attempts
+		};
+	}
 
 	SpriteMorph.prototype.blocks.reportAnalogReading = 
 	{
