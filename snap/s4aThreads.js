@@ -21,23 +21,10 @@ Process.prototype.connectArduino = function (port) {
 		return;
 	}
 
-	if (board.connected) {
+	if (board && board.connected) {
 		throw new Error('Board already connected');
 	}
 
-	this.pushContext('doYield');
-	this.pushContext();
-}
-
-Process.prototype.disconnectArduino = function() {
-	if (board) {
-		board.sp.close( function() { 
-			board = undefined; 
-			return 
-		})
-	} else if (!board) {
-		throw new Error('No board connected')
-	}
 	this.pushContext('doYield');
 	this.pushContext();
 }
