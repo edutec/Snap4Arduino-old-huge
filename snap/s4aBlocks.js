@@ -4,6 +4,9 @@ var serialport = require('serialport');
 setInterval(function(){ serialport.list(function (err, ports) { if(ports){ ports.forEach(function(each) { portList[each.comName] = each.comName })}})}, 500);
 
 function pinsSetToMode(aMode) {
+	var sprite = world.children[0].currentSprite,
+		board = sprite.arduino.board;
+
 	var pinNumbers = {};
 	var pins = board.pins;
 	pins.forEach(
@@ -67,6 +70,10 @@ function overridenLabelPart(spec) {
 				null,
 				true,
 				function() { 
+					// Get board associated to currentSprite
+					var sprite = world.children[0].currentSprite,
+					board = sprite.arduino.board;
+
 			   		if (board) {
 						return pinsSetToMode(board.MODES.SERVO);
 					} else {
@@ -81,6 +88,10 @@ function overridenLabelPart(spec) {
 				null,
 				true,
 				function() { 
+					// Get board associated to currentSprite
+					var sprite = world.children[0].currentSprite,
+					board = sprite.arduino.board;
+
 			   		if (board) {
 						return pinsSetToMode(board.MODES.PWM);
 					} else {
@@ -95,6 +106,10 @@ function overridenLabelPart(spec) {
                 null,
                 true,
 				function() { 
+					// Get board associated to currentSprite
+					var sprite = world.children[0].currentSprite,
+					board = sprite.arduino.board;
+
 					if (board) { 
 						return board.analogPins.map(function(each){ return (each - board.analogPins[0]).toString() });
 					} else { 
@@ -109,6 +124,10 @@ function overridenLabelPart(spec) {
 				null,
 				true,
 				function() {
+					// Get board associated to currentSprite
+					var sprite = world.children[0].currentSprite,
+					board = sprite.arduino.board;
+
 					if (board) {
 						var pinNumbers = [];
 						var pins = board.pins.filter(function(each){ return each.analogChannel == 127 });
