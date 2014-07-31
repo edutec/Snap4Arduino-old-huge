@@ -1,9 +1,7 @@
 var portList = [];
 var serialport = require('serialport');
 
-setInterval(function(){ 
-	portList = [];
-	serialport.list(function (err, ports) { if(ports){ ports.forEach(function(each) { portList[each.comName] = each.comName })}})}, 500);
+setInterval(function(){ serialport.list(function (err, ports) { if(ports){ ports.forEach(function(each) { portList[each.comName] = each.comName })}})}, 500);
 
 function pinsSetToMode(aMode) {
 	var pinNumbers = {};
@@ -33,7 +31,8 @@ function overridenLabelPart(spec) {
 				false,
 				function() {
 					return portList;
-				} 
+				},
+			   	true
 				);
 			break;
 		case '%servoValue':
