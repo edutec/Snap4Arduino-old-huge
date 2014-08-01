@@ -1,14 +1,14 @@
 Process.prototype.connectArduino = function (port) {
     var sprite = this.homeContext.receiver;
 
-	if (!sprite.connecting) {
-		sprite.connecting = true;
-		if (board === undefined) {
-			board = new firmata.Board(port, function(err) { 
+	if (!sprite.arduino.connecting) {
+		sprite.arduino.connecting = true;
+		if (sprite.arduino.board === undefined) {
+			sprite.arduino.board = new firmata.Board(port, function(err) { 
 				if (!err) { 
-					sprite.connecting = false;
-					sprite.justConnected = true;
-					board.connected = true;
+					sprite.arduino.connecting = false;
+					sprite.arduino.justConnected = true;
+					sprite.arduino.board.connected = true;
 					inform('Board connected', 'An Arduino board has been connected. Happy prototyping!');   
 				}
 				return
@@ -16,12 +16,12 @@ Process.prototype.connectArduino = function (port) {
 		}
 	}
 
-	if (sprite.justConnected) {
-		sprite.justConnected = undefined;
+	if (sprite.arduino.justConnected) {
+		sprite.arduino.justConnected = undefined;
 		return;
 	}
 
-	if (board && board.connected) {
+	if (sprite.arduino.board && sprite.arduino.board.connected) {
 		throw new Error('Board already connected');
 	}
 
@@ -30,6 +30,9 @@ Process.prototype.connectArduino = function (port) {
 }
 
 Process.prototype.setPinMode = function (pin, mode) {
+	var sprite = this.homeContext.receiver,
+		board = sprite.arduino.board; 
+
 	var val;
 	switch(mode[0]) {
 		case 'digital input': val = board.MODES.INPUT; break;
@@ -55,6 +58,9 @@ Process.prototype.setPinMode = function (pin, mode) {
 }
 
 Process.prototype.servoWrite = function (pin, value) {
+	var sprite = this.homeContext.receiver,
+		board = sprite.arduino.board; 
+
 	var numericValue;
 	switch (value[0]) {
 		case "clockwise":
@@ -75,6 +81,9 @@ Process.prototype.servoWrite = function (pin, value) {
 }
 
 Process.prototype.reportAnalogReading = function (pin) {
+	var sprite = this.homeContext.receiver,
+		board = sprite.arduino.board; 
+
 	if (board.pins[board.analogPins[pin]].mode != board.MODES.ANALOG) {
 		board.pinMode(board.analogPins[pin], board.MODES.ANALOG);
 	}
@@ -95,6 +104,9 @@ Process.prototype.reportAnalogReading = function (pin) {
 }
 
 Process.prototype.reportDigitalReading = function (pin) {
+	var sprite = this.homeContext.receiver,
+	board = sprite.arduino.board; 
+
 	if (board.pins[pin].mode != board.MODES.INPUT) {
 		board.pinMode(pin, board.MODES.INPUT);
 	}
@@ -103,6 +115,9 @@ Process.prototype.reportDigitalReading = function (pin) {
 
 
 Process.prototype.digitalWrite = function (pin, booleanValue) {
+	var sprite = this.homeContext.receiver,
+		board = sprite.arduino.board; 
+
 	var val;
 	if (booleanValue) { val = board.HIGH } else { val = board.LOW };
 	board.digitalWrite(pin, val);
@@ -110,6 +125,9 @@ Process.prototype.digitalWrite = function (pin, booleanValue) {
 }
 
 Process.prototype.pwmWrite = function (pin, value) {
+	var sprite = this.homeContext.receiver,
+		board = sprite.arduino.board; 
+
 	board.analogWrite(pin, value);
 	return null;
 }
