@@ -1,8 +1,3 @@
-var portList = [];
-var serialport = require('serialport');
-
-setInterval(function(){ serialport.list(function (err, ports) { if(ports){ ports.forEach(function(each) { portList[each.comName] = each.comName })}})}, 500);
-
 function pinsSetToMode(aMode) {
 	var sprite = world.children[0].currentSprite,
 		board = sprite.arduino.board;
@@ -33,7 +28,7 @@ function overridenLabelPart(spec) {
 				null,
 				false,
 				function() {
-					return portList;
+					return world.arduino.portList;
 				},
 			   	true
 				);
