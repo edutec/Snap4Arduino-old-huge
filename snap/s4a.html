@@ -5,6 +5,9 @@
 		<title>Snap4Arduino 1.0.1-pre-alpha</title>
         <link rel="shortcut icon" href="http://snap.berkeley.edu/fav3.gif" type="image/gif">
 		<script type="text/javascript" src="morphic.js"></script>
+		<!-- <Snap4Arduino> -->
+		<script type="text/javascript" src="s4aMorphic.js"></script>
+		<!-- </Snap4Arduino> -->
 		<script type="text/javascript" src="widgets.js"></script>
 		<script type="text/javascript" src="blocks.js"></script>
 		<!-- <Snap4Arduino> -->
@@ -42,6 +45,9 @@
 				world = new WorldMorph(document.getElementById('world'));
 				new IDE_Morph().openIn(world);
 				setInterval(loop, 1);
+
+				// Starts arduino related processes
+				world.arduino.start();
 			};
 
 			function inform(title, message) { (new DialogBoxMorph()).inform(title, message, world) };
