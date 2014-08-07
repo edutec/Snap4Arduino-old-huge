@@ -13,23 +13,58 @@ WorldMorph.prototype.arduino = {
 };
 
 /**
+ * Locks the given port to prevent its use in other connection (until it is unlocked)
+ */
+WorldMorph.prototype.arduino.lockPort = function (port) {
+    var usedPorts = this.usedPorts;
+
+    if (usedPorts.indexOf(port) === -1) {
+        usedPorts.push(port);
+    }
+}
+
+/**
+ * Unlocks a previously Locked port to permit it's use in new connections
+ * Should be called when closing connections
+ */
+WorldMorph.prototype.arduino.unlockPort = function (port) {
+    var usedPorts = this.usedPorts;
+
+    if (usedPorts.indexOf(port) > -1) {
+        usedPorts.splice(usedPorts.indexOf(port));
+    }
+}
+
+/**
+ * Informs wether the port is locked or unlocked
+ */
+WorldMorph.prototype.arduino.isPortLocked = function (port) {
+    return (this.usedPorts.indexOf(port) > -1)
+}
+
+
+/**
  * Gets a list of available serial ports (paths) and return it through callback function
  */
 WorldMorph.prototype.arduino.getSerialPorts = function (callback) {
     var myself = this;
 
     var portList = [];
+    var portcheck = /usb|acm|^com/i;
 
     myself.serialport.list(function (err, ports) { 
         if(ports){ 
             ports.forEach(function(each) { 
-                portList[each.comName] = each.comName; 
+                if(!myself.isPortLocked(each.comName) && portcheck.test(each.comName)) {
+                    portList[each.comName] = each.comName; 
+                }
             });
         }
         callback(portList);
     });
     
 };
+
 
 /**
  * Startup required for Arduino
