@@ -1,3 +1,27 @@
+// userMenu proxy
+
+SpriteIconMorph.prototype.originalUserMenu = SpriteIconMorph.prototype.userMenu;
+
+overridenUserMenu = function () {
+	menu = this.originalUserMenu();
+	menu.addLine();
+	menu.addItem('connect to Arduino', function() { 
+		var portMenu = new MenuMorph(this, 'select a port');
+		world.arduino.portList.forEach(function(each) {
+   			portMenu.addItem(each, function() { 
+				// actually connect the Arduino to the port `each`
+			})
+		});
+		portMenu.popUpAtHand(world);
+	});
+	return menu;
+}
+
+SpriteIconMorph.prototype.userMenu = overridenUserMenu;
+
+
+// Snap4Arduino logo
+
 IDE_Morph.prototype.createLogo = function () {
     var myself = this;
 
