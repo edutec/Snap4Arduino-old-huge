@@ -1,4 +1,3 @@
-
 // blockTemplates() proxy
 
 StageMorph.prototype.originalBlockTemplates = StageMorph.prototype.blockTemplates;

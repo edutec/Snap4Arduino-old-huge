@@ -6,6 +6,7 @@ Process.prototype.connectArduino = function (port) {
 		if (sprite.arduino.board === undefined) {
 			sprite.arduino.board = new world.arduino.firmata.Board(port, function(err) { 
 				if (!err) { 
+					world.arduino.lockPort(port);
 					sprite.arduino.connecting = false;
 					sprite.arduino.justConnected = true;
 					sprite.arduino.board.connected = true;
