@@ -129,3 +129,47 @@ IDE_Morph.prototype.exportProject = function (name, plain) {
 function homePath() {
 	return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + ((process.platform == 'win32') ? '\\' : '/')
 }
+
+/**
+ * Override setLanguage function
+ */
+IDE_Morph.prototype.setLanguage = function (lang, callback) {
+    var translation = document.getElementById('language'),
+        src = 'lang-' + lang + '.js',
+        myself = this;
+    SnapTranslator.unload();
+    if (translation) {
+        document.head.removeChild(translation);
+    }
+    if (lang === 'en') {
+        return this.reflectLanguage('en', callback);
+    }
+    translation = document.createElement('script');
+    translation.id = 'language';
+    translation.onload = function () {
+        myself.reflectLanguage(lang, callback);
+    };
+    document.head.appendChild(translation);
+    translation.src = src;
+
+    // Load language script for s4a related functions
+    var s4a_translation = document.getElementById('s4a-language'),
+        s4a_src = 's4a-lang-' + lang + '.js',
+        myself = this;
+    SnapTranslator.unload();
+    if (s4a_translation) {
+        document.head.removeChild(s4a_translation);
+    }
+    if (lang === 'en') {
+        return this.reflectLanguage('en', callback);
+    }
+    s4a_translation = document.createElement('script');
+    s4a_translation.id = 's4a-language';
+    s4a_translation.onload = function () {
+        myself.reflectLanguage(lang, callback);
+    };
+    document.head.appendChild(s4a_translation);
+    s4a_translation.src = s4a_src;
+
+};
+
