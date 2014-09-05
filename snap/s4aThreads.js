@@ -1,3 +1,7 @@
+//
+// The folowwing code has been replaced by  function SpriteMorph.prototype.arduinoConnect() in s4aOnjects.js
+// It needs to be deleted once the change is approved
+/*
 Process.prototype.connectArduino = function (port) {
     var sprite = this.homeContext.receiver;
 
@@ -29,6 +33,7 @@ Process.prototype.connectArduino = function (port) {
 	this.pushContext('doYield');
 	this.pushContext();
 }
+*/
 
 Process.prototype.setPinMode = function (pin, mode) {
 	var sprite = this.homeContext.receiver,
