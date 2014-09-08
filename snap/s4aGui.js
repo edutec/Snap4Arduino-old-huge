@@ -5,15 +5,8 @@ SpriteIconMorph.prototype.originalUserMenu = SpriteIconMorph.prototype.userMenu;
 overridenUserMenu = function () {
 	menu = this.originalUserMenu();
 	menu.addLine();
-	menu.addItem('connect to Arduino', function() { 
-		var portMenu = new MenuMorph(this, 'select a port');
-		world.arduino.portList.forEach(function(each) {
-   			portMenu.addItem(each, function() { 
-				// actually connect the Arduino to the port `each`
-			})
-		});
-		portMenu.popUpAtHand(world);
-	});
+	var myself = this;
+	menu.addItem('connect to Arduino', function() { myself.object.arduinoAttemptConnection() });
 	return menu;
 }
 
