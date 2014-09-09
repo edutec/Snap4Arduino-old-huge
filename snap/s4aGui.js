@@ -7,6 +7,7 @@ overridenUserMenu = function () {
 	menu.addLine();
 	var myself = this;
 	menu.addItem('connect to Arduino', function() { myself.object.arduinoAttemptConnection() });
+	menu.addItem('disconnect Arduino', function() { myself.object.arduinoDisconnect() });
 	return menu;
 }
 
