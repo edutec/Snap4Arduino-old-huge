@@ -50,7 +50,7 @@ WorldMorph.prototype.arduino.getSerialPorts = function (callback) {
     var myself = this;
 
     var portList = [];
-    var portcheck = /usb|acm|^com/i;
+    var portcheck = /usb|DevB|rfcomm|acm|^com/i; // Not sure about rfcomm! We must dig further how bluetooth works in Gnu/Linux
 
     myself.serialport.list(function (err, ports) { 
         if(ports){ 
@@ -73,7 +73,7 @@ WorldMorph.prototype.arduino.getSerialPorts = function (callback) {
 WorldMorph.prototype.arduino.start = function () {
     var myself = this;
 
-    // Pollr list of serial ports
+    // Polls list of serial ports
     myself.portPollInterval = setInterval(function(){
          myself.getSerialPorts(function(portList) {
             myself.portList = portList;
