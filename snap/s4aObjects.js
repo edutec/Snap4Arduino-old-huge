@@ -51,7 +51,6 @@ SpriteMorph.prototype.arduinoAttemptConnection = function() {
 
 			// Get list of ports (arduino compatible)
 			var ports = world.arduino.getSerialPorts(function(ports) {
-
 				
 				var port;
 				
