@@ -2233,3 +2233,61 @@ ______
 ------
 * Objects, Threads: new “JavaScript function” primitive. Go figure…
 * GUI: updated Credits
+
+140728
+------
+* Lists: fixed "Load Failed Type Error Cannot read property 'isLinked' of null"
+* Threads: enable “JS function” block to create custom control structures and HOFs
+
+140729
+------
+* fixed #526, thanks, Bernat, for reporting it!
+* Objects, GUI: duplicate and clone nested sprites
+* GUI, Store: export and import nested sprites
+* Objects: double clicking on a sprite in the stage selects it in the IDE
+* Objects: added ‘move’ option to the sprite context menu, lets the user move (nested) sprites in edit mode without changing their layering, and also sprites marked “undraggable” 
+* updated Portuguese translation, thanks, Manuel!
+* updated German translation
+* Morphic: fixed #497 (prevent bubble shadows from getting cut-off)
+* Blocks: keep result-bubbles within the enclosing scripting pane
+
+140730
+------
+* Objects: propagate HIDE and SHOW to nested sprite parts
+* GUI: propagate DELETE to nested sprite parts
+* Blocks, Threads: export script pic with result bubble (shift-context-menu of reporter scripts)
+* updated Portuguese translation, thanks, Manuel!
+
+140813
+------
+* Threads, Blocks: enable Zombiefication of JS-Functions
+* Morphic: Fix #563 (Paste into Chrome), thanks, @Muon, for the hint!
+
+140917
+------
+* Threads, Objects, Store: Refactor variables handling, introducing Variable objects, all functionality stays the same
+
+140918
+------
+* Threads: fixed #174, replace UpvarReferences with references to Variable objects, fixes upvar scope issues
+
+140922
+------
+* Blocks: Make upvars mutable
+* GUI: fixed #585 (sprite name conflict with stage). Thanks, Michael, for the report!
+
+140929
+------
+* Threads: fixed #591 fully copy local variables for sprite duplicates and (Scratch-like) clones
+* Portuguese translation update, thanks, Manuel!
+* fixed #590 (Russian translation syntax glitches) Thanks @alexf2000 !
+* Paint: flood fill issue fixed, thanks, Kartik!
+
+140930
+------
+* Objects: fixed #593 match broadcast numbers with event hat blocks containing strings that can be parsed as numbers 
+* BYOB: allow percent symbols in custom block texts (fix #361), thanks, @Gubolin!!
+* Morphic: allow negative min/max values for sliders (fix #285), thanks, @Gubolin!!
+* Objects: fixed #378 (disable context menus for boolean representations)
+* Blocks: fixed #584
+

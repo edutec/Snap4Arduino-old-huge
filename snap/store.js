@@ -57,11 +57,11 @@ newCanvas, Costume, Sound, Audio, IDE_Morph, ScriptsMorph, BlockMorph,
 ArgMorph, InputSlotMorph, TemplateSlotMorph, CommandSlotMorph,
 FunctionSlotMorph, MultiArgMorph, ColorSlotMorph, nop, CommentMorph, isNil,
 localize, sizeOf, ArgLabelMorph, SVG_Costume, MorphicPreferences,
-SyntaxElementMorph*/
+SyntaxElementMorph, Variable*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.store = '2014-Jun-04';
+modules.store = '2014-September-17';
 
 
 // XML_Serializer ///////////////////////////////////////////////////////
@@ -618,6 +618,25 @@ SnapSerializer.prototype.loadSprites = function (xmlString, ide) {
         sprite.gotoXY(+model.attributes.x || 0, +model.attributes.y || 0);
         myself.loadObject(sprite, model);
     });
+
+    // restore nesting associations
+    project.stage.children.forEach(function (sprite) {
+        var anchor;
+        if (sprite.nestingInfo) { // only sprites may have nesting info
+            anchor = project.sprites[sprite.nestingInfo.anchor];
+            if (anchor) {
+                anchor.attachPart(sprite);
+            }
+            sprite.rotatesWithAnchor = (sprite.nestingInfo.synch === 'true');
+        }
+    });
+    project.stage.children.forEach(function (sprite) {
+        if (sprite.nestingInfo) { // only sprites may have nesting info
+            sprite.nestingScale = +(sprite.nestingInfo.scale || sprite.scale);
+            delete sprite.nestingInfo;
+        }
+    });
+
     this.objects = {};
     this.project = {};
     this.mediaDict = {};
@@ -711,8 +730,8 @@ SnapSerializer.prototype.loadVariables = function (varFrame, element) {
             return;
         }
         value = child.children[0];
-        varFrame.vars[child.attributes.name] = value ?
-                myself.loadValue(value) : 0;
+        varFrame.vars[child.attributes.name] = new Variable(value ?
+                myself.loadValue(value) : 0);
     });
 };
 
@@ -1490,7 +1509,7 @@ Sound.prototype.toXML = function (serializer) {
 VariableFrame.prototype.toXML = function (serializer) {
     var myself = this;
     return Object.keys(this.vars).reduce(function (vars, v) {
-        var val = myself.vars[v],
+        var val = myself.vars[v].value,
             dta;
         if (val === undefined || val === null) {
             dta = serializer.format('<variable name="@"/>', v);
