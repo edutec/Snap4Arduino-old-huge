@@ -1035,7 +1035,7 @@
 /*global window, HTMLCanvasElement, getMinimumFontHeight, FileReader, Audio,
 FileList, getBlurredShadowSupport*/
 
-var morphicVersion = '2014-July-11';
+var morphicVersion = '2014-September-30';
 var modules = {}; // keep track of additional loaded modules
 var useBlurredShadows = getBlurredShadowSupport(); // check for Chrome-bug
 
@@ -5120,7 +5120,7 @@ SpeechBubbleMorph.prototype.popUp = function (world, pos, isClickable) {
     this.addShadow(new Point(2, 2), 80);
     this.keepWithin(world);
     world.add(this);
-    this.changed();
+    this.fullChanged();
     world.hand.destroyTemporaries();
     world.hand.temporaries.push(this);
 
@@ -5916,14 +5916,14 @@ SliderMorph.prototype.setStart = function (num) {
     var newStart;
     if (typeof num === 'number') {
         this.start = Math.min(
-            Math.max(num, 0),
+            num,
             this.stop - this.size
         );
     } else {
         newStart = parseFloat(num);
         if (!isNaN(newStart)) {
             this.start = Math.min(
-                Math.max(newStart, 0),
+                newStart,
                 this.stop - this.size
             );
         }
@@ -10321,7 +10321,8 @@ WorldMorph.prototype.initEventListeners = function () {
                 }
                 event.preventDefault();
             }
-            if (event.ctrlKey || event.metaKey) {
+            if ((event.ctrlKey || event.metaKey) &&
+                    (event.keyIdentifier !== 'U+0056')) { // allow pasting-in
                 event.preventDefault();
             }
         },
