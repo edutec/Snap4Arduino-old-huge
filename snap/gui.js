@@ -69,7 +69,7 @@ SpeechBubbleMorph*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.gui = '2014-July-25';
+modules.gui = '2014-September-22';
 
 // Declarations
 
@@ -1824,17 +1824,16 @@ IDE_Morph.prototype.paintNewSprite = function () {
 IDE_Morph.prototype.duplicateSprite = function (sprite) {
     var duplicate = sprite.fullCopy();
 
-    duplicate.name = this.newSpriteName(sprite.name);
     duplicate.setPosition(this.world().hand.position());
-    this.stage.add(duplicate);
+    duplicate.appearIn(this);
     duplicate.keepWithin(this.stage);
-    this.sprites.add(duplicate);
-    this.corral.addSprite(duplicate);
     this.selectSprite(duplicate);
 };
 
 IDE_Morph.prototype.removeSprite = function (sprite) {
-    var idx = this.sprites.asArray().indexOf(sprite) + 1;
+    var idx, myself = this;
+    sprite.parts.forEach(function (part) {myself.removeSprite(part); });
+    idx = this.sprites.asArray().indexOf(sprite) + 1;
     this.stage.threads.stopAllForReceiver(sprite);
     sprite.destroy();
     this.stage.watchers().forEach(function (watcher) {
@@ -1860,7 +1859,7 @@ IDE_Morph.prototype.newSpriteName = function (name, ignoredSprite) {
         stem = (ix < 0) ? name : name.substring(0, ix),
         count = 1,
         newName = stem,
-        all = this.sprites.asArray().filter(
+        all = this.sprites.asArray().concat(this.stage).filter(
             function (each) {return each !== ignoredSprite; }
         ).map(
             function (each) {return each.name; }
@@ -2853,7 +2852,7 @@ IDE_Morph.prototype.exportGlobalBlocks = function () {
 };
 
 IDE_Morph.prototype.exportSprite = function (sprite) {
-    var str = this.serializer.serialize(sprite);
+    var str = this.serializer.serialize(sprite.allParts());
     window.open('data:text/xml,<sprites app="'
         + this.serializer.app
         + '" version="'

@@ -5,19 +5,120 @@ SpriteIconMorph.prototype.originalUserMenu = SpriteIconMorph.prototype.userMenu;
 overridenUserMenu = function () {
 	menu = this.originalUserMenu();
 	menu.addLine();
-	menu.addItem('connect to Arduino', function() { 
-		var portMenu = new MenuMorph(this, 'select a port');
-		world.arduino.portList.forEach(function(each) {
-   			portMenu.addItem(each, function() { 
-				// actually connect the Arduino to the port `each`
-			})
-		});
-		portMenu.popUpAtHand(world);
-	});
+	var myself = this;
+	menu.addItem('connect to Arduino', function() { myself.object.arduinoAttemptConnection() });
+	menu.addItem('disconnect Arduino', function() { myself.object.arduinoDisconnect() });
 	return menu;
 }
 
 SpriteIconMorph.prototype.userMenu = overridenUserMenu;
+
+
+// Addessing issue #24 : https://github.com/edutec/Snap4Arduino/issues/24
+// Remove all items that are not usable from menus, plus add a few more
+
+// Remove cloud button from control bar
+
+IDE_Morph.prototype.originalBuildPanes = IDE_Morph.prototype.buildPanes;
+
+overridenBuildPanes = function (){
+	var myself = this;
+
+	this.originalBuildPanes();
+	this.controlBar.cloudButton.hide();
+	
+	this.controlBar.originalFixLayout = this.controlBar.fixLayout;
+
+	overridenFixLayout = function () {
+		myself.controlBar.projectButton.setLeft(150);
+		myself.controlBar.updateLabel()
+	};
+
+	this.controlBar.fixLayout = overridenFixLayout;
+};
+
+IDE_Morph.prototype.buildPanes = overridenBuildPanes;
+
+
+// Remove cloud button from dialogs
+
+ProjectDialogMorph.prototype.originalAddSourceButton = ProjectDialogMorph.prototype.addSourceButton;
+
+overridenAddSourceButton = function(source, label, symbol) {
+	if (source != 'cloud') { this.originalAddSourceButton(source, label, symbol) }
+}
+
+ProjectDialogMorph.prototype.addSourceButton = overridenAddSourceButton;
+
+
+// Override Snap! menu to show stuff about Snap4Arduino as well
+// ToDo: Duplicate code! This is terrible style... we need to think of a better way 
+
+IDE_Morph.prototype.snapMenu = function () {
+    var menu,
+        world = this.world();
+
+    menu = new MenuMorph(this);
+    menu.addItem('About Snap!...', 'aboutSnap');
+    menu.addLine();
+    menu.addItem(
+        'Snap! reference manual',
+        function () {
+			window.open('http://snap.berkeley.edu/snapsource/help/SnapManual.pdf', 'SnapReferenceManual');
+        }
+    );
+    menu.addItem(
+        'Snap! website',
+        function () {
+            window.open('http://snap.berkeley.edu/', 'SnapWebsite');
+        }
+    );
+    menu.addItem('Snap4Arduino website', 
+		function() {
+			window.open('http://s4a.cat/snap', 'Snap4ArduinoWebsite'); 
+		}
+	);
+    menu.addItem(
+        'Download Snap! source',
+        function () {
+            window.open(
+                'http://snap.berkeley.edu/snapsource/snap.zip',
+                'SnapSource'
+            );
+        }
+    );
+	menu.addItem(
+        'Snap4Arduino repository',
+        function () {
+            window.open(
+                'http://github.com/edutec/Snap4Arduino',
+                'SnapSource'
+            );
+        }
+    );
+
+    if (world.isDevMode) {
+        menu.addLine();
+        menu.addItem(
+            'Switch back to user mode',
+            'switchToUserMode',
+            'disable deep-Morphic\ncontext menus'
+                + '\nand show user-friendly ones',
+            new Color(0, 100, 0)
+        );
+    } else if (world.currentKey === 16) { // shift-click
+        menu.addLine();
+        menu.addItem(
+            'Switch to dev mode',
+            'switchToDevMode',
+            'enable Morphic\ncontext menus\nand inspectors,'
+                + '\nnot user-friendly!',
+            new Color(100, 0, 0)
+        );
+    }
+    menu.popup(world, this.logo.bottomLeft());
+};
+
 
 
 // Snap4Arduino logo
@@ -129,3 +230,47 @@ IDE_Morph.prototype.exportProject = function (name, plain) {
 function homePath() {
 	return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + ((process.platform == 'win32') ? '\\' : '/')
 }
+
+/**
+ * Override setLanguage function
+ */
+IDE_Morph.prototype.setLanguage = function (lang, callback) {
+    var translation = document.getElementById('language'),
+        src = 'lang-' + lang + '.js',
+        myself = this;
+    SnapTranslator.unload();
+    if (translation) {
+        document.head.removeChild(translation);
+    }
+    if (lang === 'en') {
+        return this.reflectLanguage('en', callback);
+    }
+    translation = document.createElement('script');
+    translation.id = 'language';
+    translation.onload = function () {
+        myself.reflectLanguage(lang, callback);
+    };
+    document.head.appendChild(translation);
+    translation.src = src;
+
+    // Load language script for s4a related functions
+    var s4a_translation = document.getElementById('s4a-language'),
+        s4a_src = 's4a-lang-' + lang + '.js',
+        myself = this;
+    SnapTranslator.unload();
+    if (s4a_translation) {
+        document.head.removeChild(s4a_translation);
+    }
+    if (lang === 'en') {
+        return this.reflectLanguage('en', callback);
+    }
+    s4a_translation = document.createElement('script');
+    s4a_translation.id = 's4a-language';
+    s4a_translation.onload = function () {
+        myself.reflectLanguage(lang, callback);
+    };
+    document.head.appendChild(s4a_translation);
+    s4a_translation.src = s4a_src;
+
+};
+

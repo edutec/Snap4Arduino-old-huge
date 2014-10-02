@@ -37,12 +37,13 @@ SpriteMorph.prototype.arduinoHideMessage = function(text) {
 	var sprite = this;
 
 	if (sprite.arduino.message) {
-		sprite.arduino.message.hide();
+		sprite.arduino.message.cancel();
+		sprite.arduino.message = null;
 	}
 }
 
 
-SpriteMorph.prototype.arduinoConnect = function() {
+SpriteMorph.prototype.arduinoAttemptConnection = function() {
 	var sprite = this;
 
 	if (!sprite.arduino.connecting) {
@@ -50,99 +51,31 @@ SpriteMorph.prototype.arduinoConnect = function() {
 
 			// Get list of ports (arduino compatible)
 			var ports = world.arduino.getSerialPorts(function(ports) {
+
+				
+				var port;
+				
 				// Check if there is at least one port on ports object (which for some reason was defined as an array)
-				if (Object.keys(ports).length > 0) {
-					var port = ports[Object.keys(ports)[0]]; //Choose the first compatible port
-					//We need to change the above instruction if the user is to select the port when there is more than one
-
-					sprite.arduinoShowMessage("Connecting board at port\n"+port);
-					sprite.arduino.connecting = true;
-
-					sprite.arduino.board = new world.arduino.firmata.Board(port, function(err) { 
-						if (!err) { 
-							var disconnectionAction = function() {
-								sprite.arduino.disconnected = true;
-								var port = sprite.arduino.board.sp.path;
-							}
-							
-							var closeAction = function() {
-								var port = sprite.arduino.board.sp.path;
-
-								sprite.arduino.board.removeListener('disconnect', disconnectionAction);
-								sprite.arduino.board.removeListener('close', closeAction);
-								sprite.arduino.board.removeListener('error', errorAction);
-								world.arduino.unlockPort(sprite.arduino.port);
-								sprite.arduino.connecting = false;
-
-								//Following is a trick to keep oldboards alive in case of conflict with pending processes
-								if (!sprite.arduino.oldboards) {sprite.arduino.oldboards = []};
-								sprite.arduino.oldboards.push(sprite.arduino.board);
-
-								sprite.arduino.board = undefined;
-
-								if (sprite.arduino.disconnected) {
-									inform(sprite.name, 'Board was disconnected from port\n'+port+'\n\nIt seems that someone pulled the cable!');
-									sprite.arduino.disconnected = false;
-								} else {
-									inform(sprite.name, 'Board was disconnected from port\n'+port);
-								}
-								
-
-							}
-							
-							var errorAction = function(err) {
-								inform(sprite.name, 'En error was detected on the board\n\n'+err)
-							}
-							
-							sprite.arduino.board.sp.on('disconnect', disconnectionAction);
-							sprite.arduino.board.sp.on('close', closeAction);
-							sprite.arduino.board.sp.on('error', errorAction);
-
-
-							world.arduino.lockPort(port);
-							sprite.arduino.port = sprite.arduino.board.sp.path;
-							sprite.arduino.connecting = false;
-							sprite.arduino.justConnected = true;
-							sprite.arduino.board.connected = true;
-
-							sprite.arduinoHideMessage();
-							inform(sprite.name, 'An Arduino board has been connected. Happy prototyping!');   
-						} else {
-							sprite.arduinoHideMessage();
-							inform(sprite.name, 'Error connecting the board. '+err);
-						}
-						return;
+				if (Object.keys(ports).length == 0) {
+					inform(sprite.name, localize('Could not connect an Arduino\nNo boards found'));
+					return;
+				} else if (Object.keys(ports).length == 1) {
+					port = ports[Object.keys(ports)[0]]; //Choose the first compatible port
+					sprite.arduinoConnect(port);
+				} else if (Object.keys(ports).length > 1) { 
+					var portMenu = new MenuMorph(this, 'select a port');
+					Object.keys(ports).forEach(function(each) {
+						portMenu.addItem(each, function() { 
+							port = each;
+							sprite.arduinoConnect(port);
+						})
 					});
-
-					// Set timeout to check if device does not speak firmata (in such case new Board callback was never called, but board objects exists) 
-					setTimeout(function() {
-						// If board.versionReceived = false, the board has not established a firmata connection
-						if (sprite.arduino.board && !sprite.arduino.board.versionReceived) {
-							var port = sprite.arduino.board.sp.path;
-
-							sprite.arduinoHideMessage();
-							inform(sprite.name, 'Could not talk to Arduino in port\n'+port+ '\n\n'+'Check if firmata is loaded.')
-							
-							// Close the board connection
-							sprite.arduino.board.sp.close();
-							world.arduino.unlockPort(sprite.arduino.port);
-							sprite.arduino.connecting = false;
-							
-							//Following is a trick to keep oldboards alive in case of conflict with pending processes
-							if (!sprite.arduino.oldboards) {sprite.arduino.oldboards = []};
-							sprite.arduino.oldboards.push(sprite.arduino.board);
-
-							sprite.arduino.board = undefined;
-						}
-					}, 30000)
-
-				} else {
-					inform(sprite.name, 'Could not connect an Arduino\nNo boards found')
+					portMenu.popUpAtHand(world);		
 				}
 
 			});
 		} else {
-			inform(sprite.name, 'There is already a board connected to this sprite');
+			inform(sprite.name, localize('There is already a board connected to this sprite'));
 		}
 	}
 
@@ -153,16 +86,97 @@ SpriteMorph.prototype.arduinoConnect = function() {
 
 }
 
+SpriteMorph.prototype.arduinoConnect = function(port) {
+	
+	var sprite = this;
+
+	sprite.arduinoShowMessage("Connecting board at port\n"+port);
+	sprite.arduino.connecting = true;
+
+	sprite.arduino.board = new world.arduino.firmata.Board(port, function(err) { 
+		if (!err) { 
+			var disconnectionAction = function() {
+				sprite.arduino.disconnected = true;
+				var port = sprite.arduino.board.sp.path;
+			}
+			
+			var closeAction = function() {
+				var port = sprite.arduino.board.sp.path;
+
+				sprite.arduino.board.removeListener('disconnect', disconnectionAction);
+				sprite.arduino.board.removeListener('close', closeAction);
+				sprite.arduino.board.removeListener('error', errorAction);
+				world.arduino.unlockPort(sprite.arduino.port);
+				sprite.arduino.connecting = false;
+
+				//Following is a trick to keep oldboards alive in case of conflict with pending processes
+				if (!sprite.arduino.oldboards) {sprite.arduino.oldboards = []};
+				sprite.arduino.oldboards.push(sprite.arduino.board);
+
+				sprite.arduino.board = undefined;
+
+				if (sprite.arduino.disconnected) {
+					inform(sprite.name, localize('Board was disconnected from port\n')+port+'\n\nIt seems that someone pulled the cable!');
+					sprite.arduino.disconnected = false;
+				} else {
+					inform(sprite.name, localize('Board was disconnected from port\n')+port);
+				}
+			}
+						
+			var errorAction = function(err) {
+				inform(sprite.name, localize('An error was detected on the board\n\n')+err)
+			}
+						
+			sprite.arduino.board.sp.on('disconnect', disconnectionAction);
+			sprite.arduino.board.sp.on('close', closeAction);
+			sprite.arduino.board.sp.on('error', errorAction);
+
+			world.arduino.lockPort(port);
+			sprite.arduino.port = sprite.arduino.board.sp.path;
+			sprite.arduino.connecting = false;
+			sprite.arduino.justConnected = true;
+			sprite.arduino.board.connected = true;
+
+			sprite.arduinoHideMessage();
+			inform(sprite.name, localize('An Arduino board has been connected. Happy prototyping!'));   
+		} else {
+			sprite.arduinoHideMessage();
+			inform(sprite.name, localize('Error connecting the board.')+' '+err);
+		}
+		return;
+	});
+
+	// Set timeout to check if device does not speak firmata (in such case new Board callback was never called, but board objects exists) 
+	setTimeout(function() {
+		// If board.versionReceived = false, the board has not established a firmata connection
+		if (sprite.arduino.board && !sprite.arduino.board.versionReceived) {
+			var port = sprite.arduino.board.sp.path;
+
+			sprite.arduinoHideMessage();
+			inform(sprite.name, localize('Could not talk to Arduino in port\n')+port+ '\n\n'+localize('Check if firmata is loaded.'))
+							
+			// Close the board connection
+			sprite.arduino.board.sp.close();
+			world.arduino.unlockPort(sprite.arduino.port);
+			sprite.arduino.connecting = false;
+							
+			//Following is a trick to keep oldboards alive in case of conflict with pending processes
+			if (!sprite.arduino.oldboards) {sprite.arduino.oldboards = []};
+			sprite.arduino.oldboards.push(sprite.arduino.board);
+
+			sprite.arduino.board = undefined;
+		}
+	}, 20000)
+}
+
 SpriteMorph.prototype.arduinoDisconnect = function() {
 	var sprite = this;
 
 	if (sprite.arduino.board) {
 		sprite.arduino.board.sp.close();
 	} else {
-		inform(sprite.name, 'Board is not connected')
+		inform(sprite.name, localize('Board is not connected'))
 	}
-
-	
 }
 
 // blockTemplates() proxy
@@ -219,7 +233,7 @@ function overridenBlockTemplates(category) {
     var arduinoConnectButton = new PushButtonMorph(
             null,
             function () {
-                myself.arduinoConnect();
+                myself.arduinoAttemptConnection();
             },
             'Connect Arduino'
     );
