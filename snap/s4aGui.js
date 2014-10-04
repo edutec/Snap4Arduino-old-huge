@@ -30,6 +30,7 @@ overridenBuildPanes = function (){
 	this.controlBar.originalFixLayout = this.controlBar.fixLayout;
 
 	overridenFixLayout = function () {
+        myself.controlBar.originalFixLayout();
 		myself.controlBar.projectButton.setLeft(150);
 		myself.controlBar.updateLabel()
 	};
