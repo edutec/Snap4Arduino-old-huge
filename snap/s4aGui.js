@@ -40,6 +40,14 @@ overridenBuildPanes = function (){
 
 IDE_Morph.prototype.buildPanes = overridenBuildPanes;
 
+// Hide cloud button when toggleAppMode is called (when changing language, opening projects, ...)
+IDE_Morph.prototype.originalToggleAppMode = IDE_Morph.prototype.toggleAppMode;
+
+IDE_Morph.prototype.toggleAppMode = function(mode) {
+    this.originalToggleAppMode(mode);
+    this.controlBar.cloudButton.hide();
+}
+
 
 // Remove cloud button from dialogs
 
