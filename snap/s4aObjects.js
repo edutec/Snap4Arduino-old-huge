@@ -218,7 +218,8 @@ SpriteMorph.prototype.initBlocks = function() {
 		only: SpriteMorph,
 		type: 'command',
 		category: 'arduino',
-		spec: 'setup digital pin %digitalPin as %pinMode'
+		spec: 'setup digital pin %digitalPin as %pinMode',
+		defaults: [null, 'servo']
 	};
 
 	this.blocks.digitalWrite =
@@ -234,7 +235,8 @@ SpriteMorph.prototype.initBlocks = function() {
 		only: SpriteMorph,
 		type: 'command',
 		category: 'arduino',
-		spec: 'set servo %servoPin to %servoValue'
+		spec: 'set servo %servoPin to %servoValue',
+		defaults: [null, 'clockwise']
 	};
 
 	this.blocks.pwmWrite =
