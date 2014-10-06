@@ -183,27 +183,91 @@ SpriteMorph.prototype.arduinoDisconnect = function() {
 SpriteMorph.prototype.categories.push('arduino');
 SpriteMorph.prototype.blockColor['arduino'] = new Color(64, 136, 182);
 
+SpriteMorph.prototype.originalInitBlocks = SpriteMorph.prototype.initBlocks;
+
+SpriteMorph.prototype.initBlocks = function() {
+	
+	this.originalInitBlocks();
+
+	this.blocks.reportAnalogReading = 
+	{
+		only: SpriteMorph,
+       	type: 'reporter',
+        category: 'arduino',
+        spec: 'analog reading %analogPin'
+	};
+
+	this.blocks.reportDigitalReading = 
+	{
+		only: SpriteMorph,
+        type: 'reporter',
+		category: 'arduino',
+		spec: 'digital reading %digitalPin',
+	};
+
+	this.blocks.connectArduino =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'connect arduino at %port'
+	};
+
+	this.blocks.setPinMode =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'setup digital pin %digitalPin as %pinMode'
+	};
+
+	this.blocks.digitalWrite =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'set digital pin %digitalPin to %b'
+	};
+
+	this.blocks.servoWrite =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'set servo %servoPin to %servoValue'
+	};
+
+	this.blocks.pwmWrite =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'set PWM pin %pwmPin to %n'
+	};
+
+}
+
 // blockTemplates proxy
 
-StageMorph.prototype.originalBlockTemplates = StageMorph.prototype.blockTemplates;
 SpriteMorph.prototype.originalBlockTemplates = SpriteMorph.prototype.blockTemplates;
 
 // Definition of our new primitive blocks
 
-function overridenBlockTemplates(category) {
+SpriteMorph.prototype.blockTemplates = function(category) {
 	var myself = this;
+
+	var blocks = myself.originalBlockTemplates(category); 
 
 	if (!this.arduino) {
 		this.arduino = {
 			board : undefined,		// Reference to arduino board - to be created by new firmata.Board()
 			connecting : false,		// Mark to avoid multiple attempts to connect
-			justconnected: false,	// Mark to avoid double attempts
+			justConnected: false,	// Mark to avoid double attempts
 		};
 	}
 
-	/**
-     *  Button that triggers a connection attempt 
-     */
+	//  Button that triggers a connection attempt 
+
     var arduinoConnectButton = new PushButtonMorph(
             null,
             function () {
@@ -212,9 +276,8 @@ function overridenBlockTemplates(category) {
             'Connect Arduino'
     );
 
-    /**
-     * Button that triggers a disconnection from board
-     */
+    //  Button that triggers a disconnection from board
+
     var arduinoDisconnectButton = new PushButtonMorph(
             null,
             function () {
@@ -223,63 +286,12 @@ function overridenBlockTemplates(category) {
             'Disconnect Arduino'
     );
 
-	SpriteMorph.prototype.blocks.reportAnalogReading = 
-	{
-       	type: 'reporter',
-        category: 'arduino',
-        spec: 'analog reading %analogPin'
-	};
-
-	SpriteMorph.prototype.blocks.reportDigitalReading = 
-	{
-        type: 'reporter',
-		category: 'arduino',
-		spec: 'digital reading %digitalPin'
-	};
-
-	SpriteMorph.prototype.blocks.connectArduino =
-	{
-		type: 'command',
-		category: 'arduino',
-		spec: 'connect arduino at %port'
-	};
-
-	SpriteMorph.prototype.blocks.setPinMode =
-	{
-		type: 'command',
-		category: 'arduino',
-		spec: 'setup digital pin %digitalPin as %pinMode'
-	};
-
-	SpriteMorph.prototype.blocks.digitalWrite =
-	{
-		type: 'command',
-		category: 'arduino',
-		spec: 'set digital pin %digitalPin to %b'
-	};
-
-	SpriteMorph.prototype.blocks.servoWrite =
-	{
-		type: 'command',
-		category: 'arduino',
-		spec: 'set servo %servoPin to %servoValue'
-	};
-
-	SpriteMorph.prototype.blocks.pwmWrite =
-	{
-		type: 'command',
-		category: 'arduino',
-		spec: 'set PWM pin %pwmPin to %n'
-	};
-
-	// *this* will either be StageMorph or SpriteMorph
-	var blocks = this.originalBlockTemplates(category); 
-
 	function blockBySelector(selector) {
+		console.log(selector);
         var newBlock = SpriteMorph.prototype.blockForSelector(selector, true);
         newBlock.isTemplate = true;
         return newBlock;
-    }
+    };
 
 	if (category === 'arduino') {
 		blocks.push(arduinoConnectButton);
@@ -293,10 +305,7 @@ function overridenBlockTemplates(category) {
 		blocks.push('-');
         blocks.push(blockBySelector('reportAnalogReading'));
         blocks.push(blockBySelector('reportDigitalReading'));
-	}
+	};
 
 	return blocks;
 }
-
-StageMorph.prototype.blockTemplates = overridenBlockTemplates;
-SpriteMorph.prototype.blockTemplates = overridenBlockTemplates;
