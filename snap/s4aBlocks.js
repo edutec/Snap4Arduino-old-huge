@@ -39,12 +39,11 @@ SyntaxElementMorph.prototype.labelPart = function(spec) {
 				false,
 				{
 					'angle (0-180)' : 90,
-					'stopped' : ['stopped'] , 
-					'clockwise' : ['clockwise'] ,
+					'stopped' : ['stopped'], 
+					'clockwise' : ['clockwise'],
 				 	'counter-clockwise' : ['counter-clockwise']
 				}
 				);
-			part.setContents(['clockwise']);
 			break;
 		case '%pinMode':
 			part = new InputSlotMorph(
@@ -53,12 +52,11 @@ SyntaxElementMorph.prototype.labelPart = function(spec) {
 				{
 					'digital input' : ['digital input'],
 					'digital output' : ['digital output'] ,
-				 	'PWM' : ['PWM'] ,
+				 	'PWM' : ['PWM'],
 				 	'servo' : ['servo']
 				},
 				true
 				);
-			part.setContents(['servo']);
 			break;
 		case '%servoPin':
 			part = new InputSlotMorph(
