@@ -1,5 +1,5 @@
 // Force disconnection of connected srpites before opening a new project
-SnapSerializer.prototype.OriginalOpenProject = SnapSerializer.prototype.openProject;
+SnapSerializer.prototype.originalOpenProject = SnapSerializer.prototype.openProject;
 
 SnapSerializer.prototype.openProject = function (project, ide) {
     // Disconnect each sprite before opening the new project
@@ -10,6 +10,6 @@ SnapSerializer.prototype.openProject = function (project, ide) {
         }
     })
 
-    this.OriginalOpenProject(project,ide);
+    this.originalOpenProject(project, ide);
 }
 

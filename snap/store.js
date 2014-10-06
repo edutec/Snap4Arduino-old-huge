@@ -61,7 +61,7 @@ SyntaxElementMorph, Variable*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.store = '2014-September-17';
+modules.store = '2014-October-01';
 
 
 // XML_Serializer ///////////////////////////////////////////////////////
@@ -1393,7 +1393,7 @@ StageMorph.prototype.toXML = function (serializer) {
             '<blocks>%</blocks>' +
             '<variables>%</variables>' +
             '</project>',
-        (ide && ide.projectName) ? ide.projectName : 'Untitled',
+        (ide && ide.projectName) ? ide.projectName : localize('Untitled'),
         serializer.app,
         serializer.version,
         (ide && ide.projectNotes) ? ide.projectNotes : '',
