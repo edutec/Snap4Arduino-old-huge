@@ -41,11 +41,12 @@ s4aTempDict = {
     */
 
     // arduino:
+	
 	'digital input':
 		'entrada digital',
 
 	'digital output':
-		'salida digital',
+		'sortida digital',
 
 	'PWM':
 		'PWM',
@@ -54,84 +55,84 @@ s4aTempDict = {
 		'servo',
 
 	'clockwise':
-		'sentido horario',
+		'sentit horari',
 
 	'counter-clockwise':
-		'sentido anti-horario',
+		'sentit anti-horari',
 
 	'stopped':
-		'parado',
+		'aturat',
 
 	'angle (0-180)':
-		'ángulo (0-180)',
+		'angle (0-180)',
 
     'connect to Arduino':
-        'conectar a Arduino',
+        'connectar a Arduino',
 
     'disconnect Arduino':
-        'desconectar Arduino',
+        'desconnectar Arduino',
 
-	'Connect Arduino':
-        'Conectar Arduino',
+    'Connect Arduino':
+        'Connectar Arduino',
 
     'Disconnect Arduino':
-        'Desconectar Arduino',
+        'Desconnectar Arduino',
 
     'analog reading %analogPin':
-        'lectura analógica %analogPin',
+        'lectura analògica %analogPin',
 
     'digital reading %digitalPin':
         'lectura digital %digitalPin',
 
     'connect arduino at %port':
-        'conectar arduino en puerta %port',
+        'connectar arduino al port %port',
 
     'setup digital pin %digitalPin as %pinMode':
-        'configurar pin %digitalPin como %pinMode',
+        'configurar pin %digitalPin com a %pinMode',
 
     'set digital pin %digitalPin to %b':
-        'fijar pin digital %digitalPin en %b',
+        'posar pin digital %digitalPin a %b',
 
     'set servo %servoPin to %servoValue':
-        'fijar servo %servoPin en %servoValue',
+        'posar servo %servoPin a %servoValue',
 
     'set PWM pin %pwmPin to %n':
-        'fijar pin PWM %pwmPin en %n',
+        'posar pin PWM %pwmPin a %n',
 
     'Connecting board at port\n': 
-        'Conectando tarjeta en la puerta\n',
+        'Connectando placa al port\n',
 
     'An Arduino board has been connected. Happy prototyping!':
-        'Se conectó exitosamente una tarjeta Arduino.\n¡Feliz prototipeo!',
+        'S\'ha connectat correctament una placa Arduino.\nFeliç prototipatge!',
 
     'Board was disconnected from port\n':
-        'Se deconectó la tarjeta de la puerta\n',
+        'S\'ha desconnectat la placa del port\n',
 
     'It seems that someone pulled the cable!':
-        '¡Parece que alguien desconectó el cable!',
+        'Sembla que algú ha desconnectat el cable!',
 
     'Error connecting the board.':
-        'Error al conectar la tarjeta',
+        'Error al connectar la placa',
 
     'There is already a board connected to this sprite':
-        'Ya existe una tarjeta conectada a este objeto',
+        'Aquest objecte ja té una placa connectada',
 
     'Could not connect an Arduino\nNo boards found':
-        'No se pudo conectar un Arduino\nNo es encontró ninguna tarjeta',
+        'No s\'ha pogut connectar cap Arduino\nNo s\'ha trobat cap placa',
 
     'Could not talk to Arduino in port\n':
-        'No se pudo comunicar con Arduino en la puerta\n',
+        'No s\'ha pogut establir comunicació amb Arduino al port\n',
 
     'Check if firmata is loaded.':
-        'Revisar si tiene cargado el firmware Firmata.',
+        'Reviseu que Firmata hi estigui carregat.',
 
     'An error was detected on the board\n\n':
-        'Se detectó un error en la tarjeta\n\n',
+        'S\'ha detectat un error a la placa\n\n',
 
     'Board is not connected':
-        'La tarjeta no está conectada'
+        'La placa no està connectada'
 
 };
 
-// Add attributes to original SnapTranslator.dict.es
-for (var attrname in s4aTempDict) { SnapTranslator.dict.es[attrname] = s4aTempDict[attrname]; }
+// Add attributes to original SnapTranslator.dict.ca
+for (var attrname in s4aTempDict) { SnapTranslator.dict.ca[attrname] = s4aTempDict[attrname]; }
