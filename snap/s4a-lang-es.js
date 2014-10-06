@@ -41,7 +41,37 @@ s4aTempDict = {
     */
 
     // arduino:
-    'Connect Arduino':
+	'digital input':
+		'entrada digital',
+
+	'digital output':
+		'salida digital',
+
+	'PWM':
+		'PWM',
+
+	'servo':
+		'servo',
+
+	'clockwise':
+		'sentido horario',
+
+	'counter-clockwise':
+		'sentido anti-horario',
+
+	'stopped':
+		'parado',
+
+	'angle (0-180)':
+		'ángulo (0-180)',
+
+    'connect to Arduino':
+        'conectar a Arduino',
+
+    'disconnect Arduino':
+        'desconectar Arduino',
+
+	'Connect Arduino':
         'Conectar Arduino',
 
     'Disconnect Arduino':
