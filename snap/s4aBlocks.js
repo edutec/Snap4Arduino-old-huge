@@ -20,7 +20,7 @@ function pinsSetToMode(aMode) {
 
 SyntaxElementMorph.prototype.originalLabelPart = SyntaxElementMorph.prototype.labelPart;
 
-function overridenLabelPart(spec) {
+SyntaxElementMorph.prototype.labelPart = function(spec) {
 	var part;
 	switch (spec) {
 		case '%port':
@@ -141,4 +141,3 @@ function overridenLabelPart(spec) {
 	return part;
 }
 
-SyntaxElementMorph.prototype.labelPart = overridenLabelPart
