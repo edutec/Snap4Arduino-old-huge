@@ -44,16 +44,33 @@
 				process.exit(1);
     		});*/
 			var world;
+			var ide;
+
 			window.onload = function () {
 				world = new WorldMorph(document.getElementById('world'));
-				new IDE_Morph().openIn(world);
+
+				ide = new IDE_Morph();
+				ide.openIn(world);
+
+				ide.inform = function(title, message, callback) { 
+						var myself = this;
+						if (!myself.informing) {
+							var box = new DialogBoxMorph();
+							myself.informing = true;
+							box.ok = function() { 
+								myself.informing = false;
+								if (callback) { callback() };
+								this.accept();
+							};
+							box.inform(title, message, world)
+						}
+				};
+
 				setInterval(loop, 1);
 
 				// Starts arduino related processes
-				world.arduino.start();
+				world.Arduino.start();
 			};
-
-			function inform(title, message) { (new DialogBoxMorph()).inform(title, message, world) };
 
 			function loop() {
 				world.doOneCycle();

@@ -1,182 +1,178 @@
-SpriteMorph.prototype.arduinoShowMessage = function(msg) {
-	var sprite = this;
+// init proxy
 
-	if (!sprite.arduino.message) {
-		sprite.arduino.message = new DialogBoxMorph();
-	}
-	
-    var txt = new TextMorph(
-        msg,
-        this.fontSize,
-        this.fontStyle,
-        true,
-        false,
-        'center',
-        null,
-        null,
-        MorphicPreferences.isFlat ? null : new Point(1, 1),
-        new Color(255, 255, 255)
-    );
+SpriteMorph.prototype.originalInit = SpriteMorph.prototype.init;
 
-    if (!sprite.arduino.message.key) {
-        sprite.arduino.message.key = 'message' + sprite.name + msg;
-    }
+SpriteMorph.prototype.init = function() {
+	var myself = this;
+	myself.originalInit();
 
-    sprite.arduino.message.labelString = sprite.name;
-    sprite.arduino.message.createLabel();
-    if (msg) {
-        sprite.arduino.message.addBody(txt);
-    }
-    sprite.arduino.message.drawNew();
-    sprite.arduino.message.fixLayout();
-    sprite.arduino.message.popUp(world);
-    sprite.arduino.message.show();
-}
+	myself.arduino = {
+		board : undefined,		// Reference to arduino board - to be created by new firmata.Board()
+		connecting : false,		// Mark to avoid multiple attempts to connect
+		justConnected: false,	// Mark to avoid double attempts
+	};
 
-SpriteMorph.prototype.arduinoHideMessage = function(text) {
-	var sprite = this;
+	myself.arduino.disconnect = function() {
 
-	if (sprite.arduino.message) {
-		sprite.arduino.message.cancel();
-		sprite.arduino.message = null;
-	}
-}
-
-
-SpriteMorph.prototype.arduinoAttemptConnection = function() {
-	var sprite = this;
-
-	if (!sprite.arduino.connecting) {
-		if (sprite.arduino.board === undefined) {
-
-			// Get list of ports (arduino compatible)
-			var ports = world.arduino.getSerialPorts(function(ports) {
-				
-				var port;
-				
-				// Check if there is at least one port on ports object (which for some reason was defined as an array)
-				if (Object.keys(ports).length == 0) {
-					inform(sprite.name, localize('Could not connect an Arduino\nNo boards found'));
-					return;
-				} else if (Object.keys(ports).length == 1) {
-					port = ports[Object.keys(ports)[0]]; //Choose the first compatible port
-					sprite.arduinoConnect(port);
-				} else if (Object.keys(ports).length > 1) { 
-					var portMenu = new MenuMorph(this, 'select a port');
-					Object.keys(ports).forEach(function(each) {
-						portMenu.addItem(each, function() { 
-							port = each;
-							sprite.arduinoConnect(port);
-						})
-					});
-					portMenu.popUpAtHand(world);		
-				}
-
-			});
+		if (myself.arduino.board) {
+			myself.arduino.board.sp.close();
 		} else {
-			inform(sprite.name, localize('There is already a board connected to this sprite'));
+			ide.inform(myself.name, localize('Board is not connected'))
 		}
 	}
 
-	if (sprite.arduino.justConnected) {
-		sprite.arduino.justConnected = undefined;
-		return;
+	myself.arduino.showMessage = function(msg) {
+		if (!myself.arduino.message) { myself.arduino.message = new DialogBoxMorph() };
+	
+		var txt = new TextMorph(
+			msg,
+	        this.fontSize,
+			this.fontStyle,
+			true,
+			false,
+			'center',
+			null,
+			null,
+			MorphicPreferences.isFlat ? null : new Point(1, 1),
+			new Color(255, 255, 255)
+		);
+
+		if (!myself.arduino.message.key) { myself.arduino.message.key = 'message' + myself.name + msg };
+
+		myself.arduino.message.labelString = myself.name;
+		myself.arduino.message.createLabel();
+		if (msg) { myself.arduino.message.addBody(txt) };
+		myself.arduino.message.drawNew();
+		myself.arduino.message.fixLayout();
+		myself.arduino.message.popUp(world);
+		myself.arduino.message.show();
 	}
 
-}
+	myself.arduino.hideMessage = function() {
+		if (myself.arduino.message) {
+			myself.arduino.message.cancel();
+			myself.arduino.message = null;
+		}
+	}
 
-SpriteMorph.prototype.arduinoConnect = function(port) {
+	myself.arduino.attemptConnection = function() {
+		if (!myself.arduino.connecting) {
+			if (myself.arduino.board === undefined) {
+
+				// Get list of ports (Arduino compatible)
+				var ports = world.Arduino.getSerialPorts(function(ports) {
+				
+					var port;
+				
+					// Check if there is at least one port on ports object (which for some reason was defined as an array)
+					if (Object.keys(ports).length == 0) {
+						ide.inform(myself.name, localize('Could not connect an Arduino\nNo boards found'));
+						return;
+					} else if (Object.keys(ports).length == 1) {
+						port = ports[Object.keys(ports)[0]]; // Choose the first compatible port
+						myself.arduino.connect(port);
+					} else if (Object.keys(ports).length > 1) { 
+						var portMenu = new MenuMorph(this, 'select a port');
+						Object.keys(ports).forEach(function(each) {
+							portMenu.addItem(each, function() { 
+								port = each;
+								myself.arduino.connect(port);
+							})
+						});
+						portMenu.popUpAtHand(world);		
+					}
 	
-	var sprite = this;
-
-	sprite.arduinoShowMessage("Connecting board at port\n"+port);
-	sprite.arduino.connecting = true;
-
-	sprite.arduino.board = new world.arduino.firmata.Board(port, function(err) { 
-		if (!err) { 
-			var disconnectionAction = function() {
-				sprite.arduino.disconnected = true;
-				var port = sprite.arduino.board.sp.path;
+				});
+			} else {
+				ide.inform(myself.name, localize('There is already a board connected to this sprite'));
 			}
+		}
+	
+		if (myself.arduino.justConnected) {
+			myself.arduino.justConnected = undefined;
+			return;
+		}
+	
+	}
+
+	myself.arduino.closeHandler = function(silent) {
+
+		if (!myself.arduino.oldBoards) { myself.arduino.oldBoards = [] };
+
+		if (myself.arduino.board) {
+			var port = myself.arduino.board.sp.path;
+
+			myself.arduino.board.sp.removeListener('disconnect', myself.arduino.disconnectHandler);
+			myself.arduino.board.sp.removeListener('close', myself.arduino.closeHandler);
+			myself.arduino.board.sp.removeListener('error', myself.arduino.errorHandler);
 			
-			var closeAction = function() {
-				var port = sprite.arduino.board.sp.path;
+			myself.arduino.oldBoards.push(myself.arduino.board);
+			myself.arduino.board = undefined;
+		};
 
-				sprite.arduino.board.removeListener('disconnect', disconnectionAction);
-				sprite.arduino.board.removeListener('close', closeAction);
-				sprite.arduino.board.removeListener('error', errorAction);
-				world.arduino.unlockPort(sprite.arduino.port);
-				sprite.arduino.connecting = false;
+		world.Arduino.unlockPort(myself.arduino.port);
+		myself.arduino.connecting = false;
 
-				//Following is a trick to keep oldboards alive in case of conflict with pending processes
-				if (!sprite.arduino.oldboards) {sprite.arduino.oldboards = []};
-				sprite.arduino.oldboards.push(sprite.arduino.board);
-
-				sprite.arduino.board = undefined;
-
-				if (sprite.arduino.disconnected) {
-					inform(sprite.name, localize('Board was disconnected from port\n')+port+'\n\nIt seems that someone pulled the cable!');
-					sprite.arduino.disconnected = false;
-				} else {
-					inform(sprite.name, localize('Board was disconnected from port\n')+port);
-				}
-			}
-						
-			var errorAction = function(err) {
-				inform(sprite.name, localize('An error was detected on the board\n\n')+err)
-			}
-						
-			sprite.arduino.board.sp.on('disconnect', disconnectionAction);
-			sprite.arduino.board.sp.on('close', closeAction);
-			sprite.arduino.board.sp.on('error', errorAction);
-
-			world.arduino.lockPort(port);
-			sprite.arduino.port = sprite.arduino.board.sp.path;
-			sprite.arduino.connecting = false;
-			sprite.arduino.justConnected = true;
-			sprite.arduino.board.connected = true;
-
-			sprite.arduinoHideMessage();
-			inform(sprite.name, localize('An Arduino board has been connected. Happy prototyping!'));   
+		if (myself.arduino.disconnected & !silent) {
+			ide.inform(myself.name, localize('Board was disconnected from port\n') + port + '\n\nIt seems that someone pulled the cable!');
+			myself.arduino.disconnected = false;
 		} else {
-			sprite.arduinoHideMessage();
-			inform(sprite.name, localize('Error connecting the board.')+' '+err);
+			ide.inform(myself.name, localize('Board was disconnected from port\n') + port);
 		}
-		return;
-	});
+	}
 
-	// Set timeout to check if device does not speak firmata (in such case new Board callback was never called, but board objects exists) 
-	setTimeout(function() {
-		// If board.versionReceived = false, the board has not established a firmata connection
-		if (sprite.arduino.board && !sprite.arduino.board.versionReceived) {
-			var port = sprite.arduino.board.sp.path;
+	myself.arduino.disconnectHandler = function() {
+		myself.arduino.disconnected = true;
+		// var port = myself.arduino.board.sp.path;
+	}
+			
+	myself.arduino.errorHandler = function(err) {
+		ide.inform(myself.name, localize('An error was detected on the board\n\n') + err, myself.arduino.closeHandler(true));
+	}
+	
+	myself.arduino.connect = function(port) {
 
-			sprite.arduinoHideMessage();
-			inform(sprite.name, localize('Could not talk to Arduino in port\n')+port+ '\n\n'+localize('Check if firmata is loaded.'))
-							
-			// Close the board connection
-			sprite.arduino.board.sp.close();
-			world.arduino.unlockPort(sprite.arduino.port);
-			sprite.arduino.connecting = false;
-							
-			//Following is a trick to keep oldboards alive in case of conflict with pending processes
-			if (!sprite.arduino.oldboards) {sprite.arduino.oldboards = []};
-			sprite.arduino.oldboards.push(sprite.arduino.board);
+		myself.arduino.showMessage(localize('Connecting board at port\n') + port);
+		myself.arduino.connecting = true;
 
-			sprite.arduino.board = undefined;
-		}
-	}, 20000)
-}
+		myself.arduino.board = new world.Arduino.firmata.Board(port, function(err) { 
+			if (!err) { 
+				myself.arduino.board.sp.on('disconnect', myself.arduino.disconnectHandler);
+				myself.arduino.board.sp.on('close', myself.arduino.closeHandler);
+				myself.arduino.board.sp.on('error', myself.arduino.errorHandler);
 
-SpriteMorph.prototype.arduinoDisconnect = function() {
-	var sprite = this;
-
-	if (sprite.arduino.board) {
-		sprite.arduino.board.sp.close();
-	} else {
-		inform(sprite.name, localize('Board is not connected'))
+				world.Arduino.lockPort(port);
+				myself.arduino.port = myself.arduino.board.sp.path;
+				myself.arduino.connecting = false;
+				myself.arduino.justConnected = true;
+				myself.arduino.board.connected = true;
+	
+				myself.arduino.hideMessage();
+				ide.inform(myself.name, localize('An Arduino board has been connected. Happy prototyping!'));   
+			} else {
+				myself.arduino.hideMessage();
+				ide.inform(myself.name, localize('Error connecting the board.') + ' ' + err, myself.arduino.closeHandler(true));
+			}
+			return;
+		});
+	
+		// Set timeout to check if device does not speak firmata (in such case new Board callback was never called, but board object exists) 
+		setTimeout(function() {
+			// If board.versionReceived = false, the board has not established a firmata connection
+			if (myself.arduino.board && !myself.arduino.board.versionReceived) {
+				var port = myself.arduino.board.sp.path;
+	
+				myself.arduino.hideMessage();
+				ide.inform(myself.name, localize('Could not talk to Arduino in port\n') + port + '\n\n' + localize('Check if firmata is loaded.'))
+				
+				// silently closing the connection attempt
+				myself.arduino.closeHandler(true); 
+			}
+		}, 10000)
 	}
 }
+
+
 
 // Definition of a new Arduino Category
 
@@ -260,20 +256,12 @@ SpriteMorph.prototype.blockTemplates = function(category) {
 
 	var blocks = myself.originalBlockTemplates(category); 
 
-	if (!this.arduino) {
-		this.arduino = {
-			board : undefined,		// Reference to arduino board - to be created by new firmata.Board()
-			connecting : false,		// Mark to avoid multiple attempts to connect
-			justConnected: false,	// Mark to avoid double attempts
-		};
-	}
-
 	//  Button that triggers a connection attempt 
 
     var arduinoConnectButton = new PushButtonMorph(
             null,
             function () {
-                myself.arduinoAttemptConnection();
+                myself.arduino.attemptConnection();
             },
             'Connect Arduino'
     );
@@ -283,13 +271,12 @@ SpriteMorph.prototype.blockTemplates = function(category) {
     var arduinoDisconnectButton = new PushButtonMorph(
             null,
             function () {
-                myself.arduinoDisconnect();;
+                myself.arduino.disconnect();;
             },
             'Disconnect Arduino'
     );
 
 	function blockBySelector(selector) {
-		console.log(selector);
         var newBlock = SpriteMorph.prototype.blockForSelector(selector, true);
         newBlock.isTemplate = true;
         return newBlock;
