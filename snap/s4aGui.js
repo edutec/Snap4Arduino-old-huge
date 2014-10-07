@@ -6,8 +6,8 @@ SpriteIconMorph.prototype.userMenu = function () {
 	menu = this.originalUserMenu();
 	menu.addLine();
 	var myself = this;
-	menu.addItem('connect to Arduino', function() { myself.object.arduinoAttemptConnection() });
-	menu.addItem('disconnect Arduino', function() { myself.object.arduinoDisconnect() });
+	menu.addItem('connect to Arduino', function() { myself.object.arduino.attemptConnection() });
+	menu.addItem('disconnect Arduino', function() { myself.object.arduino.disconnect() });
 	return menu;
 }
 
@@ -285,7 +285,7 @@ IDE_Morph.prototype.newProject = function () {
     var sprites = this.sprites.asArray()
     sprites.forEach(function(sprite) {
         if (sprite.arduino && sprite.arduino.board) {
-            sprite.arduinoDisconnect();
+            sprite.arduino.disconnect();
         }
     })
     this.originalnNewProject();

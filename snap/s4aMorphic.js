@@ -3,9 +3,9 @@
 */
 
 /**
- * Global object (world.arduino) used for s4a/arduino properties
+ * Global object (world.Arduino) used for s4a/arduino properties
  */
-WorldMorph.prototype.arduino = {
+WorldMorph.prototype.Arduino = {
     firmata : require('firmata'),
     serialport : require('serialport'),
     portList : [],
@@ -15,7 +15,7 @@ WorldMorph.prototype.arduino = {
 /**
  * Locks the given port to prevent its use in other connection (until it is unlocked)
  */
-WorldMorph.prototype.arduino.lockPort = function (port) {
+WorldMorph.prototype.Arduino.lockPort = function (port) {
     var usedPorts = this.usedPorts;
 
     if (usedPorts.indexOf(port) === -1) {
@@ -27,7 +27,7 @@ WorldMorph.prototype.arduino.lockPort = function (port) {
  * Unlocks a previously Locked port to permit it's use in new connections
  * Should be called when closing connections
  */
-WorldMorph.prototype.arduino.unlockPort = function (port) {
+WorldMorph.prototype.Arduino.unlockPort = function (port) {
     var usedPorts = this.usedPorts;
 
     if (usedPorts.indexOf(port) > -1) {
@@ -38,7 +38,7 @@ WorldMorph.prototype.arduino.unlockPort = function (port) {
 /**
  * Informs wether the port is locked or unlocked
  */
-WorldMorph.prototype.arduino.isPortLocked = function (port) {
+WorldMorph.prototype.Arduino.isPortLocked = function (port) {
     return (this.usedPorts.indexOf(port) > -1)
 }
 
@@ -46,7 +46,7 @@ WorldMorph.prototype.arduino.isPortLocked = function (port) {
 /**
  * Gets a list of available serial ports (paths) and return it through callback function
  */
-WorldMorph.prototype.arduino.getSerialPorts = function (callback) {
+WorldMorph.prototype.Arduino.getSerialPorts = function (callback) {
     var myself = this;
 
     var portList = [];
@@ -70,7 +70,7 @@ WorldMorph.prototype.arduino.getSerialPorts = function (callback) {
  * Startup required for Arduino
  * - Starts polling list of SerialPorts
  */
-WorldMorph.prototype.arduino.start = function () {
+WorldMorph.prototype.Arduino.start = function () {
     var myself = this;
 
     // Polls list of serial ports
