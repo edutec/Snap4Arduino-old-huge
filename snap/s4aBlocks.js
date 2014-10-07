@@ -28,7 +28,7 @@ SyntaxElementMorph.prototype.labelPart = function(spec) {
 				null,
 				false,
 				function() {
-					return world.arduino.portList;
+					return world.Arduino.portList;
 				},
 			   	true
 				);

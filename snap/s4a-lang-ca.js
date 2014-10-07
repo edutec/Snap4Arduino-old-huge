@@ -100,7 +100,7 @@ s4aTempDict = {
         'posar pin PWM %pwmPin a %n',
 
     'Connecting board at port\n': 
-        'Connectando placa al port\n',
+        'Connectant placa al port\n',
 
     'An Arduino board has been connected. Happy prototyping!':
         'S\'ha connectat correctament una placa Arduino.\nFeliç prototipatge!',
