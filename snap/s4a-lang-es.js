@@ -117,7 +117,7 @@ s4aTempDict = {
         'Ya existe una tarjeta conectada a este objeto',
 
     'Could not connect an Arduino\nNo boards found':
-        'No se pudo conectar un Arduino\nNo es encontró ninguna tarjeta',
+        'No se pudo conectar un Arduino\nNo se encontró ninguna tarjeta',
 
     'Could not talk to Arduino in port\n':
         'No se pudo comunicar con Arduino en la puerta\n',
