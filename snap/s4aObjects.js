@@ -2,9 +2,9 @@
 
 SpriteMorph.prototype.originalInit = SpriteMorph.prototype.init;
 
-SpriteMorph.prototype.init = function() {
+SpriteMorph.prototype.init = function(globals) {
 	var myself = this;
-	myself.originalInit();
+	myself.originalInit(globals);
 
 	myself.arduino = {
 		board : undefined,		// Reference to arduino board - to be created by new firmata.Board()
