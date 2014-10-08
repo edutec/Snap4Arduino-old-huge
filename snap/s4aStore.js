@@ -6,7 +6,7 @@ SnapSerializer.prototype.openProject = function (project, ide) {
     var sprites = ide.sprites.asArray()
     sprites.forEach(function(sprite) {
         if (sprite.arduino && sprite.arduino.board) {
-            sprite.arduinoDisconnect();
+            sprite.arduino.disconnect();
         }
     })
 
