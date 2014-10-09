@@ -245,6 +245,8 @@ SpriteMorph.prototype.initBlocks = function() {
 
 }
 
+SpriteMorph.prototype.initBlocks();
+
 // blockTemplates proxy
 
 SpriteMorph.prototype.originalBlockTemplates = SpriteMorph.prototype.blockTemplates;
@@ -278,11 +280,6 @@ SpriteMorph.prototype.blockTemplates = function(category) {
 
 	function blockBySelector(selector) {
         var newBlock = SpriteMorph.prototype.blockForSelector(selector, true);
-		if (!newBlock) {
-			// It seems redundant, but in some cases initBlocks() was called before being overriden, so the S4A blocks were not there yet
-			this.initBlocks();
-        	newBlock = SpriteMorph.prototype.blockForSelector(selector, true);
-		};
         newBlock.isTemplate = true;
         return newBlock;
     };
