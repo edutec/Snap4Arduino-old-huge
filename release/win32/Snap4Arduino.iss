@@ -7,8 +7,8 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{79712027-5DAE-425B-8534-1CA699720EA5}
 AppName=Snap4Arduino
-AppVersion=1.0.3-alpha
-;AppVerName=Snap4Arduino 1.0.3
+AppVersion=1.0.5-alpha
+;AppVerName=Snap4Arduino 1.0.5
 AppPublisher=Citilab
 AppPublisherURL=http://www.s4a.cat/snap
 AppSupportURL=http://www.s4a.cat/snap
@@ -17,7 +17,7 @@ DefaultDirName={pf}\Snap4Arduino
 DefaultGroupName=Snap4Arduino
 AllowNoIcons=yes
 OutputDir=C:\Users\citilab\Desktop\snap4arduino-win32\
-OutputBaseFilename=Snap4Arduino-1.0.3-alpha
+OutputBaseFilename=Snap4Arduino-1.0.5-alpha
 SetupIconFile=C:\Users\citilab\Desktop\snap4arduino-win32\s4a.ico
 Compression=lzma
 SolidCompression=yes
@@ -33,13 +33,13 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: "C:\Users\citilab\Desktop\snap4arduino-win32\app.nw"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\citilab\Desktop\snap4arduino-win32\credits.html"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\citilab\Desktop\snap4arduino-win32\ffmpegsumo.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\citilab\Desktop\snap4arduino-win32\icudt.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\citilab\Desktop\snap4arduino-win32\icudtl.dat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\citilab\Desktop\snap4arduino-win32\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\citilab\Desktop\snap4arduino-win32\libGLESv2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\citilab\Desktop\snap4arduino-win32\nw.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\citilab\Desktop\snap4arduino-win32\nw.pak"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\citilab\Desktop\snap4arduino-win32\nwsnapshot.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\citilab\Desktop\snap4arduino-win32\s4a.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
