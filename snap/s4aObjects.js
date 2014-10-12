@@ -9,12 +9,14 @@ SpriteMorph.prototype.init = function(globals) {
 	myself.arduino = {
 		board : undefined,		// Reference to arduino board - to be created by new firmata.Board()
 		connecting : false,		// Mark to avoid multiple attempts to connect
+		disconnecting : false,  // Mark to avoid serialport communication when it is being closed
 		justConnected: false,	// Mark to avoid double attempts
 	};
 
 	myself.arduino.disconnect = function() {
 
 		if (myself.arduino.board) {
+			myself.arduino.disconnecting = true;
 			myself.arduino.board.sp.close();
 		} else {
 			ide.inform(myself.name, localize('Board is not connected'))
@@ -112,6 +114,7 @@ SpriteMorph.prototype.init = function(globals) {
 
 		world.Arduino.unlockPort(myself.arduino.port);
 		myself.arduino.connecting = false;
+		myself.arduino.disconnecting = false;
 
 		if (myself.arduino.disconnected & !silent) {
 			ide.inform(myself.name, localize('Board was disconnected from port\n') + port + '\n\nIt seems that someone pulled the cable!');
@@ -169,6 +172,10 @@ SpriteMorph.prototype.init = function(globals) {
 				myself.arduino.closeHandler(true); 
 			}
 		}, 10000)
+	}
+
+	myself.arduino.isBoardReady = function() {
+		return ((myself.arduino.board !== undefined) && (myself.arduino.board.pins.length>0) && (!myself.arduino.disconnecting));
 	}
 }
 
