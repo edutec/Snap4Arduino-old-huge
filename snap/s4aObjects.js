@@ -140,6 +140,9 @@ SpriteMorph.prototype.init = function(globals) {
 
 		myself.arduino.board = new world.Arduino.firmata.Board(port, function(err) { 
 			if (!err) { 
+				
+				clearTimeout(myself.arduino.connectionTimeout); // Clear timeout to avoid problems if connection is closed before timeout is completed
+
 				myself.arduino.board.sp.on('disconnect', myself.arduino.disconnectHandler);
 				myself.arduino.board.sp.on('close', myself.arduino.closeHandler);
 				myself.arduino.board.sp.on('error', myself.arduino.errorHandler);
@@ -160,7 +163,7 @@ SpriteMorph.prototype.init = function(globals) {
 		});
 	
 		// Set timeout to check if device does not speak firmata (in such case new Board callback was never called, but board object exists) 
-		setTimeout(function() {
+		myself.arduino.connectionTimeout = setTimeout(function() {
 			// If board.versionReceived = false, the board has not established a firmata connection
 			if (myself.arduino.board && !myself.arduino.board.versionReceived) {
 				var port = myself.arduino.board.sp.path;
