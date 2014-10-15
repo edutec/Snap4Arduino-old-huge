@@ -65,16 +65,12 @@
 							box.inform(title, message, world)
 						}
 				};
-
 				setInterval(loop, 1);
-
-				// Starts arduino related processes
-				world.Arduino.start();
 			};
 
 			function loop() {
 				world.doOneCycle();
-			}
+			};
 
 			// Add menubar for Mac version ('darwin') with node-webkit >10.0 (modules version 14)
 			if (process.platform==='darwin' && +process.versions.modules >= 14) {

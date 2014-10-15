@@ -23,16 +23,6 @@ SyntaxElementMorph.prototype.originalLabelPart = SyntaxElementMorph.prototype.la
 SyntaxElementMorph.prototype.labelPart = function(spec) {
 	var part;
 	switch (spec) {
-		case '%port':
-			part = new InputSlotMorph(
-				null,
-				false,
-				function() {
-					return world.Arduino.portList;
-				},
-			   	true
-				);
-			break;
 		case '%servoValue':
 			part = new InputSlotMorph(
 				null,
