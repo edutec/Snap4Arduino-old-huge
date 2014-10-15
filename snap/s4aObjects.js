@@ -15,10 +15,10 @@ SpriteMorph.prototype.init = function(globals) {
 
 	myself.arduino.disconnect = function() {
 
-		if (myself.arduino.board) {
+		if (myself.arduino.isBoardReady()) { // Prevent disconnection attempts before board is actually connected
 			myself.arduino.disconnecting = true;
 			myself.arduino.board.sp.close();
-		} else {
+		} else if (!myself.arduino.board) {  // Don't send info message if the board is been connected
 			ide.inform(myself.name, localize('Board is not connected'))
 		}
 	}
