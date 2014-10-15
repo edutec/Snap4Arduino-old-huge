@@ -248,29 +248,27 @@ IDE_Morph.prototype.setLanguage = function(lang, callback) {
 
 IDE_Morph.prototype.setLanguageS4A = function (lang, callback) {
      // Load language script for s4a related functions
-     var s4a_translation = document.getElementById('s4a-language'),
-         s4a_src = 's4a-lang-' + lang + '.js',
+     var s4aTranslation = document.getElementById('s4a-language'),
+         s4aSrc = 's4a-lang-' + lang + '.js',
          myself = this;
-    //SnapTranslator.unload();
-     if (s4a_translation) {
-         document.head.removeChild(s4a_translation);
+     if (s4aTranslation) {
+         document.head.removeChild(s4aTranslation);
      }
      if (lang === 'en') {
          return this.reflectLanguage('en', callback);
      }
-     s4a_translation = document.createElement('script');
-     s4a_translation.id = 's4a-language';
-     s4a_translation.onload = function () {
+     s4aTranslation = document.createElement('script');
+     s4aTranslation.id = 's4a-language';
+     s4aTranslation.onload = function () {
          myself.reflectLanguage(lang, callback);
      };
-     document.head.appendChild(s4a_translation);
-     s4a_translation.src = s4a_src; 
+     document.head.appendChild(s4aTranslation);
+     s4aTranslation.src = s4aSrc; 
 };
 
-// Fix probelm with connected board when creating a new project 
-// If the board is connected (it is not freed for the new srpites)
-IDE_Morph.prototype.originalnNewProject = IDE_Morph.prototype.newProject
-
+// Fix problme with connected board when creating a new project 
+// If the board is connected (it is not freed for the new sprites)
+IDE_Morph.prototype.originalNewProject = IDE_Morph.prototype.newProject
 
 IDE_Morph.prototype.newProject = function () {
     // Disconnect each sprite before creating the new project
@@ -279,7 +277,7 @@ IDE_Morph.prototype.newProject = function () {
         if (sprite.arduino && sprite.arduino.board) {
             sprite.arduino.disconnect();
         }
-    })
-    this.originalnNewProject();
+    });
+    this.originalNewProject();
 };
 
