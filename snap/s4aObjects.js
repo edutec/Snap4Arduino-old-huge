@@ -63,22 +63,17 @@ SpriteMorph.prototype.init = function(globals) {
 
 				// Get list of ports (Arduino compatible)
 				var ports = world.Arduino.getSerialPorts(function(ports) {
-				
-					var port;
-				
 					// Check if there is at least one port on ports object (which for some reason was defined as an array)
 					if (Object.keys(ports).length == 0) {
 						ide.inform(myself.name, localize('Could not connect an Arduino\nNo boards found'));
 						return;
 					} else if (Object.keys(ports).length == 1) {
-						port = ports[Object.keys(ports)[0]]; // Choose the first compatible port
-						myself.arduino.connect(port);
+						myself.arduino.connect(ports[Object.keys(ports)[0]]);
 					} else if (Object.keys(ports).length > 1) { 
 						var portMenu = new MenuMorph(this, 'select a port');
 						Object.keys(ports).forEach(function(each) {
 							portMenu.addItem(each, function() { 
-								port = each;
-								myself.arduino.connect(port);
+								myself.arduino.connect(each);
 							})
 						});
 						portMenu.popUpAtHand(world);		
@@ -126,6 +121,7 @@ SpriteMorph.prototype.init = function(globals) {
 
 	myself.arduino.disconnectHandler = function() {
 		myself.arduino.disconnected = true;
+		// Why is this here? I can't recall, but it seems it's not really doing anything:
 		// var port = myself.arduino.board.sp.path;
 	}
 			
@@ -141,7 +137,8 @@ SpriteMorph.prototype.init = function(globals) {
 		myself.arduino.board = new world.Arduino.firmata.Board(port, function(err) { 
 			if (!err) { 
 				
-				clearTimeout(myself.arduino.connectionTimeout); // Clear timeout to avoid problems if connection is closed before timeout is completed
+				// Clear timeout to avoid problems if connection is closed before timeout is completed
+				clearTimeout(myself.arduino.connectionTimeout); 
 
 				myself.arduino.board.sp.on('disconnect', myself.arduino.disconnectHandler);
 				myself.arduino.board.sp.on('close', myself.arduino.closeHandler);
@@ -164,7 +161,7 @@ SpriteMorph.prototype.init = function(globals) {
 	
 		// Set timeout to check if device does not speak firmata (in such case new Board callback was never called, but board object exists) 
 		myself.arduino.connectionTimeout = setTimeout(function() {
-			// If board.versionReceived = false, the board has not established a firmata connection
+			// If board.versionReceived == false, the board has not established a firmata connection
 			if (myself.arduino.board && !myself.arduino.board.versionReceived) {
 				var port = myself.arduino.board.sp.path;
 	
