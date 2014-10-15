@@ -65,19 +65,3 @@ WorldMorph.prototype.Arduino.getSerialPorts = function (callback) {
     
 };
 
-
-/**
- * Startup required for Arduino
- * - Starts polling list of SerialPorts
- */
-WorldMorph.prototype.Arduino.start = function () {
-    var myself = this;
-
-    // Polls list of serial ports
-    myself.portPollInterval = setInterval(function(){
-         myself.getSerialPorts(function(portList) {
-            myself.portList = portList;
-         });
-    }, 500);
-
-};
