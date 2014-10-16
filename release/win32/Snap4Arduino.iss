@@ -8,7 +8,7 @@
 AppId={{79712027-5DAE-425B-8534-1CA699720EA5}
 AppName=Snap4Arduino
 AppVersion=1.0-beta
-;AppVerName=Snap4Arduino 1.0-beta
+AppVerName=Snap4Arduino-1.0-beta
 AppPublisher=Citilab
 AppPublisherURL=http://www.s4a.cat/snap
 AppSupportURL=http://www.s4a.cat/snap
@@ -16,9 +16,9 @@ AppUpdatesURL=http://www.s4a.cat/snap
 DefaultDirName={pf}\Snap4Arduino
 DefaultGroupName=Snap4Arduino
 AllowNoIcons=yes
-OutputDir=C:\Users\citilab\Desktop\snap4arduino-win32\
+OutputDir=.
 OutputBaseFilename=Snap4Arduino-1.0-beta
-SetupIconFile=C:\Users\citilab\Desktop\snap4arduino-win32\s4a.ico
+SetupIconFile=s4a.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -32,15 +32,15 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "C:\Users\citilab\Desktop\snap4arduino-win32\app.nw"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\citilab\Desktop\snap4arduino-win32\credits.html"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\citilab\Desktop\snap4arduino-win32\ffmpegsumo.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\citilab\Desktop\snap4arduino-win32\icudtl.dat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\citilab\Desktop\snap4arduino-win32\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\citilab\Desktop\snap4arduino-win32\libGLESv2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\citilab\Desktop\snap4arduino-win32\nw.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\citilab\Desktop\snap4arduino-win32\nw.pak"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\citilab\Desktop\snap4arduino-win32\s4a.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "app.nw"; DestDir: "{app}"; Flags: ignoreversion
+Source: "credits.html"; DestDir: "{app}"; Flags: ignoreversion
+Source: "ffmpegsumo.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "icudtl.dat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "libGLESv2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "nw.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "nw.pak"; DestDir: "{app}"; Flags: ignoreversion
+Source: "s4a.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
