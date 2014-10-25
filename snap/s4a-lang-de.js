@@ -60,7 +60,7 @@ s4aTempDict = {
 		'gegen den Uhrzeigersinn',
 
 	'stopped':
-		'angehalten', 
+		'gestoppt',
 
 	'angle (0-180)':
 		'Winkel (0-180)',
@@ -111,7 +111,7 @@ s4aTempDict = {
         'Scheinbar hat jemand das Kabel gezogen!',
 
     'Error connecting the board.':
-        'Fehler beim Verbinden mit dem Board.',
+        'Fehler beim verbinden mit dem Board.',
 
     'There is already a board connected to this sprite':
         'Es ist bereits ein Board mit diesem Sprite verbunden',
