@@ -757,6 +757,7 @@ Process.prototype.reportJSFunction = function (parmNames, body) {
     );
 };
 
+
 Process.prototype.doRun = function (context, args, isCustomBlock) {
     return this.evaluate(context, args, true, isCustomBlock);
 };
@@ -1520,6 +1521,38 @@ Process.prototype.doForever = function (body) {
     this.pushContext();
 };
 
+
+Process.prototype.doLoop = function (body) {
+    this.pushContext('doYield');
+    if (body) {
+        this.pushContext(body.blockSequence());
+    }
+    this.pushContext();
+};
+
+Process.prototype.doSetup = function (body) {	
+    this.popContext();
+   	if (body) {
+       	this.pushContext(body.blockSequence());
+    }
+	this.pushContext();
+};
+
+Process.prototype.doUntil = function (goalCondition, body) {
+    if (goalCondition) {
+        this.popContext();
+        this.pushContext('doYield');
+        return null;
+    }
+    this.context.inputs = [];
+    this.pushContext('doYield');
+    if (body) {
+        this.pushContext(body.blockSequence());
+    }
+    this.pushContext();
+};
+
+
 Process.prototype.doRepeat = function (counter, body) {
     var block = this.context.expression,
         outer = this.context.outerContext, // for tail call elimination
@@ -1643,6 +1676,7 @@ Process.prototype.doWait = function (secs) {
     this.pushContext('doYield');
     this.pushContext();
 };
+
 
 Process.prototype.doGlide = function (secs, endX, endY) {
     if (!this.context.startTime) {
@@ -1931,6 +1965,11 @@ Process.prototype.reportRandom = function (min, max) {
         return Math.random() * (ceil - floor) + floor;
     }
     return Math.floor(Math.random() * (ceil - floor + 1)) + floor;
+};
+
+
+Process.prototype.reportMapValue = function (val, in_min, in_max, out_min, out_max) {
+	 return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 };
 
 Process.prototype.reportLessThan = function (a, b) {
@@ -2842,7 +2881,6 @@ Context.prototype.image = function () {
     if (this.expression instanceof Array) {
         block = this.expression[this.pc].fullCopy();
         if (block instanceof RingMorph && !block.contents()) { // empty ring
-            return block.fullImage();
         }
         ring.embed(block, this.isContinuation ? [] : this.inputs);
         return ring.fullImage();
