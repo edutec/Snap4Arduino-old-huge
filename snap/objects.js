@@ -754,7 +754,18 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'control',
             spec: 'pause all %pause'
         },
-
+		// Arduino - IDE specific, to help codification
+		
+		doSetup: {
+            type: 'command',
+            category: 'control',
+            spec: 'setup %c'
+        },
+		doLoop: {
+            type: 'command',
+            category: 'control',
+            spec: 'loop %c'
+        },
         // Sensing
 
         reportTouchingObject: {
@@ -1029,6 +1040,12 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'operators',
             spec: 'JavaScript function ( %mult%s ) { %code }'
         },
+		reportMapValue: { // maps value from one range to another http://arduino.cc/en/pmwiki.php?n=Reference/Map
+			type: 'reporter',
+			category: 'operators',
+			spec: 'map value %n from range %n .. %n to range %n .. %n',
+			defaults: [500,0,1023,0,255]
+		},
         reportTypeOf: { // only in dev mode for debugging
             dev: true,
             type: 'reporter',
@@ -1823,6 +1840,9 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('doReport'));
         blocks.push('-');
+		// Arduino
+		blocks.push(block('doSetup'));
+		blocks.push(block('doLoop'));
     /*
     // old STOP variants, migrated to a newer version, now redundant
         blocks.push(block('doStopBlock'));
@@ -1942,7 +1962,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportIsIdentical'));
         blocks.push('-');
         blocks.push(block('reportJSFunction'));
-
+        blocks.push(block('reportMapValue'));
     // for debugging: ///////////////
 
         if (this.world().isDevMode) {
@@ -4961,6 +4981,9 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('doReport'));
         blocks.push('-');
+		// Arduino
+		blocks.push(block('doSetup'));
+		blocks.push(block('doLoop'));
     /*
     // old STOP variants, migrated to a newer version, now redundant
         blocks.push(block('doStopBlock'));
@@ -5074,7 +5097,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportIsIdentical'));
         blocks.push('-');
         blocks.push(block('reportJSFunction'));
-
+        blocks.push(block('reportMapValue'));
     // for debugging: ///////////////
 
         if (this.world().isDevMode) {
