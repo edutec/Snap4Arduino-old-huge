@@ -3,10 +3,12 @@ s4aTempDict = {
 /*
     Special characters: (see <http://0xcc.net/jsescape/>)
 
-    Ä, ä   \u00c4, \u00e4
-    Ö, ö   \u00d6, \u00f6
-    Ü, ü   \u00dc, \u00fc
-    ß      \u00df
+    Ã„, Ã¤   \u00c4, \u00e4
+    Ã–, Ã¶   \u00d6, \u00f6
+    Ãœ, Ã¼   \u00dc, \u00fc
+    ÃŸ      \u00df
+	Ã       \u00E0
+	Ã¨      \u00E8
 */
     // primitive blocks:
 
@@ -103,10 +105,10 @@ s4aTempDict = {
         'Sto collegando la scheda alla porta\n',
 
     'An Arduino board has been connected. Happy prototyping!':
-        'La scheda Arduino è correttamente collegata.\nBuona sperimentazione!',
+        'La scheda Arduino \u00E8 correttamente collegata.\nBuona sperimentazione!',
 
     'Board was disconnected from port\n':
-        'La scheda è stata scollegata dalla porta\n',
+        'La scheda \u00E8 stata scollegata dalla porta\n',
 
     'It seems that someone pulled the cable!':
         'Sembra che qualcuno ha staccato il cavo!',
@@ -115,7 +117,7 @@ s4aTempDict = {
         'Errore di connessione alla scheda',
 
     'There is already a board connected to this sprite':
-        'C\'è già una scheda collegata a questo oggetto',
+        'C\'\u00E8 gi\u00E0 una scheda collegata a questo oggetto',
 
     'Could not connect an Arduino\nNo boards found':
         'Impossibile collegarsi ad Arduino\nNessuna scheda trovata',
@@ -127,10 +129,10 @@ s4aTempDict = {
         'Verifica che Firmata sia caricato sulla scheda.',
 
     'An error was detected on the board\n\n':
-        'Un errore è stato riscontrato sulla scheda\n\n',
+        'Un errore \u00E8 stato riscontrato sulla scheda\n\n',
 
     'Board is not connected':
-        'La scheda non è collegata'
+        'La scheda non \u00E8 collegata'
 
 };
 

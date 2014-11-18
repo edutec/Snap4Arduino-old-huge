@@ -2309,3 +2309,15 @@ ______
 141008
 ------
 * Objects: fixed #608, #610
+
+141106
+------
+* Morphic: Enable mouseMove events with right button pressed
+
+141114
+------
+* Threads, Store: Fix reporting out of nested custom C-shaped blocks
+
+141117
+------
+* Threads, Blocks: Treat REPORT blocks inside custom command definitions as STOP THIS BLOCK / IGNORE INPUTS
