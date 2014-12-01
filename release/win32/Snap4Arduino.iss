@@ -44,11 +44,11 @@ Source: "s4a.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\Snap4Arduino"; Filename: "{app}\nw.exe"; Parameters: "app.nw"; IconFilename: "{app}\s4a.ico"
+Name: "{group}\Snap4Arduino"; Filename: "{app}\nw.exe"; Parameters: "app.nw"; IconFilename: "{app}\s4a.ico"; WorkingDir: "{app}"
 Name: "{group}\{cm:ProgramOnTheWeb,Snap4Arduino}"; Filename: "http://www.s4a.cat/snap"
 Name: "{group}\{cm:UninstallProgram,Snap4Arduino}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\Snap4Arduino"; Filename: "{app}\nw.exe"; Parameters: "app.nw"; IconFilename: "{app}\s4a.ico"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Snap4Arduino"; Filename: "{app}\nw.exe"; Parameters: "app.nw"; Tasks: quicklaunchicon
+Name: "{commondesktop}\Snap4Arduino"; Filename: "{app}\nw.exe"; Parameters: "app.nw"; IconFilename: "{app}\s4a.ico"; Tasks: desktopicon; WorkingDir: "{app}"
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Snap4Arduino"; Filename: "{app}\nw.exe"; Parameters: "app.nw"; Tasks: quicklaunchicon; WorkingDir: "{app}"
 
 [Run]
 Filename: "{app}\nw.exe"; Parameters: "app.nw"; Description: "{cm:LaunchProgram,Snap4Arduino}"; Flags: nowait postinstall skipifsilent
