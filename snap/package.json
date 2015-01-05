@@ -14,6 +14,7 @@
     "min_height": 640
   },
   "dependencies": {
-    "firmata": "~0.3.3"
+    "firmata": "~0.3.3",
+    "serialport": ">=0.7.5"
   }
 }

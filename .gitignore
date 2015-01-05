@@ -1,0 +1,6 @@
+# Don't commit build products
+app.nw
+Snap4Arduino.tar.gz
+
+# Ignore libudev.so.0 soft links
+libudev.so.0
