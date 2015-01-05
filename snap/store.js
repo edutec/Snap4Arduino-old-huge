@@ -61,7 +61,7 @@ SyntaxElementMorph, Variable*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.store = '2014-November-14';
+modules.store = '2014-December-17';
 
 
 // XML_Serializer ///////////////////////////////////////////////////////
@@ -261,11 +261,14 @@ SnapSerializer.prototype.watcherLabels = {
     yPosition: 'y position',
     direction: 'direction',
     getScale: 'size',
+    getTempo: 'tempo',
     getLastAnswer: 'answer',
+    getLastMessage: 'message',
     getTimer: 'timer',
     getCostumeIdx: 'costume #',
     reportMouseX: 'mouse x',
-    reportMouseY: 'mouse y'
+    reportMouseY: 'mouse y',
+    reportThreadCount: 'processes'
 };
 
 // SnapSerializer instance creation:
@@ -1198,6 +1201,10 @@ SnapSerializer.prototype.loadValue = function (model) {
         el = model.childNamed('context');
         if (el) {
             v.outerContext = this.loadValue(el);
+        }
+        if (v.outerContext && v.receiver &&
+                !v.outerContext.variables.parentFrame) {
+            v.outerContext.variables.parentFrame = v.receiver.variables;
         }
         return v;
     case 'costume':

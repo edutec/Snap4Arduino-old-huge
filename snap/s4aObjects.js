@@ -187,7 +187,6 @@ SpriteMorph.prototype.categories.push('arduino');
 SpriteMorph.prototype.blockColor['arduino'] = new Color(64, 136, 182);
 
 SpriteMorph.prototype.originalInitBlocks = SpriteMorph.prototype.initBlocks;
-
 SpriteMorph.prototype.initBlocks = function() {
 	
 	this.originalInitBlocks();
@@ -257,9 +256,6 @@ SpriteMorph.prototype.initBlocks();
 // blockTemplates proxy
 
 SpriteMorph.prototype.originalBlockTemplates = SpriteMorph.prototype.blockTemplates;
-
-// Definition of our new primitive blocks
-
 SpriteMorph.prototype.blockTemplates = function(category) {
 	var myself = this;
 

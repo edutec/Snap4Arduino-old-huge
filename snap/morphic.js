@@ -1041,7 +1041,7 @@
 /*global window, HTMLCanvasElement, getMinimumFontHeight, FileReader, Audio,
 FileList, getBlurredShadowSupport*/
 
-var morphicVersion = '2014-November-06';
+var morphicVersion = '2014-December-05';
 var modules = {}; // keep track of additional loaded modules
 var useBlurredShadows = getBlurredShadowSupport(); // check for Chrome-bug
 
@@ -1931,7 +1931,9 @@ Rectangle.prototype.round = function () {
 
 Rectangle.prototype.spread = function () {
     // round me by applying floor() to my origin and ceil() to my corner
-    return this.origin.floor().corner(this.corner.ceil());
+    // expand by 1 to be on the safe side, this eliminates rounding
+    // artefacts caused by Safari's auto-scaling on retina displays
+    return this.origin.floor().corner(this.corner.ceil()).expandBy(1);
 };
 
 Rectangle.prototype.amountToTranslateWithin = function (aRect) {
@@ -3978,6 +3980,7 @@ PenMorph.prototype.init = function () {
     this.size = 1;
     this.wantsRedraw = false;
     this.penPoint = 'tip'; // or 'center"
+    this.penBounds = null; // rect around the visible arrow shape
 
     HandleMorph.uber.init.call(this);
     this.setExtent(new Point(size, size));
@@ -4000,11 +4003,9 @@ PenMorph.prototype.changed = function () {
 // PenMorph display:
 
 PenMorph.prototype.drawNew = function (facing) {
-/*
-    my orientation can be overridden with the "facing" parameter to
-    implement Scratch-style rotation styles
+    // my orientation can be overridden with the "facing" parameter to
+    // implement Scratch-style rotation styles
 
-*/
     var context, start, dest, left, right, len,
         direction = facing || this.heading;
 
@@ -4027,6 +4028,15 @@ PenMorph.prototype.drawNew = function (facing) {
         right = start.distanceAngle(len * 0.33, direction - 230);
     }
 
+    // cache penBounds
+    this.penBounds = new Rectangle(
+        Math.min(start.x, dest.x, left.x, right.x),
+        Math.min(start.y, dest.y, left.y, right.y),
+        Math.max(start.x, dest.x, left.x, right.x),
+        Math.max(start.y, dest.y, left.y, right.y)
+    );
+
+    // draw arrow shape
     context.fillStyle = this.color.toString();
     context.beginPath();
 
@@ -4043,7 +4053,6 @@ PenMorph.prototype.drawNew = function (facing) {
     context.lineWidth = 1;
     context.stroke();
     context.fill();
-
 };
 
 // PenMorph access:
@@ -5760,7 +5769,7 @@ SliderMorph.prototype.rangeSize = function () {
 };
 
 SliderMorph.prototype.ratio = function () {
-    return this.size / this.rangeSize();
+    return this.size / (this.rangeSize() + 1);
 };
 
 SliderMorph.prototype.unitSize = function () {
