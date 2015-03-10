@@ -1,5 +1,4 @@
 // init proxy
-
 SpriteMorph.prototype.originalInit = SpriteMorph.prototype.init;
 
 SpriteMorph.prototype.init = function(globals) {
@@ -19,11 +18,12 @@ SpriteMorph.prototype.init = function(globals) {
 			myself.arduino.disconnecting = true;
 			myself.arduino.board.sp.close();
 		} else if (!myself.arduino.board) {  // Don't send info message if the board is been connected
+			//ide.showModalMessage("Probando");
 			ide.inform(myself.name, localize('Board is not connected'))
 		}
 	}
 
-	myself.arduino.showMessage = function(msg) {
+	/*myself.arduino.showMessage = function(msg) {
 		if (!myself.arduino.message) { myself.arduino.message = new DialogBoxMorph() };
 	
 		var txt = new TextMorph(
@@ -48,6 +48,7 @@ SpriteMorph.prototype.init = function(globals) {
 		myself.arduino.message.fixLayout();
 		myself.arduino.message.popUp(world);
 		myself.arduino.message.show();
+	
 	}
 
 	myself.arduino.hideMessage = function() {
@@ -55,7 +56,7 @@ SpriteMorph.prototype.init = function(globals) {
 			myself.arduino.message.cancel();
 			myself.arduino.message = null;
 		}
-	}
+	}*/
 
 	myself.arduino.attemptConnection = function() {
 		if (!myself.arduino.connecting) {
@@ -131,7 +132,9 @@ SpriteMorph.prototype.init = function(globals) {
 	
 	myself.arduino.connect = function(port) {
 
-		myself.arduino.showMessage(localize('Connecting board at port\n') + port);
+		//IDE_MORPH.prototype.showModalMessage(localize('Connecting board at port\n') + port);
+		//myself.arduino.showMessage(localize('Connecting board at port\n') + port);
+		ide.showModalMessage(localize('Connecting board at port\n') + port)
 		myself.arduino.connecting = true;
 
 		myself.arduino.board = new world.Arduino.firmata.Board(port, function(err) { 
@@ -150,10 +153,10 @@ SpriteMorph.prototype.init = function(globals) {
 				myself.arduino.justConnected = true;
 				myself.arduino.board.connected = true;
 	
-				myself.arduino.hideMessage();
+				ide.hideMessage();
 				ide.inform(myself.name, localize('An Arduino board has been connected. Happy prototyping!'));   
 			} else {
-				myself.arduino.hideMessage();
+				ide.hideMessage();
 				ide.inform(myself.name, localize('Error connecting the board.') + ' ' + err, myself.arduino.closeHandler(true));
 			}
 			return;
@@ -165,7 +168,7 @@ SpriteMorph.prototype.init = function(globals) {
 			if (myself.arduino.board && !myself.arduino.board.versionReceived) {
 				var port = myself.arduino.board.sp.path;
 	
-				myself.arduino.hideMessage();
+				ide.hideMessage();
 				ide.inform(myself.name, localize('Could not talk to Arduino in port\n') + port + '\n\n' + localize('Check if firmata is loaded.'))
 				
 				// silently closing the connection attempt
@@ -303,3 +306,4 @@ SpriteMorph.prototype.blockTemplates = function(category) {
 
 	return blocks;
 }
+
