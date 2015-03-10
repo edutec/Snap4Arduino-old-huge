@@ -6,7 +6,7 @@
 
     written by Jens Mönig
 
-    Copyright (C) 2014 by Jens Mönig
+    Copyright (C) 2015 by Jens Mönig
 
     This file is part of Snap!.
 
@@ -42,7 +42,7 @@
 
 /*global modules, contains*/
 
-modules.locale = '2014-December-15';
+modules.locale = '2015-February-23';
 
 // Global stuff
 
@@ -149,7 +149,7 @@ SnapTranslator.dict.de = {
     'translator_e-mail':
         'jens@moenig.org',
     'last_changed':
-        '2014-07-29'
+        '2015-02-23'
 };
 
 SnapTranslator.dict.it = {
@@ -157,11 +157,11 @@ SnapTranslator.dict.it = {
     'language_name':
         'Italiano',
     'language_translator':
-        'Stefano Federici',
+        'Stefano Federici, Alberto Firpo',
     'translator_e-mail':
-        's_federici@yahoo.com',
+        's_federici@yahoo.com, albertofirpo12@gmail.com',
     'last_changed':
-        '2013-04-08'
+        '2015-01-12'
 };
 
 SnapTranslator.dict.ja = {
@@ -195,9 +195,9 @@ SnapTranslator.dict.ko = {
     'language_translator':
         'Yunjae Jang',
     'translator_e-mail':
-        'yunjae.jang@inc.korea.ac.kr',
+        'janggoons@gmail.com',
     'last_changed':
-        '2012-11-18'
+        '2015-01-21'
 };
 
 SnapTranslator.dict.pt = {
@@ -375,9 +375,9 @@ SnapTranslator.dict.ca = {
     'language_translator':
         'Bernat Romagosa Carrasquer',
     'translator_e-mail':
-        'tibabenfortlapalanca@gmail.com',
+        'bromagosa@citilab.eu',
     'last_changed':
-        '2013-11-26'
+        '2015-01-21'
 };
 
 SnapTranslator.dict.fi = {
@@ -438,4 +438,40 @@ SnapTranslator.dict.kn = {
         'vnkmr7620@gmail.com',
     'last_changed':
         '2014-12-02'
+};
+
+SnapTranslator.dict.ml = {
+    // translations meta information
+    'language_name':
+        'Malayalam',
+    'language_translator':
+        'vinayakumar R',
+    'translator_e-mail':
+        'vnkmr7620@gmail.com',
+    'last_changed':
+        '2015-02-20'
+};
+
+SnapTranslator.dict.ta = {
+    // translations meta information
+    'language_name':
+        'Tamil',
+    'language_translator':
+        'vinayakumar R',
+    'translator_e-mail':
+        'vnkmr7620@gmail.com',
+    'last_changed':
+        '2015-02-20'
+};
+
+SnapTranslator.dict.te = {
+    // translations meta information
+    'language_name':
+        'Telagu', // the name as it should appear in the language menu
+    'language_translator':
+        'vinayakumar R', // your name for the Translators tab
+    'translator_e-mail':
+        'vnkmr7620@gmail.com', // optional
+    'last_changed':
+        '2015-02-20'
 };
