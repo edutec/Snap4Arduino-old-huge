@@ -2404,3 +2404,70 @@ ______
 * Objects, Store: Experimental “processes” count watcher (hidden in dev mode)
 * Threads: Remove terminated processes from expired clones
 * Threads: Let “zombifying” scripts access receivers’ local vars
+
+150112
+------
+* Cloud, GUI: Backend load balancing support, eliminate now obsolete authentication roundtrip, Cloud error message tweaks
+* Store: notify users of potential incompatibilities when opening projects created in other forks (e.g. BeetleBlocks)
+* Threads: Don’t highlight scripts running inside clones (boosts performance), Thanks, @aranlunzer, for the hint!
+* Objects: Disable clones from being edited via their context menus or double-click
+* Italian translation update, thanks, Alberto Firpo!
+* GUI: add additional yields to nextSteps() (work around a bug in Chrome)
+
+150113
+------
+* BYOB: fixed #702
+* GUI: fixed #680
+
+150121
+------
+* Objects: Keep layering of nested sprites thru drag & drop
+* GUI, Store, BYOB: Generate ScriptsPaneTexture programmatically
+* GUI: Fix Zoom Dialog’s sample background in “flat” design
+* Updated Korean and Catalan translations, thanks, Yunjae Jang and Bernat Romagosa!
+* Objects: Fix speech bubbles of dragged nested sprites
+
+150128
+------
+* Objects: Fixed #710
+
+150206
+------
+* GUI: Added url switch #cloud: to open a shared project in edit mode
+
+150220
+------
+* Malayam, Tamil and Telagu translations, thanks, Vinay Kumar!!
+* Un-hide “Save to disk” feature (currently supported by both Chrome and Firefox, but not by Safari)
+* Update German translation
+* GUI: Make “project data in URLs” a hidden dev option (prevent long urls per default)
+
+150223
+------
+* Blocks, Objects: Add user-interaction choices to the “When I am ...” hat block
+* Update German translation
+* Store: Avoid incompatibility warning for very old (pre-earmarked) projects
+
+150224
+------
+* Store: fixed #725
+
+150228
+------
+* Blocks, Store, GUI: Cache inputs, accelerates evaluating recursive reporters and warped / turbo recursive commands by up to 40%
+* Objects: slightly optimize warped / turbo execution
+* Threads: fixed #715
+* BYOB: fixed #716
+
+150302
+------
+* BYOB: fixed #730
+
+150306
+------
+* Blocks: fixed #736
+
+150309
+------
+* Blocks: fixed #738
+* GUI, Blocks: Only enable input caching for blocks

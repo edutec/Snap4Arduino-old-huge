@@ -9,7 +9,7 @@
     written by Jens Mönig
     jens@moenig.org
 
-    Copyright (C) 2014 by Jens Mönig
+    Copyright (C) 2015 by Jens Mönig
 
     This file is part of Snap!.
 
@@ -69,7 +69,7 @@ SpeechBubbleMorph*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.gui = '2014-December-04';
+modules.gui = '2015-March-09';
 
 // Declarations
 
@@ -119,7 +119,7 @@ IDE_Morph.prototype.setDefaultDesign = function () {
     ];
     IDE_Morph.prototype.rotationStyleColors = IDE_Morph.prototype.tabColors;
     IDE_Morph.prototype.appModeColor = new Color();
-    IDE_Morph.prototype.scriptsPaneTexture = 'scriptsPaneTexture.gif';
+    IDE_Morph.prototype.scriptsPaneTexture = this.scriptsTexture();
     IDE_Morph.prototype.padding = 5;
 
     SpriteIconMorph.prototype.labelColor
@@ -172,6 +172,22 @@ IDE_Morph.prototype.setFlatDesign = function () {
         = IDE_Morph.prototype.buttonLabelColor;
 };
 
+IDE_Morph.prototype.scriptsTexture = function () {
+    var pic = newCanvas(new Point(100, 100)), // bigger scales faster
+        ctx = pic.getContext('2d'),
+        i;
+    for (i = 0; i < 100; i += 4) {
+        ctx.fillStyle = this.frameColor.toString();
+        ctx.fillRect(i, 0, 1, 100);
+        ctx.fillStyle = this.groupColor.lighter(6).toString();
+        ctx.fillRect(i + 1, 0, 1, 100);
+        ctx.fillRect(i + 3, 0, 1, 100);
+        ctx.fillStyle = this.groupColor.toString();
+        ctx.fillRect(i + 2, 0, 1, 100);
+    }
+    return pic;
+};
+
 IDE_Morph.prototype.setDefaultDesign();
 
 // IDE_Morph instance creation:
@@ -186,6 +202,7 @@ IDE_Morph.prototype.init = function (isAutoFill) {
 
     // restore saved user preferences
     this.userLanguage = null; // user language preference for startup
+    this.projectsInURLs = false;
     this.applySavedSettings();
 
     // additional properties:
@@ -300,7 +317,6 @@ IDE_Morph.prototype.openIn = function (world) {
         this.inform('Snap!', motd);
     }
     */
-
     function interpretUrlAnchors() {
         var dict;
         if (location.hash.substr(0, 6) === '#open:') {
@@ -353,6 +369,7 @@ IDE_Morph.prototype.openIn = function (world) {
                         function () {
                             msg = myself.showMessage('Opening project...');
                         },
+                        function () {nop(); }, // yield (bug in Chrome)
                         function () {
                             if (projectData.indexOf('<snapdata') === 0) {
                                 myself.rawOpenCloudDataString(projectData);
@@ -369,6 +386,46 @@ IDE_Morph.prototype.openIn = function (world) {
                             msg.destroy();
                             myself.toggleAppMode(true);
                             myself.runScripts();
+                        }
+                    ]);
+                },
+                this.cloudError()
+            );
+        } else if (location.hash.substr(0, 7) === '#cloud:') {
+            this.shield = new Morph();
+            this.shield.alpha = 0;
+            this.shield.setExtent(this.parent.extent());
+            this.parent.add(this.shield);
+            myself.showMessage('Fetching project\nfrom the cloud...');
+
+            // make sure to lowercase the username
+            dict = SnapCloud.parseDict(location.hash.substr(7));
+            dict.Username = dict.Username.toLowerCase();
+
+            SnapCloud.getPublicProject(
+                SnapCloud.encodeDict(dict),
+                function (projectData) {
+                    var msg;
+                    myself.nextSteps([
+                        function () {
+                            msg = myself.showMessage('Opening project...');
+                        },
+                        function () {nop(); }, // yield (bug in Chrome)
+                        function () {
+                            if (projectData.indexOf('<snapdata') === 0) {
+                                myself.rawOpenCloudDataString(projectData);
+                            } else if (
+                                projectData.indexOf('<project') === 0
+                            ) {
+                                myself.rawOpenProjectString(projectData);
+                            }
+                            myself.hasChangedMedia = true;
+                        },
+                        function () {
+                            myself.shield.destroy();
+                            myself.shield = null;
+                            msg.destroy();
+                            myself.toggleAppMode(false);
                         }
                     ]);
                 },
@@ -1152,7 +1209,7 @@ IDE_Morph.prototype.createSpriteEditor = function () {
     if (this.currentTab === 'scripts') {
         scripts.isDraggable = false;
         scripts.color = this.groupColor;
-        scripts.texture = this.scriptsPaneTexture;
+        scripts.cachedTexture = this.scriptsPaneTexture;
 
         this.spriteEditor = new ScrollFrameMorph(
             scripts,
@@ -1723,6 +1780,7 @@ IDE_Morph.prototype.applySavedSettings = function () {
         language = this.getSetting('language'),
         click = this.getSetting('click'),
         longform = this.getSetting('longform'),
+        longurls = this.getSetting('longurls'),
         plainprototype = this.getSetting('plainprototype');
 
     // design
@@ -1754,6 +1812,13 @@ IDE_Morph.prototype.applySavedSettings = function () {
     // long form
     if (longform) {
         InputSlotDialogMorph.prototype.isLaunchingExpanded = true;
+    }
+
+    // project data in URLs
+    if (longurls) {
+        this.projectsInURLs = true;
+    } else {
+        this.projectsInURLs = false;
     }
 
     // plain prototype labels
@@ -2046,6 +2111,7 @@ IDE_Morph.prototype.cloudMenu = function () {
                                             'Opening project...'
                                         );
                                     },
+                                    function () {nop(); }, // yield (Chrome)
                                     function () {
                                         myself.rawOpenCloudDataString(
                                             projectData
@@ -2201,6 +2267,17 @@ IDE_Morph.prototype.settingsMenu = function () {
         'check to prioritize\nscript execution'
     );
     addPreference(
+        'Cache Inputs',
+        function () {
+            BlockMorph.prototype.isCachingInputs =
+                !BlockMorph.prototype.isCachingInputs;
+        },
+        BlockMorph.prototype.isCachingInputs,
+        'uncheck to stop caching\ninputs (for debugging the evaluator)',
+        'check to cache inputs\nboosts recursion',
+        true
+    );
+    addPreference(
         'Rasterize SVGs',
         function () {
             MorphicPreferences.rasterizeSVGs =
@@ -2223,6 +2300,21 @@ IDE_Morph.prototype.settingsMenu = function () {
         'uncheck for default\nGUI design',
         'check for alternative\nGUI design',
         false
+    );
+    addPreference(
+        'Project URLs',
+        function () {
+            myself.projectsInURLs = !myself.projectsInURLs;
+            if (myself.projectsInURLs) {
+                myself.saveSetting('longurls', true);
+            } else {
+                myself.removeSetting('longurls');
+            }
+        },
+        myself.projectsInURLs,
+        'uncheck to disable\nproject data in URLs',
+        'check to enable\nproject data in URLs',
+        true
     );
     addPreference(
         'Sprite Nesting',
@@ -2292,14 +2384,12 @@ IDE_Morph.prototype.projectMenu = function () {
     menu.addItem('New', 'createNewProject');
     menu.addItem('Open...', 'openProjectsBrowser');
     menu.addItem('Save', "save");
-    if (shiftClicked) {
-        menu.addItem(
-            'Save to disk',
-            'saveProjectToDisk',
-            'experimental - store this project\nin your downloads folder',
-            new Color(100, 0, 0)
-        );
-    }
+    menu.addItem(
+        'Save to disk',
+        'saveProjectToDisk',
+        'store this project\nin the downloads folder\n'
+            + '(in supporting browsers)'
+    );
     menu.addItem('Save As...', 'saveProjectsBrowser');
     menu.addLine();
     menu.addItem(
@@ -2509,7 +2599,7 @@ IDE_Morph.prototype.aboutSnap = function () {
         world = this.world();
 
     aboutTxt = 'Snap! 4.0\nBuild Your Own Blocks\n\n--- beta ---\n\n'
-        + 'Copyright \u24B8 2014 Jens M\u00F6nig and '
+        + 'Copyright \u24B8 2015 Jens M\u00F6nig and '
         + 'Brian Harvey\n'
         + 'jens@moenig.org, bh@cs.berkeley.edu\n\n'
 
@@ -2771,7 +2861,7 @@ IDE_Morph.prototype.rawSaveProject = function (name) {
             try {
                 localStorage['-snap-project-' + name]
                     = str = this.serializer.serialize(this.stage);
-                location.hash = '#open:' + str;
+                this.setURL('#open:' + str);
                 this.showMessage('Saved!', 1);
             } catch (err) {
                 this.showMessage('Save failed: ' + err);
@@ -2779,7 +2869,7 @@ IDE_Morph.prototype.rawSaveProject = function (name) {
         } else {
             localStorage['-snap-project-' + name]
                 = str = this.serializer.serialize(this.stage);
-            location.hash = '#open:' + str;
+            this.setURL('#open:' + str);
             this.showMessage('Saved!', 1);
         }
     }
@@ -2820,7 +2910,7 @@ IDE_Morph.prototype.exportProject = function (name, plain) {
                 str = encodeURIComponent(
                     this.serializer.serialize(this.stage)
                 );
-                location.hash = '#open:' + str;
+                this.setURL('#open:' + str);
                 window.open('data:text/'
                     + (plain ? 'plain,' + str : 'xml,' + str));
                 menu.destroy();
@@ -2833,7 +2923,7 @@ IDE_Morph.prototype.exportProject = function (name, plain) {
             str = encodeURIComponent(
                 this.serializer.serialize(this.stage)
             );
-            location.hash = '#open:' + str;
+            this.setURL('#open:' + str);
             window.open('data:text/'
                 + (plain ? 'plain,' + str : 'xml,' + str));
             menu.destroy();
@@ -2925,6 +3015,7 @@ IDE_Morph.prototype.openProjectString = function (str) {
         function () {
             msg = myself.showMessage('Opening project...');
         },
+        function () {nop(); }, // yield (bug in Chrome)
         function () {
             myself.rawOpenProjectString(str);
         },
@@ -2943,12 +3034,18 @@ IDE_Morph.prototype.rawOpenProjectString = function (str) {
     StageMorph.prototype.enableCodeMapping = false;
     if (Process.prototype.isCatchingErrors) {
         try {
-            this.serializer.openProject(this.serializer.load(str), this);
+            this.serializer.openProject(
+                this.serializer.load(str, this),
+                this
+            );
         } catch (err) {
             this.showMessage('Load failed: ' + err);
         }
     } else {
-        this.serializer.openProject(this.serializer.load(str), this);
+        this.serializer.openProject(
+            this.serializer.load(str, this),
+            this
+        );
     }
     this.stopFastTracking();
 };
@@ -2960,6 +3057,7 @@ IDE_Morph.prototype.openCloudDataString = function (str) {
         function () {
             msg = myself.showMessage('Opening project...');
         },
+        function () {nop(); }, // yield (bug in Chrome)
         function () {
             myself.rawOpenCloudDataString(str);
         },
@@ -2980,7 +3078,10 @@ IDE_Morph.prototype.rawOpenCloudDataString = function (str) {
             model = this.serializer.parse(str);
             this.serializer.loadMediaModel(model.childNamed('media'));
             this.serializer.openProject(
-                this.serializer.loadProjectModel(model.childNamed('project')),
+                this.serializer.loadProjectModel(
+                    model.childNamed('project'),
+                    this
+                ),
                 this
             );
         } catch (err) {
@@ -2990,7 +3091,10 @@ IDE_Morph.prototype.rawOpenCloudDataString = function (str) {
         model = this.serializer.parse(str);
         this.serializer.loadMediaModel(model.childNamed('media'));
         this.serializer.openProject(
-            this.serializer.loadProjectModel(model.childNamed('project')),
+            this.serializer.loadProjectModel(
+                model.childNamed('project'),
+                this
+            ),
             this
         );
     }
@@ -3004,6 +3108,7 @@ IDE_Morph.prototype.openBlocksString = function (str, name, silently) {
         function () {
             msg = myself.showMessage('Opening blocks...');
         },
+        function () {nop(); }, // yield (bug in Chrome)
         function () {
             myself.rawOpenBlocksString(str, name, silently);
         },
@@ -3050,6 +3155,7 @@ IDE_Morph.prototype.openSpritesString = function (str) {
         function () {
             msg = myself.showMessage('Opening sprite...');
         },
+        function () {nop(); }, // yield (bug in Chrome)
         function () {
             myself.rawOpenSpritesString(str);
         },
@@ -3091,7 +3197,13 @@ IDE_Morph.prototype.openProject = function (name) {
         this.setProjectName(name);
         str = localStorage['-snap-project-' + name];
         this.openProjectString(str);
-        location.hash = '#open:' + str;
+        this.setURL('#open:' + str);
+    }
+};
+
+IDE_Morph.prototype.setURL = function (str) {
+    if (this.projectsInURLs) {
+        location.hash = str;
     }
 };
 
@@ -3326,6 +3438,15 @@ IDE_Morph.prototype.toggleAppMode = function (appMode) {
         }).forEach(function (s) {
             s.adjustScrollBars();
         });
+        // prevent rotation and draggability controls from
+        // showing for the stage
+        if (this.currentSprite === this.stage) {
+            this.spriteBar.children.forEach(function (child) {
+                if (child instanceof PushButtonMorph) {
+                    child.hide();
+                }
+            });
+        }
     }
     this.setExtent(this.world().extent()); // resume trackChanges
 };
@@ -3501,7 +3622,8 @@ IDE_Morph.prototype.userSetBlocksScale = function () {
 
     sample = new FrameMorph();
     sample.acceptsDrops = false;
-    sample.texture = this.scriptsPaneTexture;
+    sample.color = IDE_Morph.prototype.groupColor;
+    sample.cachedTexture = this.scriptsPaneTexture;
     sample.setExtent(new Point(250, 180));
     scrpt.setPosition(sample.position().add(10));
     sample.add(scrpt);
@@ -3974,6 +4096,9 @@ IDE_Morph.prototype.cloudResponse = function () {
 IDE_Morph.prototype.cloudError = function () {
     var myself = this;
 
+    // try finding an eplanation what's going on
+    // has some issues, commented out for now
+    /*
     function getURL(url) {
         try {
             var request = new XMLHttpRequest();
@@ -3987,13 +4112,15 @@ IDE_Morph.prototype.cloudError = function () {
             return null;
         }
     }
+    */
 
     return function (responseText, url) {
         // first, try to find out an explanation for the error
         // and notify the user about it,
         // if none is found, show an error dialog box
         var response = responseText,
-            explanation = getURL('http://snap.berkeley.edu/cloudmsg.txt');
+            // explanation = getURL('http://snap.berkeley.edu/cloudmsg.txt'),
+            explanation = null;
         if (myself.shield) {
             myself.shield.destroy();
             myself.shield = null;
@@ -4044,14 +4171,7 @@ IDE_Morph.prototype.setCloudURL = function () {
         null,
         {
             'Snap!Cloud' :
-                'https://snapcloud.miosoft.com/miocon/app/' +
-                    'login?_app=SnapCloud',
-            'local network lab' :
-                '192.168.2.107:8087/miocon/app/login?_app=SnapCloud',
-            'local network office' :
-                '192.168.186.146:8087/miocon/app/login?_app=SnapCloud',
-            'localhost dev' :
-                'localhost/miocon/app/login?_app=SnapCloud'
+                'https://snap.apps.miosoft.com/SnapCloud'
         }
     );
 };
