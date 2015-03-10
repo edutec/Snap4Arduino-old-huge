@@ -185,7 +185,7 @@ SnapTranslator.dict.de = {
     'translator_e-mail':
         'jens@moenig.org', // optional
     'last_changed':
-        '2014-07-29', // this, too, will appear in the Translators tab
+        '2015-02-23', // this, too, will appear in the Translators tab
 
     // GUI
     // control bar:
@@ -417,8 +417,18 @@ SnapTranslator.dict.de = {
         'Wenn %greenflag angeklickt',
     'when %keyHat key pressed':
         'Wenn Taste %keyHat gedr\u00fcckt',
-    'when I am clicked':
-        'Wenn ich angeklickt werde',
+    'when I am %interaction':
+        'Wenn ich %interaction werde',
+    'clicked':
+        'angeklickt',
+    'pressed':
+        'gedr\u00fcckt',
+    'dropped':
+        'abgestellt',
+    'mouse-entered':
+        'vom Mauszeiger betreten',
+    'mouse-departed':
+        'vom Mauszeiger verlassen',
     'when I receive %msgHat':
         'Wenn ich %msgHat empfange',
     'broadcast %msg':
@@ -647,6 +657,11 @@ SnapTranslator.dict.de = {
         '\u00d6ffnen...',
     'Save':
         'Sichern',
+    'Save to disk':
+        'Abpeichern',
+    'store this project\nin the downloads folder\n(in supporting browsers)':
+        'dieses Projekt herunterladen\nund lokal speichern\n'
+            + '(nicht von allen Browsern unters\u00fctzt)',
     'Save As...':
         'Sichern als...',
     'Import...':
