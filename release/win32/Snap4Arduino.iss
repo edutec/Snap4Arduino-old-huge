@@ -7,8 +7,8 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{79712027-5DAE-425B-8534-1CA699720EA5}
 AppName=Snap4Arduino
-AppVersion=1.0-beta
-AppVerName=Snap4Arduino-1.0-beta
+AppVersion=1.0.2-beta
+AppVerName=Snap4Arduino-1.0.2-beta
 AppPublisher=Citilab
 AppPublisherURL=http://www.s4a.cat/snap
 AppSupportURL=http://www.s4a.cat/snap
@@ -17,7 +17,7 @@ DefaultDirName={pf}\Snap4Arduino
 DefaultGroupName=Snap4Arduino
 AllowNoIcons=yes
 OutputDir=.
-OutputBaseFilename=Snap4Arduino-1.0-beta
+OutputBaseFilename=Snap4Arduino-1.0.2-beta
 SetupIconFile=s4a.ico
 Compression=lzma
 SolidCompression=yes
