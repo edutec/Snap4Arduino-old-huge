@@ -2471,3 +2471,8 @@ ______
 ------
 * Blocks: fixed #738
 * GUI, Blocks: Only enable input caching for blocks
+
+150315
+------
+* Store: fixed #743
+* GUI, html: switch from beta to release candidate
