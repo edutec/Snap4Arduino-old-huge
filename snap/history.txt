@@ -2476,3 +2476,12 @@ ______
 ------
 * Store: fixed #743
 * GUI, html: switch from beta to release candidate
+
+150325
+------
+* Threads: fixed #752
+
+150415
+------
+* Threads: flush Stage>>keysPressed when prompting the user
+* Objects: fixed #770

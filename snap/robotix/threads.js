@@ -1,97 +1,138 @@
 // Motors
 Process.prototype.leftMotorForward = function (value) {
-	if (value) {
-		this.digitalWrite(10, false);
-		this.digitalWrite(11, true);
-	} else {
-		this.digitalWrite(10, false);
-		this.digitalWrite(11, false);
-	}
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[11].mode != board.MODES.PWM) {
+        board.pinMode(11, board.MODES.PWM);
+    }
+
+    this.pwmWrite(11, Math.min(100, value) / 100 * 255);
 };
 Process.prototype.leftMotorBackward = function (value) {
-	if (value) {
-		this.digitalWrite(10, true);
-		this.digitalWrite(11, false);
-	} else {
-		this.digitalWrite(10, false);
-		this.digitalWrite(11, false);
-	}
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[10].mode != board.MODES.PWM) {
+        board.pinMode(10, board.MODES.PWM);
+    }
+
+    this.pwmWrite(10, Math.min(100, value) / 100 * 255);
 };
 Process.prototype.rightMotorForward = function (value) {
-	if (value) {
-		this.digitalWrite(13, false);
-		this.digitalWrite(12, true);
-	} else {
-		this.digitalWrite(13, false);
-		this.digitalWrite(12, false);
-	}
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[12].mode != board.MODES.PWM) {
+        board.pinMode(12, board.MODES.PWM);
+    }
+
+    this.pwmWrite(12, Math.min(100, value) / 100 * 255);
 };
 Process.prototype.rightMotorBackward = function (value) {
-	if (value) {
-		this.digitalWrite(13, true);
-		this.digitalWrite(12, false);
-	} else {
-		this.digitalWrite(13, false);
-		this.digitalWrite(12, false);
-	}
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[13].mode != board.MODES.PWM) {
+        board.pinMode(13, board.MODES.PWM);
+    }
+
+    this.pwmWrite(13, Math.min(100, value) / 100 * 255);
 };
 
 // Sensors
 Process.prototype.frontLeftSensor = function () { 
-	return this.reportAnalogReading(4);
+    return this.reportAnalogReading(4);
 };
 Process.prototype.frontRightSensor = function () { 
-	return this.reportAnalogReading(1);
+    return this.reportAnalogReading(1);
 };
 Process.prototype.sideLeftSensor = function () { 
-	return this.reportAnalogReading(5);
+    return this.reportAnalogReading(5);
 };
 Process.prototype.sideRightSensor = function () { 
-	return this.reportAnalogReading(0);
+    return this.reportAnalogReading(0);
 };
 Process.prototype.bottomLeftSensor = function () { 
-	return this.reportAnalogReading(3);
+    return this.reportAnalogReading(3);
 };
 Process.prototype.bottomRightSensor = function () { 
-	return this.reportAnalogReading(2);
+    return this.reportAnalogReading(2);
 };
 
 // LEDs
 Process.prototype.leftLEDRed = function (value) {
-	this.digitalWrite(4, value);
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[4].mode != board.MODES.PWM) {
+        board.pinMode(4, board.MODES.PWM);
+    }
+
+    this.pwmWrite(4, value);
 };
 Process.prototype.leftLEDGreen = function (value) {
-	this.digitalWrite(5, value);
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[5].mode != board.MODES.PWM) {
+        board.pinMode(5, board.MODES.PWM);
+    }
+
+    this.pwmWrite(5, value);
 };
 Process.prototype.leftLEDBlue = function (value) {
-	this.digitalWrite(6, value);
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[6].mode != board.MODES.PWM) {
+        board.pinMode(6, board.MODES.PWM);
+    }
+
+    this.pwmWrite(6, value);
 };
 Process.prototype.rightLEDRed = function (value) {
-	this.digitalWrite(7, value);
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[7].mode != board.MODES.PWM) {
+        board.pinMode(7, board.MODES.PWM);
+    }
+
+    this.pwmWrite(7, value);
 };
 Process.prototype.rightLEDGreen = function (value) {
-	this.digitalWrite(8, value);
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[8].mode != board.MODES.PWM) {
+        board.pinMode(8, board.MODES.PWM);
+    }
+    this.pwmWrite(8, value);
 };
 Process.prototype.rightLEDBlue = function (value) {
-	this.digitalWrite(9, value);
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[9].mode != board.MODES.PWM) {
+        board.pinMode(9, board.MODES.PWM);
+    }
+
+    this.pwmWrite(9, value);
 };
 
 // Speaker
 Process.prototype.speaker = function (value) {
-	this.digitalWrite(3, value);
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[3].mode != board.MODES.PWM) {
+        board.pinMode(3, board.MODES.PWM);
+    }
+
+    this.pwmWrite(3, value);
 };
 
 // Values
 Process.prototype.low = function () { 
-	return false;
+    return false;
 };	
 Process.prototype.high = function () { 
-	return true;
+    return true;
 };	
 
 Process.prototype.stopAll = function () {
-	for (i = 2; i < 14; i++) {
-		this.digitalWrite(i, 0);
-	}
+    for (i = 2; i < 14; i++) {
+        this.digitalWrite(i, 0);
+    }
 }
 
