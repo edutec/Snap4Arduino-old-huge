@@ -3,6 +3,7 @@ app.nw
 Snap4Arduino.tar.gz
 Snap4Arduino.zip
 Snap4Arduino*.exe
+release/phiro.zip
 
 # Ignore libudev.so.0 soft links
 libudev.so.0
