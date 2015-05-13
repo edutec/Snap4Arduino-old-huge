@@ -1,4 +1,4 @@
-// init proxy
+// init decorator
 
 SpriteMorph.prototype.originalInit = SpriteMorph.prototype.init;
 
@@ -215,6 +215,7 @@ SpriteMorph.prototype.initBlocks = function() {
         spec: 'connect arduino at %port'
     };
 
+    // Keeping this block spec, although it's not used anymore!
     this.blocks.setPinMode =
         {
         only: SpriteMorph,
@@ -253,7 +254,7 @@ SpriteMorph.prototype.initBlocks = function() {
 
 SpriteMorph.prototype.initBlocks();
 
-// blockTemplates proxy
+// blockTemplates decorator
 
 SpriteMorph.prototype.originalBlockTemplates = SpriteMorph.prototype.blockTemplates;
 SpriteMorph.prototype.blockTemplates = function(category) {
@@ -290,8 +291,9 @@ SpriteMorph.prototype.blockTemplates = function(category) {
     if (category === 'arduino') {
         blocks.push(arduinoConnectButton);
         blocks.push(arduinoDisconnectButton);
-        blocks.push('-');
-        blocks.push(blockBySelector('setPinMode'));
+//        This block has been deprecated. Configuration now happens automatically
+//        blocks.push('-');
+//        blocks.push(blockBySelector('setPinMode'));
         blocks.push('-');
         blocks.push(blockBySelector('servoWrite'));
         blocks.push(blockBySelector('digitalWrite'));
