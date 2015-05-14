@@ -1,91 +1,93 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Snap4Arduino 1.0.3-beta</title>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Snap4Arduino 1.0.4-beta</title>
         <link rel="shortcut icon" href="http://snap.berkeley.edu/fav3.gif" type="image/gif">
-		<script type="text/javascript" src="morphic.js"></script>
-		<!-- <Snap4Arduino> -->
-		<script type="text/javascript" src="s4aMorphic.js"></script>
-		<!-- </Snap4Arduino> -->
-		<script type="text/javascript" src="widgets.js"></script>
-		<script type="text/javascript" src="blocks.js"></script>
-		<!-- <Snap4Arduino> -->
-		<script type="text/javascript" src="s4aBlocks.js"></script>
-		<!-- </Snap4Arduino> -->
-		<script type="text/javascript" src="threads.js"></script>
-		<!-- <Snap4Arduino> -->
-		<script type="text/javascript" src="s4aThreads.js"></script>
-		<!-- </Snap4Arduino> -->
-		<script type="text/javascript" src="objects.js"></script>
-		<!-- <Snap4Arduino> -->
-		<script type="text/javascript" src="s4aObjects.js"></script>
-		<!-- </Snap4Arduino> -->
-		<script type="text/javascript" src="gui.js"></script>
-		<!-- <Snap4Arduino> -->
-		<script type="text/javascript" src="s4aGui.js"></script>
-		<!-- </Snap4Arduino> -->
-		<script type="text/javascript" src="paint.js"></script>
-		<script type="text/javascript" src="lists.js"></script>
-		<script type="text/javascript" src="byob.js"></script>
-		<!-- <Snap4Arduino> -->
-		<script type="text/javascript" src="s4aByob.js"></script>
-		<script type="text/javascript" src="xml.js"></script>
-		<script type="text/javascript" src="store.js"></script>
-		<!-- <Snap4Arduino> -->
-		<script type="text/javascript" src="s4aStore.js"></script>
-		<!-- </Snap4Arduino> -->
-		<script type="text/javascript" src="locale.js"></script>
-		<script type="text/javascript" src="cloud.js"></script>
-		<script type="text/javascript" src="sha512.js"></script>
-		<script type="text/javascript">
-			var firmata = require('firmata');
-/*			process.on('uncaughtException' ,function(err){
-        		console.error('uncaughtException:', err);
-        		console.error(err.stack);
-				process.exit(1);
-    		});*/
-			var world;
-			var ide;
+        <script type="text/javascript" src="morphic.js"></script>
+        <!-- <Snap4Arduino> -->
+        <script type="text/javascript" src="s4aMorphic.js"></script>
+        <!-- </Snap4Arduino> -->
+        <script type="text/javascript" src="widgets.js"></script>
+        <script type="text/javascript" src="blocks.js"></script>
+        <!-- <Snap4Arduino> -->
+        <script type="text/javascript" src="s4aBlocks.js"></script>
+        <!-- </Snap4Arduino> -->
+        <script type="text/javascript" src="threads.js"></script>
+        <!-- <Snap4Arduino> -->
+        <script type="text/javascript" src="s4aThreads.js"></script>
+        <!-- </Snap4Arduino> -->
+        <script type="text/javascript" src="objects.js"></script>
+        <!-- <Snap4Arduino> -->
+        <script type="text/javascript" src="s4aObjects.js"></script>
+        <!-- </Snap4Arduino> -->
+        <script type="text/javascript" src="gui.js"></script>
+        <!-- <Snap4Arduino> -->
+        <script type="text/javascript" src="s4aGui.js"></script>
+        <!-- </Snap4Arduino> -->
+        <script type="text/javascript" src="paint.js"></script>
+        <script type="text/javascript" src="lists.js"></script>
+        <script type="text/javascript" src="byob.js"></script>
+        <!-- <Snap4Arduino> -->
+        <script type="text/javascript" src="s4aByob.js"></script>
+        <script type="text/javascript" src="xml.js"></script>
+        <script type="text/javascript" src="store.js"></script>
+        <!-- <Snap4Arduino> -->
+        <script type="text/javascript" src="s4aStore.js"></script>
+        <!-- </Snap4Arduino> -->
+        <script type="text/javascript" src="locale.js"></script>
+        <script type="text/javascript" src="cloud.js"></script>
+        <script type="text/javascript" src="sha512.js"></script>
+        <script type="text/javascript">
+            var firmata = require('firmata');
+            /*
+               process.on('uncaughtException' ,function(err){
+                   console.error('uncaughtException:', err);
+                   console.error(err.stack);
+                   process.exit(1);
+               });
+            */
+            var world;
+            var ide;
 
-			window.onload = function () {
-				world = new WorldMorph(document.getElementById('world'));
+            window.onload = function () {
+                world = new WorldMorph(document.getElementById('world'));
 
-				ide = new IDE_Morph();
-				ide.openIn(world);
+                ide = new IDE_Morph();
+                ide.openIn(world);
 
-				ide.inform = function(title, message, callback) { 
-						var myself = this;
-						if (!myself.informing) {
-							var box = new DialogBoxMorph();
-							myself.informing = true;
-							box.ok = function() { 
-								myself.informing = false;
-								if (callback) { callback() };
-								this.accept();
-							};
-							box.inform(title, message, world)
-						}
-				};
-				setInterval(loop, 1);
-			};
+                ide.inform = function(title, message, callback) { 
+                    var myself = this;
+                    if (!myself.informing) {
+                        var box = new DialogBoxMorph();
+                        myself.informing = true;
+                        box.ok = function() { 
+                            myself.informing = false;
+                            if (callback) { callback() };
+                            this.accept();
+                        };
+                        box.inform(title, message, world)
+                    }
+                };
+                setInterval(loop, 1);
+            };
 
-			function loop() {
-				world.doOneCycle();
-			};
+            function loop() {
+                world.doOneCycle();
+            };
 
-			// Add menubar for Mac version ('darwin') with node-webkit >10.0 (modules version 14)
-			if (process.platform==='darwin' && +process.versions.modules >= 14) {
-					var nw = require('nw.gui');
-					var win = nw.Window.get();
-					var nativeMenuBar = new nw.Menu({ type: "menubar" });
-					nativeMenuBar.createMacBuiltin("Snap4Arduino");
-					win.menu = nativeMenuBar;
-			}
+            // Add menubar for Mac version ('darwin') with node-webkit >10.0 (modules version 14)
+            if (process.platform==='darwin' && +process.versions.modules >= 14) {
+                var nw = require('nw.gui');
+                var win = nw.Window.get();
+                var nativeMenuBar = new nw.Menu({ type: "menubar" });
+                nativeMenuBar.createMacBuiltin("Snap4Arduino");
+                win.menu = nativeMenuBar;
+            }
 
-		</script>
-	</head>
-	<body style="margin: 0;">
-		<canvas id="world" tabindex="1" style="position: absolute;" />
-    </body>
-</html>
+        </script>
+        </head>
+        <body style="margin: 0;">
+            <canvas id="world" tabindex="1" style="position: absolute;" />
+        </body>
+    </html>

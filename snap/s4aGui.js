@@ -3,12 +3,12 @@
 SpriteIconMorph.prototype.originalUserMenu = SpriteIconMorph.prototype.userMenu;
 
 SpriteIconMorph.prototype.userMenu = function () {
-	menu = this.originalUserMenu();
-	menu.addLine();
-	var myself = this;
-	menu.addItem('connect to Arduino', function() { myself.object.arduino.attemptConnection() });
-	menu.addItem('disconnect Arduino', function() { myself.object.arduino.disconnect() });
-	return menu;
+    menu = this.originalUserMenu();
+    menu.addLine();
+    var myself = this;
+    menu.addItem('connect to Arduino', function() { myself.object.arduino.attemptConnection() });
+    menu.addItem('disconnect Arduino', function() { myself.object.arduino.disconnect() });
+    return menu;
 }
 
 
@@ -20,18 +20,18 @@ SpriteIconMorph.prototype.userMenu = function () {
 IDE_Morph.prototype.originalBuildPanes = IDE_Morph.prototype.buildPanes;
 
 IDE_Morph.prototype.buildPanes = function (){
-	var myself = this;
+    var myself = this;
 
-	this.originalBuildPanes();
-	this.controlBar.cloudButton.hide();
-	
-	this.controlBar.originalFixLayout = this.controlBar.fixLayout;
+    this.originalBuildPanes();
+    this.controlBar.cloudButton.hide();
 
-	this.controlBar.fixLayout = function () {
+    this.controlBar.originalFixLayout = this.controlBar.fixLayout;
+
+    this.controlBar.fixLayout = function () {
         myself.controlBar.originalFixLayout();
-		myself.controlBar.projectButton.setLeft(150);
-		myself.controlBar.updateLabel()
-	};
+        myself.controlBar.projectButton.setLeft(150);
+        myself.controlBar.updateLabel()
+    };
 };
 
 // Hide cloud button when toggleAppMode is called (when changing language, opening projects, ...)
@@ -48,7 +48,7 @@ IDE_Morph.prototype.toggleAppMode = function(mode) {
 ProjectDialogMorph.prototype.originalAddSourceButton = ProjectDialogMorph.prototype.addSourceButton;
 
 ProjectDialogMorph.prototype.addSourceButton = function(source, label, symbol) {
-	if (source != 'cloud') { this.originalAddSourceButton(source, label, symbol) }
+    if (source != 'cloud') { this.originalAddSourceButton(source, label, symbol) }
 }
 
 
@@ -57,7 +57,7 @@ ProjectDialogMorph.prototype.addSourceButton = function(source, label, symbol) {
 
 IDE_Morph.prototype.snapMenu = function () {
     var menu,
-        world = this.world();
+    world = this.world();
 
     menu = new MenuMorph(this);
     menu.addItem('About Snap!...', 'aboutSnap');
@@ -65,7 +65,7 @@ IDE_Morph.prototype.snapMenu = function () {
     menu.addItem(
         'Snap! reference manual',
         function () {
-			window.open('http://snap.berkeley.edu/snapsource/help/SnapManual.pdf', 'SnapReferenceManual');
+            window.open('http://snap.berkeley.edu/snapsource/help/SnapManual.pdf', 'SnapReferenceManual');
         }
     );
     menu.addItem(
@@ -75,59 +75,59 @@ IDE_Morph.prototype.snapMenu = function () {
         }
     );
     menu.addItem('Snap4Arduino website', 
-		function() {
-			window.open('http://s4a.cat/snap', 'Snap4ArduinoWebsite'); 
-		}
-	);
-    menu.addItem(
-        'Download Snap! source',
-        function () {
-            window.open(
-                'http://snap.berkeley.edu/snapsource/snap.zip',
-                'SnapSource'
-            );
-        }
-    );
-	menu.addItem(
-        'Snap4Arduino repository',
-        function () {
-            window.open(
-                'http://github.com/edutec/Snap4Arduino',
-                'SnapSource'
-            );
-        }
-    );
+                 function() {
+                     window.open('http://s4a.cat/snap', 'Snap4ArduinoWebsite'); 
+                 }
+                );
+                menu.addItem(
+                    'Download Snap! source',
+                    function () {
+                        window.open(
+                            'http://snap.berkeley.edu/snapsource/snap.zip',
+                            'SnapSource'
+                        );
+                    }
+                );
+                menu.addItem(
+                    'Snap4Arduino repository',
+                    function () {
+                        window.open(
+                            'http://github.com/edutec/Snap4Arduino',
+                            'SnapSource'
+                        );
+                    }
+                );
 
-    if (world.isDevMode) {
-        menu.addLine();
-        menu.addItem(
-            'Switch back to user mode',
-            'switchToUserMode',
-            'disable deep-Morphic\ncontext menus'
-                + '\nand show user-friendly ones',
-            new Color(0, 100, 0)
-        );
-    } else if (world.currentKey === 16) { // shift-click
-        menu.addLine();
-        menu.addItem(
-            'Switch to dev mode',
-            'switchToDevMode',
-            'enable Morphic\ncontext menus\nand inspectors,'
-                + '\nnot user-friendly!',
-            new Color(100, 0, 0)
-        );
-    }
-    menu.popup(world, this.logo.bottomLeft());
+                if (world.isDevMode) {
+                    menu.addLine();
+                    menu.addItem(
+                        'Switch back to user mode',
+                        'switchToUserMode',
+                        'disable deep-Morphic\ncontext menus'
+                        + '\nand show user-friendly ones',
+                        new Color(0, 100, 0)
+                    );
+                } else if (world.currentKey === 16) { // shift-click
+                    menu.addLine();
+                    menu.addItem(
+                        'Switch to dev mode',
+                        'switchToDevMode',
+                        'enable Morphic\ncontext menus\nand inspectors,'
+                        + '\nnot user-friendly!',
+                        new Color(100, 0, 0)
+                    );
+                }
+                menu.popup(world, this.logo.bottomLeft());
 };
 
 IDE_Morph.prototype.projectMenu = function () {
     var menu,
-        myself = this,
+    myself = this,
         world = this.world(),
         pos = this.controlBar.projectButton.bottomLeft(),
         graphicsName = this.currentSprite instanceof SpriteMorph ?
-                'Costumes' : 'Backgrounds',
-        shiftClicked = (world.currentKey === 16);
+        'Costumes' : 'Backgrounds',
+    shiftClicked = (world.currentKey === 16);
 
     menu = new MenuMorph(this);
     menu.addItem('Project notes...', 'editProjectNotes');
@@ -173,7 +173,7 @@ IDE_Morph.prototype.projectMenu = function () {
 
     menu.addItem(
         shiftClicked ?
-                'Export project as plain text...' : 'Export project...',
+            'Export project as plain text...' : 'Export project...',
         function () {
             if (myself.projectName) {
                 myself.exportProject(myself.projectName, shiftClicked);
@@ -221,12 +221,12 @@ IDE_Morph.prototype.projectMenu = function () {
             // read a list of libraries from an external file,
             var libMenu = new MenuMorph(this, 'Import library'),
                 libUrl = 'http://snap.berkeley.edu/snapsource/libraries/' +
-                    'LIBRARIES';
+            'LIBRARIES';
 
             function loadLib(name) {
                 var url = 'http://snap.berkeley.edu/snapsource/libraries/'
-                        + name
-                        + '.xml';
+                + name
+                + '.xml';
                 myself.droppedText(myself.getURL(url), name);
             }
 
@@ -256,7 +256,7 @@ IDE_Morph.prototype.projectMenu = function () {
                 libMenu = new MenuMorph(
                     myself,
                     localize('Import') + ' ' + localize(dir)
-                );
+            );
 
             function loadCostume(name) {
                 var url = dir + '/' + name,
@@ -312,6 +312,24 @@ IDE_Morph.prototype.projectMenu = function () {
 };
 
 
+IDE_Morph.prototype.getCostumesList = function (dirname) {
+    var fs = require('fs'),
+        dir,
+        costumes = [];
+
+    dir = fs.readdirSync(dirname);
+    dir.forEach(
+        function (each) {
+            costumes.push(each);
+        }
+    );
+    costumes.sort(function (x, y) {
+        return x < y ? -1 : 1;
+    });
+    return costumes;
+};
+
+
 // Snap4Arduino logo
 
 IDE_Morph.prototype.createLogo = function () {
@@ -331,11 +349,11 @@ IDE_Morph.prototype.createLogo = function () {
                 0,
                 this.width(),
                 0
-            );
+        );
         gradient.addColorStop(0, 'black');
         gradient.addColorStop(0.5, myself.frameColor.toString());
         context.fillStyle = MorphicPreferences.isFlat ?
-                myself.frameColor.toString() : gradient;
+            myself.frameColor.toString() : gradient;
         context.fillRect(0, 0, this.width(), this.height());
         if (this.texture) {
             this.drawTexture(this.texture);
@@ -365,14 +383,14 @@ IDE_Morph.prototype.createLogo = function () {
 
 IDE_Morph.prototype.exportProject = function (name, plain) {
     var menu, str;
-	var myself = this;
+    var myself = this;
     if (name) {
         this.setProjectName(name);
         if (Process.prototype.isCatchingErrors) {
             try {
                 menu = this.showMessage('Exporting');
                 str = this.serializer.serialize(this.stage);
-				saveFile(name, str);
+                saveFile(name, str);
                 menu.destroy();
             } catch (err) {
                 this.showMessage('Export failed: ' + err);
@@ -380,49 +398,49 @@ IDE_Morph.prototype.exportProject = function (name, plain) {
         } else {
             menu = this.showMessage('Exporting');
             str = this.serializer.serialize(this.stage);
-			saveFile(name, str);
+            saveFile(name, str);
             menu.destroy();
         }
     }
 
-	function saveFile(name, contents) {
-		var inp = document.createElement('input');
-		if (myself.filePicker) {
-			document.body.removeChild(myself.filePicker);
-			myself.filePicker = null;
-		}
-		inp.nwsaveas = homePath() + name + '.xml';
-		inp.type = 'file';
-		inp.style.color = "transparent";
-		inp.style.backgroundColor = "transparent";
-		inp.style.border = "none";
-		inp.style.outline = "none";
-		inp.style.position = "absolute";
-		inp.style.top = "0px";
-		inp.style.left = "0px";
-		inp.style.width = "0px";
-		inp.style.height = "0px";
-		inp.addEventListener(
-			"change",
-			function (e) {
-				document.body.removeChild(inp);
-				myself.filePicker = null;
-				
-				var fs = require('fs');
-				fs.writeFileSync(e.target.files[0].path, contents);
-            	myself.showMessage('Exported!', 1);
-			},
-			false
-			);
-		document.body.appendChild(inp);
-		myself.filePicker = inp;
-		inp.click();
-	}
+    function saveFile(name, contents) {
+        var inp = document.createElement('input');
+        if (myself.filePicker) {
+            document.body.removeChild(myself.filePicker);
+            myself.filePicker = null;
+        }
+        inp.nwsaveas = homePath() + name + '.xml';
+        inp.type = 'file';
+        inp.style.color = "transparent";
+        inp.style.backgroundColor = "transparent";
+        inp.style.border = "none";
+        inp.style.outline = "none";
+        inp.style.position = "absolute";
+        inp.style.top = "0px";
+        inp.style.left = "0px";
+        inp.style.width = "0px";
+        inp.style.height = "0px";
+        inp.addEventListener(
+            "change",
+            function (e) {
+                document.body.removeChild(inp);
+                myself.filePicker = null;
+
+                var fs = require('fs');
+                fs.writeFileSync(e.target.files[0].path, contents);
+                myself.showMessage('Exported!', 1);
+            },
+            false
+        );
+        document.body.appendChild(inp);
+        myself.filePicker = inp;
+        inp.click();
+    }
 };
 
 
 function homePath() {
-	return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + ((process.platform == 'win32') ? '\\' : '/')
+    return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + ((process.platform == 'win32') ? '\\' : '/')
 }
 
 /**
@@ -440,23 +458,23 @@ IDE_Morph.prototype.setLanguage = function(lang, callback) {
 };
 
 IDE_Morph.prototype.setLanguageS4A = function (lang, callback) {
-     // Load language script for s4a related functions
-     var s4aTranslation = document.getElementById('s4a-language'),
-         s4aSrc = 's4a-lang-' + lang + '.js',
-         myself = this;
-     if (s4aTranslation) {
-         document.head.removeChild(s4aTranslation);
-     }
-     if (lang === 'en') {
-         return this.reflectLanguage('en', callback);
-     }
-     s4aTranslation = document.createElement('script');
-     s4aTranslation.id = 's4a-language';
-     s4aTranslation.onload = function () {
-         myself.reflectLanguage(lang, callback);
-     };
-     document.head.appendChild(s4aTranslation);
-     s4aTranslation.src = s4aSrc; 
+    // Load language script for s4a related functions
+    var s4aTranslation = document.getElementById('s4a-language'),
+        s4aSrc = 's4a-lang-' + lang + '.js',
+        myself = this;
+    if (s4aTranslation) {
+        document.head.removeChild(s4aTranslation);
+    }
+    if (lang === 'en') {
+        return this.reflectLanguage('en', callback);
+    }
+    s4aTranslation = document.createElement('script');
+    s4aTranslation.id = 's4a-language';
+    s4aTranslation.onload = function () {
+        myself.reflectLanguage(lang, callback);
+    };
+    document.head.appendChild(s4aTranslation);
+    s4aTranslation.src = s4aSrc; 
 };
 
 // Fix problme with connected board when creating a new project 
