@@ -256,12 +256,15 @@ SpriteMorph.prototype.initBlocks = function() {
         translatable: true
     };
 
+    // Ardui... nization? 
+    // Whatever, let's dumb this language down:
+
+    this.blocks.receiveGo.translatable = true;
     this.blocks.doWait.translatable = true;
     this.blocks.doForever.translatable = true;
     this.blocks.doRepeat.translatable = true;
     this.blocks.doIf.translatable = true;
     this.blocks.doIfElse.translatable = true;
-    this.blocks.doReport.translatable = true;
     this.blocks.reportSum.translatable = true;
     this.blocks.reportDifference.translatable = true;
     this.blocks.reportProduct.translatable = true;
@@ -287,11 +290,11 @@ SpriteMorph.prototype.initBlocks = function() {
     this.blocks.reportMappedCode.translatable = true;
 
     StageMorph.prototype.codeMappings['doWait'] = 'delay(<#1> * 1000);';
-    StageMorph.prototype.codeMappings['doForever'] = 'while (true) {\n  <#1>}';
+    StageMorph.prototype.codeMappings['doForever'] = 'void loop() {\n  <#1>\n}';
     StageMorph.prototype.codeMappings['doRepeat'] = 'int i = 0;\nwhile (i < <#1>) {\n  <#2>\n  i++;\n}';
-    StageMorph.prototype.codeMappings['doIf'] = 'if (<#1>) {\n  <#2>\n}\n';
+    StageMorph.prototype.codeMappings['doIf'] = 'if (<#1>) {\n  <#2>\n}';
     StageMorph.prototype.codeMappings['doIfElse'] = 'if (<#1>) {\n  <#2>\n} else {\n  <#3>\n}';
-    StageMorph.prototype.codeMappings['doReport'] = 'return <#1>;';
+
     StageMorph.prototype.codeMappings['reportSum'] = '(<#1> + <#2>)';
     StageMorph.prototype.codeMappings['reportDifference'] = '(<#1> - <#2>)';
     StageMorph.prototype.codeMappings['reportProduct'] = '(<#1> * <#2>)';
@@ -307,9 +310,17 @@ SpriteMorph.prototype.initBlocks = function() {
     StageMorph.prototype.codeMappings['reportNot'] = '!(<#1>)';
     StageMorph.prototype.codeMappings['reportTrue'] = 'true';
     StageMorph.prototype.codeMappings['reportFalse'] = 'false';
+
     StageMorph.prototype.codeMappings['doSetVar'] = '<#1> = <#2>;';
     StageMorph.prototype.codeMappings['doChangeVar'] = '<#1> += <#2>;';
-    StageMorph.prototype.codeMappings['doDeclareVariables'] = 'int <#1>;';
+    StageMorph.prototype.codeMappings['doDeclareVariables'] = 'int <#1>;'; // How do we deal with types? Damn types...
+
+    StageMorph.prototype.codeMappings['reportAnalogReading'] = 'analogRead(<#1>)';
+    StageMorph.prototype.codeMappings['reportDigitalReading'] = 'digitalRead(<#1>)';
+    StageMorph.prototype.codeMappings['setPinMode'] = 'pinMode(<#1>, <#2>);';
+    StageMorph.prototype.codeMappings['digitalWrite'] = 'digitalWrite(<#1>, <#2>);';
+    StageMorph.prototype.codeMappings['servoWrite'] = 'servo<#1>.write(<#2>);';
+    StageMorph.prototype.codeMappings['pwmWrite'] = 'analogWrite(<#1>, <#2>);';
 
 }
 

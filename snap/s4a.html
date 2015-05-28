@@ -26,7 +26,9 @@
         <script type="text/javascript" src="cloud.js"></script>
         <script type="text/javascript" src="sha512.js"></script>
         <script type="text/javascript">
-            var firmata = require('firmata');
+            var firmata = require('firmata'),
+                world,
+                ide;
             /*
                process.on('uncaughtException' ,function(err){
                    console.error('uncaughtException:', err);
@@ -34,8 +36,6 @@
                    process.exit(1);
                });
             */
-            var world;
-            var ide;
 
             window.onload = function () {
                 world = new WorldMorph(document.getElementById('world'));
