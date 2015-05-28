@@ -282,10 +282,9 @@ BlockMorph.prototype.userMenu = function () {
 };
 
 BlockMorph.prototype.exportAsArduinoC = function () {
-    console.log('wat');
     var fs = require('fs'),
         ide = this.parentThatIsA(IDE_Morph),
-        fileName = ide.projectName + '.ino';
+        fileName = homePath() + (ide.projectName ? ide.projectName.replace(/[^a-zA-Z]/g,'') : 'snap4arduino') + '.ino';
 
     try {
         fs.writeFileSync(fileName, this.world().Arduino.processC(this.mappedCode()));
