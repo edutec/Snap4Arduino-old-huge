@@ -285,13 +285,13 @@ SpriteMorph.prototype.initBlocks = function() {
     this.blocks.doChangeVar.translatable = true;
     this.blocks.doDeclareVariables.translatable = true;
 
-    // Just for testing!
-    // Remove when everything is stable
-    this.blocks.reportMappedCode.translatable = true;
+    StageMorph.prototype.codeMappings['delim'] = ',';
+    StageMorph.prototype.codeMappings['tempvars_delim'] = ',';
+    StageMorph.prototype.codeMappings['string'] = '"<#1>"';
 
     StageMorph.prototype.codeMappings['doWait'] = 'delay(<#1> * 1000);';
     StageMorph.prototype.codeMappings['doForever'] = 'void loop() {\n  <#1>\n}';
-    StageMorph.prototype.codeMappings['doRepeat'] = 'int i = 0;\nwhile (i < <#1>) {\n  <#2>\n  i++;\n}';
+    StageMorph.prototype.codeMappings['doRepeat'] = 'for (int i = 0; i < <#1>; i++) {\n  <#2>\n}';
     StageMorph.prototype.codeMappings['doIf'] = 'if (<#1>) {\n  <#2>\n}';
     StageMorph.prototype.codeMappings['doIfElse'] = 'if (<#1>) {\n  <#2>\n} else {\n  <#3>\n}';
 
@@ -363,9 +363,6 @@ SpriteMorph.prototype.blockTemplates = function(category) {
     if (category === 'arduino') {
         blocks.push(arduinoConnectButton);
         blocks.push(arduinoDisconnectButton);
-//        This block has been deprecated. Configuration now happens automatically
-//        blocks.push('-');
-//        blocks.push(blockBySelector('setPinMode'));
         blocks.push('-');
         blocks.push(blockBySelector('servoWrite'));
         blocks.push(blockBySelector('digitalWrite'));

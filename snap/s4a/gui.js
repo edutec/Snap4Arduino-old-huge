@@ -310,9 +310,15 @@ IDE_Morph.prototype.settingsMenu = function () {
     );
     addPreference(
         'Arduino translation mode...',
-        function () { myself.toggleArduinoTranslation() },
+        function () {
+            this.confirm(
+                'Are you sure you want to turn on\nArduino translation mode?\n\nYour current project may become unusable,\n and this mode is irreversible!',
+                'Arduino translation mode', 
+                function() { myself.startArduinoTranslation() }
+            )
+        },
         myself.isArduinoTranslationMode,
-        'uncheck to go back to\nnormal mode',
+        'Arduino translation\ncannot be rolled back',
         'check to restrict to\nonly translatable\nblocks and enable\nArduino C translation',
         true
     );
@@ -785,10 +791,50 @@ IDE_Morph.prototype.init = function (isAutoFill) {
     this.isArduinoTranslationMode = false;
 }
 
-IDE_Morph.prototype.toggleArduinoTranslation = function() {
+IDE_Morph.prototype.startArduinoTranslation = function() {
     var myself = this;
 
-    this.isArduinoTranslationMode = !this.isArduinoTranslationMode;
+    // Arduino translation CANNOT BE ROLLED BACK
+    if (this.isArduinoTranslationMode) { return };
+
+    this.isArduinoTranslationMode = true;
+
+    this.selectSprite(this.sprites.at(1));
+
+    // UI changes
+    SpriteMorph.prototype.notSoOriginalBlockTemplates = SpriteMorph.prototype.blockTemplates;
+    SpriteMorph.prototype.blockTemplates = function (category) {
+        var blocks = this.notSoOriginalBlockTemplates(category);
+        if (category === 'variables') {
+            blocks = blocks.splice(1);
+            blocks = blocks.splice(0, blocks.length - 1);
+        }
+        return blocks;
+    }
+
+    StageMorph.prototype.notSoOriginalBlockTemplates = StageMorph.prototype.blockTemplates;
+    StageMorph.prototype.blockTemplates = function (category) {
+        var blocks = this.notSoOriginalBlockTemplates(category);
+        if (category === 'variables') {
+            blocks = blocks.splice(1);
+            blocks = blocks.splice(0, blocks.length - 1);
+        }
+        return blocks;
+    }
+
+    // ToDo: 
+    // - Remove "make a block" from scripting pane context menu
+    // - Remove untranslatable blocks from scripts in the scripting pane (for all sprites)
+    // - Remove custom block definitions
+    // - Revert to normal when creating a new project
+
+    // Remove all variables
+    this.globalVariables.names().forEach( function(eachVar) {
+        myself.globalVariables.deleteVar(eachVar);
+    });
+    this.currentSprite.variables.names().forEach( function(eachVar) {
+        myself.globalVariables.deleteVar(eachVar);
+    });
 
     // toggle codification
     StageMorph.prototype.enableCodeMapping = this.isArduinoTranslationMode;
