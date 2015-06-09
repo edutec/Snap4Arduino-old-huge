@@ -308,20 +308,6 @@ IDE_Morph.prototype.settingsMenu = function () {
         'check to enable\nsprite composition',
         true
     );
-    addPreference(
-        'Arduino translation mode...',
-        function () {
-            this.confirm(
-                'Are you sure you want to turn on\nArduino translation mode?\n\nYour current project may become unusable,\n and this mode is irreversible!',
-                'Arduino translation mode', 
-                function() { myself.startArduinoTranslation() }
-            )
-        },
-        myself.isArduinoTranslationMode,
-        'Arduino translation\ncannot be rolled back',
-        'check to restrict to\nonly translatable\nblocks and enable\nArduino C translation',
-        true
-    );
 
     menu.addLine(); // everything below this line is stored in the project
     addPreference(
@@ -367,6 +353,11 @@ IDE_Morph.prototype.projectMenu = function () {
     menu.addItem('Open...', 'openProjectsBrowser');
     menu.addItem('Save', "save");
     menu.addItem('Save As...', 'saveProjectsBrowser');
+    menu.addLine();
+    menu.addItem(
+        'New Arduino translatable project', 
+        'createNewArduinoProject',
+        'Experimental feature!\nScripts written under this\nmode will be translatable\nas Arduino sketches');
     menu.addLine();
     menu.addItem(
         'Import...',
@@ -788,56 +779,46 @@ IDE_Morph.prototype.newProject = function () {
 IDE_Morph.prototype.originalInit = IDE_Morph.prototype.init;
 IDE_Morph.prototype.init = function (isAutoFill) {
     this.originalInit(isAutoFill);
-    this.isArduinoTranslationMode = false;
 }
 
-IDE_Morph.prototype.startArduinoTranslation = function() {
+IDE_Morph.prototype.createNewArduinoProject = function() {
+    var myself = this;
+    this.confirm(
+        'Replace the current project with a new one?',
+        'New Arduino translatable Project',
+        function () { myself.newArduinoProject() })
+}
+
+IDE_Morph.prototype.newArduinoProject = function() {
     var myself = this;
 
-    // Arduino translation CANNOT BE ROLLED BACK
-    if (this.isArduinoTranslationMode) { return };
-
-    this.isArduinoTranslationMode = true;
-
-    this.selectSprite(this.sprites.at(1));
+    this.newProject();
 
     // UI changes
-    SpriteMorph.prototype.notSoOriginalBlockTemplates = SpriteMorph.prototype.blockTemplates;
-    SpriteMorph.prototype.blockTemplates = function (category) {
-        var blocks = this.notSoOriginalBlockTemplates(category);
-        if (category === 'variables') {
-            blocks = blocks.splice(1);
-            blocks = blocks.splice(0, blocks.length - 1);
+    if (!this.isArduinoTranslationMode) {
+        SpriteMorph.prototype.notSoOriginalBlockTemplates = SpriteMorph.prototype.blockTemplates;
+        SpriteMorph.prototype.blockTemplates = function (category) {
+            var blocks = this.notSoOriginalBlockTemplates(category);
+            if (category === 'variables') {
+                blocks = blocks.splice(1);
+                blocks = blocks.splice(0, blocks.length - 1);
+            }
+            return blocks;
         }
-        return blocks;
-    }
 
-    StageMorph.prototype.notSoOriginalBlockTemplates = StageMorph.prototype.blockTemplates;
-    StageMorph.prototype.blockTemplates = function (category) {
-        var blocks = this.notSoOriginalBlockTemplates(category);
-        if (category === 'variables') {
-            blocks = blocks.splice(1);
-            blocks = blocks.splice(0, blocks.length - 1);
+        StageMorph.prototype.notSoOriginalBlockTemplates = StageMorph.prototype.blockTemplates;
+        StageMorph.prototype.blockTemplates = function (category) {
+            var blocks = this.notSoOriginalBlockTemplates(category);
+            if (category === 'variables') {
+                blocks = blocks.splice(1);
+                blocks = blocks.splice(0, blocks.length - 1);
+            }
+            return blocks;
         }
-        return blocks;
     }
-
-    // ToDo: 
-    // - Remove "make a block" from scripting pane context menu
-    // - Remove untranslatable blocks from scripts in the scripting pane (for all sprites)
-    // - Remove custom block definitions
-    // - Revert to normal when creating a new project
-
-    // Remove all variables
-    this.globalVariables.names().forEach( function(eachVar) {
-        myself.globalVariables.deleteVar(eachVar);
-    });
-    this.currentSprite.variables.names().forEach( function(eachVar) {
-        myself.globalVariables.deleteVar(eachVar);
-    });
 
     // toggle codification
-    StageMorph.prototype.enableCodeMapping = this.isArduinoTranslationMode;
+    StageMorph.prototype.enableCodeMapping = true;
     this.currentSprite.blocksCache.variables = null;
     this.currentSprite.paletteCache.variables = null;
 
@@ -847,11 +828,30 @@ IDE_Morph.prototype.startArduinoTranslation = function() {
     SpriteMorph.prototype.categories.forEach(function(category) { 
         Object.keys(defs).forEach(function (sel) {
             if (!defs[sel].translatable) {
-                StageMorph.prototype.hiddenPrimitives[sel] = myself.isArduinoTranslationMode;
+                StageMorph.prototype.hiddenPrimitives[sel] = true;
             }
         });
         myself.flushBlocksCache(category) 
     });
 
+    this.isArduinoTranslationMode = true;
     this.refreshPalette();
 }
+
+IDE_Morph.prototype.createNewProject = function () {
+    var myself = this;
+    this.confirm(
+        'Replace the current project with a new one?',
+        'New Project',
+        function () {
+            if (myself.isArduinoTranslationMode) {
+                // Ok, these names are getting silly
+                StageMorph.prototype.blockTemplates = StageMorph.prototype.notSoOriginalBlockTemplates;
+                SpriteMorph.prototype.blockTemplates = SpriteMorph.prototype.notSoOriginalBlockTemplates;
+                myself.isArduinoTranslationMode = false;
+            }
+            myself.newProject();
+        }
+    );
+};
+
