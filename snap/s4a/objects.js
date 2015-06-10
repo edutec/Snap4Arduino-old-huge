@@ -187,9 +187,7 @@ SpriteMorph.prototype.categories.push('arduino');
 SpriteMorph.prototype.blockColor['arduino'] = new Color(64, 136, 182);
 
 SpriteMorph.prototype.originalInitBlocks = SpriteMorph.prototype.initBlocks;
-SpriteMorph.prototype.initBlocks = function() {
-
-    this.originalInitBlocks();
+SpriteMorph.prototype.initArduinoBlocks = function() {
 
     this.blocks.reportAnalogReading = 
         {
@@ -321,7 +319,11 @@ SpriteMorph.prototype.initBlocks = function() {
     StageMorph.prototype.codeMappings['digitalWrite'] = 'digitalWrite(<#1>, <#2>);';
     StageMorph.prototype.codeMappings['servoWrite'] = 'servo<#1>.write(<#2>);';
     StageMorph.prototype.codeMappings['pwmWrite'] = 'analogWrite(<#1>, <#2>);';
+}
 
+SpriteMorph.prototype.initBlocks =  function() {
+    this.originalInitBlocks();
+    this.initArduinoBlocks();
 }
 
 SpriteMorph.prototype.initBlocks();

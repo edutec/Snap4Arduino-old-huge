@@ -776,11 +776,6 @@ IDE_Morph.prototype.newProject = function () {
 
 // EXPERIMENTAL: Arduino translation mode
 
-IDE_Morph.prototype.originalInit = IDE_Morph.prototype.init;
-IDE_Morph.prototype.init = function (isAutoFill) {
-    this.originalInit(isAutoFill);
-}
-
 IDE_Morph.prototype.createNewArduinoProject = function() {
     var myself = this;
     this.confirm(
@@ -793,6 +788,13 @@ IDE_Morph.prototype.newArduinoProject = function() {
     var myself = this;
 
     this.newProject();
+    SpriteMorph.prototype.initBlocks();
+
+    // toggle codification
+    StageMorph.prototype.enableCodeMapping = true;
+    this.currentSprite.blocksCache.variables = null;
+
+    console.log(StageMorph.prototype.codeMappings);
 
     // UI changes
     if (!this.isArduinoTranslationMode) {
@@ -817,11 +819,6 @@ IDE_Morph.prototype.newArduinoProject = function() {
         }
     }
 
-    // toggle codification
-    StageMorph.prototype.enableCodeMapping = true;
-    this.currentSprite.blocksCache.variables = null;
-    this.currentSprite.paletteCache.variables = null;
-
     // toggle unusable blocks
     var defs = SpriteMorph.prototype.blocks;
    
@@ -835,6 +832,8 @@ IDE_Morph.prototype.newArduinoProject = function() {
     });
 
     this.isArduinoTranslationMode = true;
+
+    this.currentSprite.paletteCache.variables = null;
     this.refreshPalette();
 }
 
