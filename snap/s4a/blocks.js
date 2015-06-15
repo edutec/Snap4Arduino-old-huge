@@ -125,7 +125,7 @@ SyntaxElementMorph.prototype.labelPart = function(spec) {
         );
         break;
         default:
-            part = SyntaxElementMorph.prototype.originalLabelPart(spec);
+            part = this.originalLabelPart(spec);
     }
     return part;
 }
