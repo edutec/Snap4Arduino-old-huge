@@ -3,15 +3,15 @@ Process.prototype.setPinMode = function (pin, mode) {
 
     if (sprite.arduino.isBoardReady()) {
 
-        var board = sprite.arduino.board; 
+        var board = sprite.arduino.board, 
+            val;
 
-        var val;
         switch(mode[0]) {
             case 'digital input': val = board.MODES.INPUT; break;
             case 'digital output': val = board.MODES.OUTPUT; break;
             case 'PWM': val = board.MODES.PWM; break;
             case 'servo': val = board.MODES.SERVO; break;
-            // not used, but left it here anyway:
+            // not used, but left it here anyway
             case 'analog input': val = board.MODES.ANALOG; break;
         }
         if (this.context.pinSet === undefined) {

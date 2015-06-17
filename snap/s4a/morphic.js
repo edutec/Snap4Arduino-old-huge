@@ -24,7 +24,7 @@ WorldMorph.prototype.Arduino.lockPort = function (port) {
 }
 
 /**
- * Unlocks a previously Locked port to permit it's use in new connections
+ * Unlocks a previously Locked port to permit its use in new connections
  * Should be called when closing connections
  */
 WorldMorph.prototype.Arduino.unlockPort = function (port) {
@@ -36,7 +36,7 @@ WorldMorph.prototype.Arduino.unlockPort = function (port) {
 }
 
 /**
- * Informs wether the port is locked or unlocked
+ * Informs whether the port is locked or unlocked
  */
 WorldMorph.prototype.Arduino.isPortLocked = function (port) {
     return (this.usedPorts.indexOf(port) > -1)
@@ -53,7 +53,7 @@ WorldMorph.prototype.Arduino.getSerialPorts = function (callback) {
     var portcheck = /usb|DevB|rfcomm|acm|^com/i; // Not sure about rfcomm! We must dig further how bluetooth works in Gnu/Linux
 
     myself.serialport.list(function (err, ports) { 
-        if(ports){ 
+        if (ports) { 
             ports.forEach(function(each) { 
                 if(!myself.isPortLocked(each.comName) && portcheck.test(each.comName)) {
                     portList[each.comName] = each.comName; 
