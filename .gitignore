@@ -6,3 +6,7 @@ Snap4Arduino*.exe
 
 # Ignore libudev.so.0 soft links
 libudev.so.0
+
+# Ignore VIM's temporary and backup files
+**/*.swp
+**/*~ 
