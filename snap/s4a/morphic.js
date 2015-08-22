@@ -97,15 +97,67 @@ WorldMorph.prototype.Arduino.processC = function (body) {
     }
 
     // let's find out what pins are we using, and for what purpose
-    servoLines = lines.filter(function(each) { return each.match(/servo[0-9]*\.write/)} );
-    servoPins = unique(servoLines.map(function(each) { return each.replace(/.*servo([0-9]*)\.write.*/g, '$1') }));
+	//SDM: changed regex so variables can be used for pin numbers
+    servoLines = lines.filter(function(each) { return each.match(/servo[A-Za-z0-9]*\.write/)} );
+    servoPins = unique(servoLines.map(function(each) { return each.replace(/.*servo([A-Za-z0-9]*)\.write.*/g, '$1') }));
 
     digitalOutputLines = lines.filter(function(each) { return each.match(/digitalWrite/)});
-    digitalOutputPins = unique(digitalOutputLines.map(function(each) { return each.replace(/.*digitalWrite\(([0-9]*),.*\).*/g, '$1') }));
+    digitalOutputPins = unique(digitalOutputLines.map(function(each) { return each.replace(/.*digitalWrite\(([A-Za-z0-9]*),.*\).*/g, '$1') }));
 
     digitalInputLines = lines.filter(function(each) { return each.match(/digitalRead/)});
-    digitalInputPins = unique(digitalInputLines.map(function(each) { return each.replace(/.*digitalRead\(([0-9]*)\).*/g, '$1') }));
-
+    digitalInputPins = unique(digitalInputLines.map(function(each) { return each.replace(/.*digitalRead\(([A-Za-z0-9]*)\).*/g, '$1') }));
+	
+	//SDM
+	//detect variables and declaration and assignment to header, so they can be used in setup()
+	//only for variables outside of loops a type detection is build in (only int or char)
+	//usefull for using variables holding the pin numbers of Arduino
+	//TODO: type detection for vars in loops
+	variableDeclareLines = lines.filter(function(each) { return each.match(/int/)});
+	variableDeclaration = unique(variableDeclareLines.map(function(each) { return each.replace(/.*int\(([A-Za-z0-9]*)\).*/g, '$1') }));
+	
+	var headertemp = '';
+	var headerVar = '';
+	
+	variableDeclaration.forEach( function(varNames) { //declaration line (int a,b,c,d;)
+		body = body.replace(varNames + '\n', '') //remove declaration line in body, will be added later in head
+		lines = body.split('\n')
+		var variables = varNames.split(',');
+		variables.forEach( function(varName) { //lines with assignment of variable
+			varName = varName.replace('int ', '')
+			varName = varName.replace(';', '')
+			var reName = new RegExp(varName + ' = ', 'g');
+			variableLines = lines.filter(function(each) { return each.match(reName)});
+			var reValue = new RegExp('/.*' + varName + ' \= ([A-Za-z0-9]*)', 'g');
+			variableSetValues = unique(variableLines.map(function(each) { return each.replace(reValue, '$1') }));
+			variableSetValues.forEach( function(valueString) { if (valueString.substring(0, 1) != ' ') {
+																var value = valueString.substring(valueString.lastIndexOf(" ")+1,valueString.lastIndexOf(";"))
+																if (isNaN(value)) { //detect type of assignment (only int or char)
+																	//detect if assignment is an Analog pin number (i.e. A0, A1) then type is int
+																	if ((value.length == 2) && ((value.substring(0,1) == 'A' || value.substring(0,1) == 'a') && !isNaN(value.substring(1,2)))) {
+																		headertemp += 'int ' + valueString + '\n'
+																	} else {
+																		headertemp += 'char ' + valueString + '\n'
+																	}
+																} else {
+																	headertemp += 'int ' + valueString + '\n'
+																};
+																varNames = varNames.replace(',' + varName + ';', ';')
+																varNames = varNames.replace(varName + ',', '')
+																if (varNames.substring(varNames.lastIndexOf(" ")+1,varNames.lastIndexOf(";")) == varName) {
+																	varNames = varNames.replace(varName + ';', ';')
+																}
+																body = body.replace(valueString + '\n', '') //remove assignment line in body, will be added later in head
+															} });
+		});
+		//add variable lines to header (only for vars outside of loops)
+		if (varNames != 'int ;') {
+			headerVar += varNames + '\n' + headertemp + '\n'
+		} else {
+			headerVar += headertemp + '\n'
+		};
+	});
+	//SDM
+	
     // now let's construct the header and the setup body
     if (servoLines.length > 0) { header += '#include <Servo.h>\n\n' };
 
@@ -120,6 +172,7 @@ WorldMorph.prototype.Arduino.processC = function (body) {
     digitalInputPins.forEach( function(pin){ setup += '  pinMode(' + pin + ', INPUT);\n' });
 
     setup += '}\n\n';
-
-    return (header + setup + body);
+	
+	//SDM: added headerVar
+    return (header + headerVar + setup + body);
 }
