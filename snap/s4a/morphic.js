@@ -181,7 +181,6 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	var durations = '';
 	melodyDurationLines.forEach (function(durLine) {
 												duration = durLine.substring(durLine.lastIndexOf(" ")+1,durLine.lastIndexOf(";"))
-												//durations += duration + ','
 												durations += 1.0/duration + ','
 												body = body.replace(durLine + '\n', '')
 											});
@@ -217,6 +216,17 @@ WorldMorph.prototype.Arduino.processC = function (body) {
     digitalOutputPins.forEach( function(pin){ setup += '  pinMode(' + pin + ', OUTPUT);\n' });
     digitalInputPins.forEach( function(pin){ setup += '  pinMode(' + pin + ', INPUT);\n' });
 
+	//SDM
+	//Detect if the Melody-block is inside the loop() or not
+	//if not, move it to setup()
+	melodyLines = lines.filter(function(each) { return each.match(/Melody\(\)/)});
+	melodyLines.forEach ( function(melodytest) { if (melodytest === 'Melody();') {
+													body = body.replace(melodytest + '\n', '')
+													setup += '  ' + melodytest + '\n'
+												}
+												});
+	//SDM
+	
     setup += '}\n\n';
 	
 	//SDM
