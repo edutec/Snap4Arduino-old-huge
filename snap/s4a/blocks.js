@@ -419,7 +419,7 @@ BlockMorph.prototype.userMenu = function () {
     if (StageMorph.prototype.enableCodeMapping && this.selector == 'receiveGo') {
         menu.addLine();
         menu.addItem(
-            localize('export as Arduino sketch...'),
+            localize('export as Arduino sketch...'), //SDM Added localization
             'exportAsArduinoC'
         );
     }
