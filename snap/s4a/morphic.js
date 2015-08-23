@@ -203,6 +203,13 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	
 	//SDM
 	
+	//SDM
+	//translate servo values into ints (not tested!)
+	body = body.replace('.write(clockwise);', '.write(0);') //1200 (https://github.com/edutec/Snap4Arduino/issues/62)
+	body = body.replace('.write(stopped);', '.write(90);') //1500
+	body = body.replace('.write(counter-clockwise);', '.write(180);') //1700
+	//SDM
+	
     // now let's construct the header and the setup body
     if (servoLines.length > 0) { header += '#include <Servo.h>\n\n' };
 
