@@ -278,6 +278,7 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
         translatable: true
     };
 	
+	//SDM
 	this.blocks.defMelody =
 	{
 		only: SpriteMorph,
@@ -295,7 +296,8 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 		spec: 'play melody on pin %buzPin',
 		translatable: true
 	};
-
+	//SDM
+	
     // Ardui... nization? 
     // Whatever, let's dumb this language down:
 
@@ -325,9 +327,11 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
     this.blocks.doChangeVar.translatable = true;
     this.blocks.doDeclareVariables.translatable = true;
 	
+	//SDM
 	this.blocks.doPlayNote.translatable = true;
 	this.blocks.doRest.translatable = true;
-
+	//SDM
+	
     StageMorph.prototype.codeMappings['delim'] = ',';
     StageMorph.prototype.codeMappings['tempvars_delim'] = ',';
     StageMorph.prototype.codeMappings['string'] = '"<#1>"';
@@ -365,10 +369,12 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
     StageMorph.prototype.codeMappings['servoWrite'] = 'servo<#1>.write(<#2>);';
     StageMorph.prototype.codeMappings['pwmWrite'] = 'analogWrite(<#1>, <#2>);';
 	
+	//SDM
 	StageMorph.prototype.codeMappings['defMelody'] = 'tempmelody(\n  <#1>\ntempmelody)';
 	StageMorph.prototype.codeMappings['doPlayNote'] = 'playnote <#1>;\nduration <#2>;';
 	StageMorph.prototype.codeMappings['doRest'] = 'playnote 0;\nduration <#1>;';
 	StageMorph.prototype.codeMappings['playMelody'] = 'buzPin_iQMaak = <#1>;\nMelody();\n';
+	//SDM
 }
 
 SpriteMorph.prototype.initBlocks =  function() {
@@ -411,10 +417,12 @@ SpriteMorph.prototype.blockTemplates = function(category) {
         newBlock.isTemplate = true;
         return newBlock;
     };
-
+	
+	//SDM
 	if (category === 'sound') {
 		blocks.push(blockBySelector('defMelody'));
 	};
+	//SDM
 	
     if (category === 'arduino') {
         blocks.push(arduinoConnectButton);
@@ -423,8 +431,8 @@ SpriteMorph.prototype.blockTemplates = function(category) {
         blocks.push(blockBySelector('servoWrite'));
         blocks.push(blockBySelector('digitalWrite'));
         blocks.push(blockBySelector('pwmWrite'));
-		blocks.push('-');
-		blocks.push(blockBySelector('playMelody'));
+		blocks.push('-'); //SDM
+		blocks.push(blockBySelector('playMelody')); //SDM
         blocks.push('-');
         blocks.push(blockBySelector('reportAnalogReading'));
         blocks.push(blockBySelector('reportDigitalReading'));

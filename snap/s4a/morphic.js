@@ -158,7 +158,6 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	//SDM
 	
 	//SDM
-	
 	var buzPin = '0';
 	buzPinVariableDeclareLines = lines.filter(function(each) { return each.match(/buzPin_iQMaak/)});
 	buzPinVariableDeclareLines.forEach( function(buzPinVar) {
@@ -220,9 +219,12 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 
     setup += '}\n\n';
 	
+	//SDM
+	//if no forever loop is in the code, it will be added (is mandatory for an Arduino sketch)
 	if (body.indexOf("void loop()") == -1) {
 		body = body + 'void loop() {\n}\n'
 	};
+	//SDM
 	
 	//SDM: added headerVar
 	if (notes.length > 0) {

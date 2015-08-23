@@ -123,6 +123,7 @@ SyntaxElementMorph.prototype.labelPart = function(spec) {
                 true
         );
         break;
+		//SDM
         case '%buzPin':
             part = new InputSlotMorph(
                 null,
@@ -144,6 +145,7 @@ SyntaxElementMorph.prototype.labelPart = function(spec) {
                 true
         );
         break;
+		//SDM
         default:
             part = this.originalLabelPart(spec);
     }
