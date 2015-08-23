@@ -145,6 +145,69 @@ SyntaxElementMorph.prototype.labelPart = function(spec) {
                 true
         );
         break;
+        case '%redPin':
+            part = new InputSlotMorph(
+                null,
+                true,
+                function() {
+                    // Get board associated to currentSprite
+                    var sprite = world.children[0].currentSprite,
+                        board = sprite.arduino.board;
+
+                    if (board) {
+                        var pinNumbers = [];
+                        var pins = board.pins.filter(function(each){ return each.analogChannel == 127 });
+                        pins.forEach(function(each){ pinNumbers.push(pins.indexOf(each).toString()) });
+                        return pinNumbers;
+                    } else {
+                        return [];
+                    }
+                },
+                true
+        );
+        break;
+        case '%grnPin':
+            part = new InputSlotMorph(
+                null,
+                true,
+                function() {
+                    // Get board associated to currentSprite
+                    var sprite = world.children[0].currentSprite,
+                        board = sprite.arduino.board;
+
+                    if (board) {
+                        var pinNumbers = [];
+                        var pins = board.pins.filter(function(each){ return each.analogChannel == 127 });
+                        pins.forEach(function(each){ pinNumbers.push(pins.indexOf(each).toString()) });
+                        return pinNumbers;
+                    } else {
+                        return [];
+                    }
+                },
+                true
+        );
+        break;
+        case '%bluPin':
+            part = new InputSlotMorph(
+                null,
+                true,
+                function() {
+                    // Get board associated to currentSprite
+                    var sprite = world.children[0].currentSprite,
+                        board = sprite.arduino.board;
+
+                    if (board) {
+                        var pinNumbers = [];
+                        var pins = board.pins.filter(function(each){ return each.analogChannel == 127 });
+                        pins.forEach(function(each){ pinNumbers.push(pins.indexOf(each).toString()) });
+                        return pinNumbers;
+                    } else {
+                        return [];
+                    }
+                },
+                true
+        );
+        break;
         case '%songs':
             part = new InputSlotMorph(
                 null,
@@ -199,7 +262,23 @@ SyntaxElementMorph.prototype.labelPart = function(spec) {
 				},
 				true
 		);
-		break;	
+		break;
+        case '%colors':
+            part = new InputSlotMorph(
+                null,
+                false,
+                {
+                    'black' : [localize('black') + '__black'],
+					'white' : [localize('white') + '__white'],
+					'red' : [localize('red') + '__red'],
+					'green' : [localize('green') + '__green'],
+					'blue' : [localize('blue') + '__blue'],
+					'yellow' : [localize('yellow') + '__yellow'],
+					'softWhite' : [localize('softWhite') + '__softWhite']
+                },
+                true
+        );
+        break;		
 		//SDM
         default:
             part = this.originalLabelPart(spec);
@@ -340,7 +419,7 @@ BlockMorph.prototype.userMenu = function () {
     if (StageMorph.prototype.enableCodeMapping && this.selector == 'receiveGo') {
         menu.addLine();
         menu.addItem(
-            'export as Arduino sketch...',
+            localize('export as Arduino sketch...'),
             'exportAsArduinoC'
         );
     }

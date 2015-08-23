@@ -316,6 +316,26 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 		defaults: ['C4', 4],
 		translatable: true
 	};
+	
+	this.blocks.doRestCustom =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'sound',
+		spec: 'rest for 1/ %n beats',
+		defaults: [4],
+		translatable: true
+	};
+	
+	this.blocks.crossFadeColor =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'fade to color %colors on pins R %redPin G %grnPin B %bluPin',
+		defaults: [localize('blue') + '__blue', null, null, null],
+		translatable: true
+	};
 	//SDM
 	
     // Ardui... nization? 
@@ -349,7 +369,7 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 	
 	//SDM
 	this.blocks.doPlayNote.translatable = false;
-	this.blocks.doRest.translatable = true;
+	this.blocks.doRest.translatable = false;
 	//SDM
 	
     StageMorph.prototype.codeMappings['delim'] = ',';
@@ -392,9 +412,10 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 	//SDM
 	StageMorph.prototype.codeMappings['defMelody'] = 'tempmelody(\n  <#1>\ntempmelody)';
 	StageMorph.prototype.codeMappings['doPlayNoteCustom'] = 'playnote <#1>;\nduration <#2>;';
-	StageMorph.prototype.codeMappings['doRest'] = 'playnote 0;\nduration <#1>;';
+	StageMorph.prototype.codeMappings['doRestCustom'] = 'playnote 0;\nduration <#1>;';
 	StageMorph.prototype.codeMappings['playMelody'] = 'buzPin_iQMaak = <#1>;\nMelody();\n';
 	StageMorph.prototype.codeMappings['playSong'] = 'buzPin_iQMaak = <#2>;\nsong <#1>;\nMelody();\n';
+	StageMorph.prototype.codeMappings['crossFadeColor'] = 'crossFade(<#1>, <#2>, <#3>, <#4>);\nRGBPin <#2>;\nRGBPin <#3>;\nRGBPin <#4>;\n';
 	//SDM
 }
 
@@ -442,6 +463,7 @@ SpriteMorph.prototype.blockTemplates = function(category) {
 	//SDM
 	if (category === 'sound') {
 		blocks.push(blockBySelector('doPlayNoteCustom'));
+		blocks.push(blockBySelector('doRestCustom'));
 		blocks.push(blockBySelector('defMelody'));
 	};
 	//SDM
@@ -453,6 +475,8 @@ SpriteMorph.prototype.blockTemplates = function(category) {
         blocks.push(blockBySelector('servoWrite'));
         blocks.push(blockBySelector('digitalWrite'));
         blocks.push(blockBySelector('pwmWrite'));
+		blocks.push('-'); //SDM
+		blocks.push(blockBySelector('crossFadeColor')); //SDM
 		blocks.push('-'); //SDM
 		blocks.push(blockBySelector('playMelody')); //SDM
 		blocks.push(blockBySelector('playSong')); //SDM

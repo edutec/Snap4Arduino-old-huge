@@ -140,8 +140,42 @@ s4aTempDict = {
 	'play melody on pin %buzPin':
 		'speel melodie op pin %buzPin',
 	
+	'play song %songs on pin %buzPin':
+		'speel lied %songs op pin %buzPin',
+	
 	'play note %tones for 1/ %n beats':
-		'speel noot %tones 1/ %n tel'
+		'speel noot %tones 1/ %n tel',
+		
+	'rest for 1/ %n beats':
+		'pauzeer 1/ %n tel',
+	
+	'fade to color %colors on pins R %redPin G %grnPin B %bluPin':
+		'ga naar kleur %colors op pin R %redPin G %grnPin B %bluPin',
+		
+	'black':
+		'zwart',
+		
+	'white':
+		'wit',
+		
+	'red':
+		'rood',
+		
+	'green':
+		'groen',
+		
+	'blue':
+		'blauw',
+		
+	'yellow':
+		'geel',
+		
+	'softWhite':
+		'zacht wit',
+		
+	'export as Arduino sketch...':
+		'exporteer als Arduino-sketch...'
+	
 
 };
 

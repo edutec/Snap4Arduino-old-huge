@@ -239,6 +239,101 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	//SDM
 	
 	//SDM
+	//crossFadeColor
+	var crossFadeInit = '/*\n'
+					+ '* Code for cross-fading 3 LEDs, red, green and blue (RGB)\n'
+					+ '* https://www.arduino.cc/en/Tutorial/ColorCrossfader\n'
+					+ '* April 2007, Clay Shirky <clay.shirky@nyu.edu>\n'
+					+ '*/ \n'
+					+ '\n'
+					+ '// Color arrays\n'
+					+ 'int black[3]  = { 0, 0, 0 };\n'
+					+ 'int white[3]  = { 100, 100, 100 };\n'
+					+ 'int red[3]    = { 100, 0, 0 };\n'
+					+ 'int green[3]  = { 0, 100, 0 };\n'
+					+ 'int blue[3]   = { 0, 0, 100 };\n'
+					+ 'int yellow[3] = { 40, 95, 0 };\n'
+					+ 'int softWhite[3] = { 30, 30, 30 };\n'
+					+ '//etc.\n'
+					+ '\n'
+					+ 'int redVal = black[0];\n'
+					+ 'int grnVal = black[1];\n'
+					+ 'int bluVal = black[2];\n'
+					+ '\n'
+					+ 'int wait = 5;\n'
+					+ 'int hold = 0;\n'
+					+ '\n'
+					+ 'int prevR = redVal;\n'
+					+ 'int prevG = grnVal;\n'
+					+ 'int prevB = bluVal;\n\n'
+	
+	var crossFadeCode = '\n\n/* BELOW THIS LINE IS THE MATH -- YOU SHOULDN\'T NEED TO CHANGE THIS FOR THE BASICS */\n'
+						+ '\n'
+						+ 'int calculateStep(int prevValue, int endValue) {\n'
+						+ '  int step = endValue - prevValue;\n'
+						+ '  if (step) {\n'
+						+ '    step = 1020/step;\n'
+						+ '  }\n'
+						+ '  return step;\n'
+						+ '}\n'
+						+ '\n'
+						+ 'int calculateVal(int step, int val, int i) {\n'
+						+ '\n'
+						+ '  if ((step) && i % step == 0) {\n'
+						+ '    if (step > 0) {\n'
+						+ '      val += 1;\n'     
+						+ '    }\n'
+						+ '    else if (step < 0) {\n'
+						+ '      val -= 1;\n'
+						+ '    }\n'
+						+ '  }\n'
+						+ '  if (val > 255) {\n'
+						+ '    val = 255;\n'
+						+ '  }\n'
+						+ '  else if (val < 0) {\n'
+						+ '    val = 0;\n'
+						+ '  }\n'
+						+ '  return val;\n'
+						+ '}\n'
+						+ '\n'
+						+ 'void crossFade(int color[3], int redPin, int grnPin, int bluPin) {\n'
+						+ 'int R = (color[0] * 255) / 100;\n'
+						+ '  int G = (color[1] * 255) / 100;\n'
+						+ '  int B = (color[2] * 255) / 100;\n'
+						+ '\n'
+						+ '  int stepR = calculateStep(prevR, R);\n'
+						+ '  int stepG = calculateStep(prevG, G);\n' 
+						+ '  int stepB = calculateStep(prevB, B);\n'
+						+ '\n'
+						+ '  for (int i = 0; i <= 1020; i++) {\n'
+						+ '    redVal = calculateVal(stepR, redVal, i);\n'
+						+ '    grnVal = calculateVal(stepG, grnVal, i);\n'
+						+ '    bluVal = calculateVal(stepB, bluVal, i);\n'
+						+ '\n'
+						+ '    analogWrite(redPin, redVal);\n'
+						+ '    analogWrite(grnPin, grnVal);\n'     
+						+ '    analogWrite(bluPin, bluVal);\n' 
+						+ '\n'
+						+ '    delay(wait);\n'
+						+ '  }\n'
+						+ '  prevR = redVal;\n'
+						+ '  prevG = grnVal;\n'
+						+ '  prevB = bluVal;\n'
+						+ '  delay(hold);\n'
+						+ '}\n'
+						
+	if (body.indexOf("crossFade(") > -1) {
+		header += crossFadeInit
+		body += crossFadeCode
+		
+		RGBLines = lines.filter(function(each) { return each.match(/RGBPin/)});
+		RGBLines.forEach ( function(RGBLine) { body = body.replace(RGBLine + '\n', '') });
+		RGBPins = unique(RGBLines.map(function(each) { return each.substring(each.lastIndexOf(" ")+1,each.lastIndexOf(";")) }));
+		RGBPins.forEach ( function(RGBPin) { setup += '  pinMode(' + RGBPin + ', OUTPUT);\n' });
+	};
+	//SDM
+	
+	//SDM
 	//translate servo values into ints (not tested!)
 	body = body.replace('.write(clockwise);', '.write(0);') //1200 (https://github.com/edutec/Snap4Arduino/issues/62)
 	body = body.replace('.write(stopped);', '.write(90);') //1500
@@ -265,6 +360,20 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	melodyLines.forEach ( function(melodytest) { if (melodytest === 'Melody();') {
 													body = body.replace(melodytest + '\n', '')
 													setup += '  ' + melodytest + '\n'
+												}
+												});
+	//Detect if the crossFade-blocks are inside the loop() or not
+	//if not, move it to setup()
+	crossFadeLines = lines.filter(function(each) { return each.match(/crossFade\(/)});
+	crossFadeLines.forEach ( function(crossfadetest) { if (crossfadetest.substring(0,10) === 'crossFade(') {
+													crossfadetestNew = crossfadetest.substring(0, crossfadetest.indexOf("(")+1) + crossfadetest.substring(crossfadetest.lastIndexOf("_")+1, crossfadetest.length)
+													crossfadetestNew = crossfadetestNew.replace('"', '') 
+													body = body.replace(crossfadetest + '\n', '')
+													setup += '  ' + crossfadetestNew + '\n'
+												} else {
+													crossfadetestNew = crossfadetest.substring(0, crossfadetest.indexOf("(")+1) + crossfadetest.substring(crossfadetest.lastIndexOf("_")+1, crossfadetest.length)
+													crossfadetestNew = crossfadetestNew.replace('"', '')
+													body = body.replace(crossfadetest + '\n', crossfadetestNew + '\n')
 												}
 												});
 	//SDM
