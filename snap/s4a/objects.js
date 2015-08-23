@@ -277,6 +277,24 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
         spec: 'set PWM pin %pwmPin to %n',
         translatable: true
     };
+	
+	this.blocks.defMelody =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'sound',
+		spec: 'make melody %c',
+		translatable: true
+	};
+	
+	this.blocks.playMelody =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'play melody on pin %buzPin',
+		translatable: true
+	};
 
     // Ardui... nization? 
     // Whatever, let's dumb this language down:
@@ -306,6 +324,9 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
     this.blocks.doSetVar.translatable = true;
     this.blocks.doChangeVar.translatable = true;
     this.blocks.doDeclareVariables.translatable = true;
+	
+	this.blocks.doPlayNote.translatable = true;
+	this.blocks.doRest.translatable = true;
 
     StageMorph.prototype.codeMappings['delim'] = ',';
     StageMorph.prototype.codeMappings['tempvars_delim'] = ',';
@@ -343,6 +364,11 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
     StageMorph.prototype.codeMappings['digitalWrite'] = 'digitalWrite(<#1>, <#2>);';
     StageMorph.prototype.codeMappings['servoWrite'] = 'servo<#1>.write(<#2>);';
     StageMorph.prototype.codeMappings['pwmWrite'] = 'analogWrite(<#1>, <#2>);';
+	
+	StageMorph.prototype.codeMappings['defMelody'] = 'tempmelody(\n  <#1>\ntempmelody)';
+	StageMorph.prototype.codeMappings['doPlayNote'] = 'playnote <#1>;\nduration <#2>;';
+	StageMorph.prototype.codeMappings['doRest'] = 'playnote 0;\nduration <#1>;';
+	StageMorph.prototype.codeMappings['playMelody'] = 'buzPin_iQMaak = <#1>;\nMelody();\n';
 }
 
 SpriteMorph.prototype.initBlocks =  function() {
@@ -386,6 +412,10 @@ SpriteMorph.prototype.blockTemplates = function(category) {
         return newBlock;
     };
 
+	if (category === 'sound') {
+		blocks.push(blockBySelector('defMelody'));
+	};
+	
     if (category === 'arduino') {
         blocks.push(arduinoConnectButton);
         blocks.push(arduinoDisconnectButton);
@@ -393,6 +423,8 @@ SpriteMorph.prototype.blockTemplates = function(category) {
         blocks.push(blockBySelector('servoWrite'));
         blocks.push(blockBySelector('digitalWrite'));
         blocks.push(blockBySelector('pwmWrite'));
+		blocks.push('-');
+		blocks.push(blockBySelector('playMelody'));
         blocks.push('-');
         blocks.push(blockBySelector('reportAnalogReading'));
         blocks.push(blockBySelector('reportDigitalReading'));

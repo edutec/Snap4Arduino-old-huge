@@ -16,7 +16,6 @@ function pinsSettableToMode(aMode) {
     return pinNumbers;
 }
 
-
 // labelPart() proxy
 
 SyntaxElementMorph.prototype.originalLabelPart = SyntaxElementMorph.prototype.labelPart;
@@ -104,6 +103,27 @@ SyntaxElementMorph.prototype.labelPart = function(spec) {
         );
         break;
         case '%digitalPin':
+            part = new InputSlotMorph(
+                null,
+                true,
+                function() {
+                    // Get board associated to currentSprite
+                    var sprite = world.children[0].currentSprite,
+                        board = sprite.arduino.board;
+
+                    if (board) {
+                        var pinNumbers = [];
+                        var pins = board.pins.filter(function(each){ return each.analogChannel == 127 });
+                        pins.forEach(function(each){ pinNumbers.push(pins.indexOf(each).toString()) });
+                        return pinNumbers;
+                    } else {
+                        return [];
+                    }
+                },
+                true
+        );
+        break;
+        case '%buzPin':
             part = new InputSlotMorph(
                 null,
                 true,

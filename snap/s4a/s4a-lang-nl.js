@@ -132,7 +132,13 @@ s4aTempDict = {
         'Arduino is niet verbonden',
 		
 	'New Arduino translatable project':
-		'Nieuw Arduino-project maken'
+		'Nieuw Arduino-project maken',
+		
+	'make melody %c':
+		'maak melodie %c',
+	
+	'play melody on pin %buzPin':
+		'speel melodie op pin %buzPin'
 
 };
 

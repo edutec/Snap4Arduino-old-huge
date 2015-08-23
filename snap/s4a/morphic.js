@@ -112,13 +112,11 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	//only for variables outside of loops a type detection is build in (only int or char)
 	//usefull for using variables holding the pin numbers of Arduino
 	//TODO: type detection for vars in loops
-	variableDeclareLines = lines.filter(function(each) { return each.match(/int/)});
-	variableDeclaration = unique(variableDeclareLines.map(function(each) { return each.replace(/.*int\(([A-Za-z0-9]*)\).*/g, '$1') }));
-	
 	var headertemp = '';
 	var headerVar = '';
-	
-	variableDeclaration.forEach( function(varNames) { //declaration line (int a,b,c,d;)
+
+	variableDeclareLines = lines.filter(function(each) { return each.match(/int/)});
+	variableDeclareLines.forEach( function(varNames) { //declaration lines (int a,b,c,d;)
 		body = body.replace(varNames + '\n', '') //remove declaration line in body, will be added later in head
 		lines = body.split('\n')
 		var variables = varNames.split(',');
@@ -130,6 +128,7 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 			var reValue = new RegExp('/.*' + varName + ' \= ([A-Za-z0-9]*)', 'g');
 			variableSetValues = unique(variableLines.map(function(each) { return each.replace(reValue, '$1') }));
 			variableSetValues.forEach( function(valueString) { if (valueString.substring(0, 1) != ' ') {
+																body = body.replace(valueString + '\n', '') //remove assignment line in body, will be added later in head
 																var value = valueString.substring(valueString.lastIndexOf(" ")+1,valueString.lastIndexOf(";"))
 																if (isNaN(value)) { //detect type of assignment (only int or char)
 																	//detect if assignment is an Analog pin number (i.e. A0, A1) then type is int
@@ -146,9 +145,9 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 																if (varNames.substring(varNames.lastIndexOf(" ")+1,varNames.lastIndexOf(";")) == varName) {
 																	varNames = varNames.replace(varName + ';', ';')
 																}
-																body = body.replace(valueString + '\n', '') //remove assignment line in body, will be added later in head
 															} });
 		});
+		
 		//add variable lines to header (only for vars outside of loops)
 		if (varNames != 'int ;') {
 			headerVar += varNames + '\n' + headertemp + '\n'
@@ -156,6 +155,54 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 			headerVar += headertemp + '\n'
 		};
 	});
+	//SDM
+	
+	//SDM
+	
+	var buzPin = '0';
+	buzPinVariableDeclareLines = lines.filter(function(each) { return each.match(/buzPin_iQMaak/)});
+	buzPinVariableDeclareLines.forEach( function(buzPinVar) {
+																body = body.replace(buzPinVar + '\n', '') //remove assignment line in body, will be added later in head
+																buzPin = buzPinVar.substring(buzPinVar.lastIndexOf(" ")+1,buzPinVar.lastIndexOf(";"))
+															});
+	
+	//recode the melody so that two variables are made (int melody[]) and (int duration[])
+	body = body.replace('tempmelody(\n', '')
+	body = body.replace('tempmelody)', '')
+	melodyNoteLines = lines.filter(function(each) { return each.match(/.*playnote/)});
+	var notes = '';
+	melodyNoteLines.forEach (function(line) {
+												note = line.substring(line.lastIndexOf(" ")+1,line.lastIndexOf(";"))
+												notes += note + ','
+												body = body.replace(line + '\n', '')
+											});
+	notes = notes.substring(0, notes.length - 1)
+	
+	melodyDurationLines = lines.filter(function(each) { return each.match(/.*duration/)});
+	var durations = '';
+	melodyDurationLines.forEach (function(durLine) {
+												duration = durLine.substring(durLine.lastIndexOf(" ")+1,durLine.lastIndexOf(";"))
+												//durations += duration + ','
+												durations += 1.0/duration + ','
+												body = body.replace(durLine + '\n', '')
+											});
+	
+	durations = durations.substring(0, durations.length - 1)
+	
+	var defMelody = 'int melody[] = {\n  ' + notes + '\n};\n\n'
+	var defDurations = 'int noteDurations[] = {\n ' + durations + '\n};\n\n'
+	var voidMelody = 'void Melody() {\n'
+					+ '  int size = sizeof(melody) / sizeof(int);\n'
+					+ '  for (int thisNote = 0; thisNote < size; thisNote++) {\n'
+					+ '    int noteDuration = 1000/noteDurations[thisNote];\n'
+					+ '    tone(' + buzPin + ', melody[thisNote],noteDuration);\n'
+					+ '    int pauseBetweenNotes = noteDuration * 1.30;\n'
+					+ '    delay(pauseBetweenNotes);\n'
+					+ '    noTone(' + buzPin + ');\n'
+					+ '    pinMode(' + buzPin + ', INPUT);\n'
+					+ '  }\n'
+					+ '}\n\n'
+	
 	//SDM
 	
     // now let's construct the header and the setup body
@@ -173,6 +220,14 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 
     setup += '}\n\n';
 	
+	if (body.indexOf("void loop()") == -1) {
+		body = body + 'void loop() {\n}\n'
+	};
+	
 	//SDM: added headerVar
-    return (header + headerVar + setup + body);
+	if (notes.length > 0) {
+		return (header + headerVar + defMelody + defDurations + voidMelody + setup + body);
+	} else {
+		return (header + headerVar + setup + body);
+	};
 }
