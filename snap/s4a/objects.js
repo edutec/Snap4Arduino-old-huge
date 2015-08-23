@@ -296,6 +296,16 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 		spec: 'play melody on pin %buzPin',
 		translatable: true
 	};
+	
+	this.blocks.playSong =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'play song %songs on pin %buzPin',
+		defaults: ['Happy', null],
+		translatable: true
+	};
 	//SDM
 	
     // Ardui... nization? 
@@ -374,6 +384,7 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 	StageMorph.prototype.codeMappings['doPlayNote'] = 'playnote <#1>;\nduration <#2>;';
 	StageMorph.prototype.codeMappings['doRest'] = 'playnote 0;\nduration <#1>;';
 	StageMorph.prototype.codeMappings['playMelody'] = 'buzPin_iQMaak = <#1>;\nMelody();\n';
+	StageMorph.prototype.codeMappings['playSong'] = 'buzPin_iQMaak = <#2>;\nsong <#1>;\nMelody();\n';
 	//SDM
 }
 
@@ -433,6 +444,7 @@ SpriteMorph.prototype.blockTemplates = function(category) {
         blocks.push(blockBySelector('pwmWrite'));
 		blocks.push('-'); //SDM
 		blocks.push(blockBySelector('playMelody')); //SDM
+		blocks.push(blockBySelector('playSong')); //SDM
         blocks.push('-');
         blocks.push(blockBySelector('reportAnalogReading'));
         blocks.push(blockBySelector('reportDigitalReading'));

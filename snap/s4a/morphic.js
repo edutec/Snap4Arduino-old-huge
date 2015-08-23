@@ -189,6 +189,39 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	
 	var defMelody = 'int melody[] = {\n  ' + notes + '\n};\n\n'
 	var defDurations = 'int noteDurations[] = {\n ' + durations + '\n};\n\n'
+	
+	//option for predefining songs
+	//search other files for 'predefSongs' to find all places to add code
+	var song = '';
+	songLines = lines.filter(function(each) { return each.match(/.*song/)});
+	songLines.forEach (function(songLine) {
+											body = body.replace(songLine + '\n', '')
+											song = songLine.substring(songLine.lastIndexOf(" ")+1,songLine.lastIndexOf(";"))
+										});
+	//predefSongs
+	if (song === 'Happy') {
+		defMelody = 'int melody[] = {\n'
+		+'  262,262,311,349,\n'
+		+'  349,349,311,349,\n'
+		+'  349,349,349,349,\n'
+		+'  311,349,349,349,\n'
+		+'  311,349,262,0,\n'
+		+'  262,262,311,349,\n'
+		+'  349\n'
+		+'};\n\n'
+
+		defDurations = 'int noteDurations[] = {\n'
+		+' 8,4,4,8,\n'
+		+' 8,8,8,6,\n'
+		+' 4,4,6,8,\n'
+		+' 8,4,4,4,\n'
+		+' 8,4,8,8,\n'
+		+' 8,4,4,8,\n'
+		+' 8\n'
+		+'};\n\n'
+	}
+	//end predefining songs
+	
 	var voidMelody = 'void Melody() {\n'
 					+ '  int size = sizeof(melody) / sizeof(int);\n'
 					+ '  for (int thisNote = 0; thisNote < size; thisNote++) {\n'
@@ -244,7 +277,7 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	//SDM
 	
 	//SDM: added headerVar
-	if (notes.length > 0) {
+	if (notes.length > 0 || song.length > 0) {
 		return (header + headerVar + defMelody + defDurations + voidMelody + setup + body);
 	} else {
 		return (header + headerVar + setup + body);

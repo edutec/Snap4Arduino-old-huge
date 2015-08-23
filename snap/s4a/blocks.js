@@ -145,6 +145,16 @@ SyntaxElementMorph.prototype.labelPart = function(spec) {
                 true
         );
         break;
+        case '%songs':
+            part = new InputSlotMorph(
+                null,
+                false,
+                { //predefSongs
+                    'Happy' : ['Happy']
+                },
+                true
+        );
+        break;
 		//SDM
         default:
             part = this.originalLabelPart(spec);
