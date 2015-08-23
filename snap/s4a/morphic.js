@@ -172,6 +172,7 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	var notes = '';
 	melodyNoteLines.forEach (function(line) {
 												note = line.substring(line.lastIndexOf(" ")+1,line.lastIndexOf(";"))
+												note = note.substring(note.lastIndexOf("_")+1,note.length)
 												notes += note + ','
 												body = body.replace(line + '\n', '')
 											});
@@ -181,7 +182,8 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	var durations = '';
 	melodyDurationLines.forEach (function(durLine) {
 												duration = durLine.substring(durLine.lastIndexOf(" ")+1,durLine.lastIndexOf(";"))
-												durations += 1.0/duration + ','
+												//durations += 1.0/duration + ','
+												durations += duration + ','
 												body = body.replace(durLine + '\n', '')
 											});
 	

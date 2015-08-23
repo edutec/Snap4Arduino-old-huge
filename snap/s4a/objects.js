@@ -306,6 +306,16 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 		defaults: ['Happy', null],
 		translatable: true
 	};
+	
+	this.blocks.doPlayNoteCustom =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'sound',
+		spec: 'play note %tones for 1/ %n beats',
+		defaults: ['C4', 4],
+		translatable: true
+	};
 	//SDM
 	
     // Ardui... nization? 
@@ -338,7 +348,7 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
     this.blocks.doDeclareVariables.translatable = true;
 	
 	//SDM
-	this.blocks.doPlayNote.translatable = true;
+	this.blocks.doPlayNote.translatable = false;
 	this.blocks.doRest.translatable = true;
 	//SDM
 	
@@ -381,7 +391,7 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 	
 	//SDM
 	StageMorph.prototype.codeMappings['defMelody'] = 'tempmelody(\n  <#1>\ntempmelody)';
-	StageMorph.prototype.codeMappings['doPlayNote'] = 'playnote <#1>;\nduration <#2>;';
+	StageMorph.prototype.codeMappings['doPlayNoteCustom'] = 'playnote <#1>;\nduration <#2>;';
 	StageMorph.prototype.codeMappings['doRest'] = 'playnote 0;\nduration <#1>;';
 	StageMorph.prototype.codeMappings['playMelody'] = 'buzPin_iQMaak = <#1>;\nMelody();\n';
 	StageMorph.prototype.codeMappings['playSong'] = 'buzPin_iQMaak = <#2>;\nsong <#1>;\nMelody();\n';
@@ -431,6 +441,7 @@ SpriteMorph.prototype.blockTemplates = function(category) {
 	
 	//SDM
 	if (category === 'sound') {
+		blocks.push(blockBySelector('doPlayNoteCustom'));
 		blocks.push(blockBySelector('defMelody'));
 	};
 	//SDM

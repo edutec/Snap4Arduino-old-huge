@@ -138,7 +138,10 @@ s4aTempDict = {
 		'maak melodie %c',
 	
 	'play melody on pin %buzPin':
-		'speel melodie op pin %buzPin'
+		'speel melodie op pin %buzPin',
+	
+	'play note %tones for 1/ %n beats':
+		'speel noot %tones 1/ %n tel'
 
 };
 

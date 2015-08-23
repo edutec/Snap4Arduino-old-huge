@@ -155,6 +155,51 @@ SyntaxElementMorph.prototype.labelPart = function(spec) {
                 true
         );
         break;
+		case '%tones':
+			part = new InputSlotMorph(
+				null,
+				false,
+				{
+					'C3' : ['C3__131'],
+					'Cis3' : ['Cis3__139'],
+					'D3' : ['D3__147'],
+					'Dis3' : ['Dis3__156'],
+					'E3' : ['E3__165'],
+					'F3' : ['F3__175'],
+					'Fis3' : ['Fis3__185'],
+					'G3' : ['G3__196'],
+					'Gis3' : ['Gis3__208'],
+					'A3' : ['A3__220'],
+					'Ais3' : ['Ais3__233'],
+					'B3' : ['B3__247'],
+					'C4' : ['C4__262'],
+					'Cis4' : ['Cis4__277'],
+					'D4' : ['D4__294'],
+					'Dis4' : ['Dis4__311'],
+					'E4' : ['E4__330'],
+					'F4' : ['F4__349'],
+					'Fis4' : ['Fis4__370'],
+					'G4' : ['G4__392'],
+					'Gis4' : ['Gis4__415'],
+					'A4' : ['A4__440'],
+					'Ais4' : ['Ais4__466'],
+					'B4' : ['B4__494'],
+					'C5' : ['C5__523'],
+					'Cis5' : ['Cis5__554'],
+					'D5' : ['D5__587'],
+					'Dis5' : ['Dis5__622'],
+					'E5' : ['E5__659'],
+					'F5' : ['F5__698'],
+					'Fis5' : ['Fis5__740'],
+					'G5' : ['G5__784'],
+					'Gis5' : ['Gis5__831'],
+					'A5' : ['A5__880'],
+					'Ais5' : ['Ais5__932'],
+					'B5' : ['B5__988']
+				},
+				true
+		);
+		break;	
 		//SDM
         default:
             part = this.originalLabelPart(spec);
@@ -316,7 +361,7 @@ BlockMorph.prototype.userMenu = function () {
 BlockMorph.prototype.exportAsArduinoC = function () {
     var fs = require('fs'),
         ide = this.parentThatIsA(IDE_Morph),
-        fileName = homePath() + (ide.projectName ? ide.projectName.replace(/[^a-zA-Z]/g,'') : 'snap4arduino') + '.ino';
+        fileName = homePath() + (ide.projectName ? ide.projectName.replace(/[^a-zA-Z0-9]/g,'') : 'snap4arduino') + '.ino'; //SDM added numbers to regex
 
     try {
         fs.writeFileSync(fileName, this.world().Arduino.processC(this.mappedCode()));
