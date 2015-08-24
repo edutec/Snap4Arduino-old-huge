@@ -445,6 +445,7 @@ BlockMorph.prototype.exportAsArduinoC = function (test) { //SDM added paramater
 		myself = this;
 	};
 	// SDM
+	//Below here: changed all this. in myself.
     var fs = require('fs'),
         ide = myself.parentThatIsA(IDE_Morph),
         fileName = homePath() + (ide.projectName ? ide.projectName.replace(/[^a-zA-Z0-9]/g,'') : 'snap4arduino') + '.ino'; //SDM added numbers to regex

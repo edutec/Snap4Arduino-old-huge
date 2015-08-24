@@ -389,11 +389,6 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
     this.blocks.doChangeVar.translatable = true;
     this.blocks.doDeclareVariables.translatable = true;
 	
-	//SDM
-	this.blocks.doPlayNote.translatable = false;
-	this.blocks.doRest.translatable = false;
-	//SDM
-	
     StageMorph.prototype.codeMappings['delim'] = ',';
     StageMorph.prototype.codeMappings['tempvars_delim'] = ',';
     StageMorph.prototype.codeMappings['string'] = '"<#1>"';
@@ -499,13 +494,15 @@ SpriteMorph.prototype.blockTemplates = function(category) {
         blocks.push(blockBySelector('servoWrite'));
         blocks.push(blockBySelector('digitalWrite'));
         blocks.push(blockBySelector('pwmWrite'));
+		//SDM
 		if (StageMorph.prototype.enableCodeMapping) {
-			blocks.push('-'); //SDM
-			blocks.push(blockBySelector('crossFadeColor')); //SDM
-			blocks.push('-'); //SDM
-			blocks.push(blockBySelector('playMelody')); //SDM
-			blocks.push(blockBySelector('playSong')); //SDM
+			blocks.push('-');
+			blocks.push(blockBySelector('crossFadeColor'));
+			blocks.push('-');
+			blocks.push(blockBySelector('playMelody'));
+			blocks.push(blockBySelector('playSong'));
 		};
+		//SDM
         blocks.push('-');
         blocks.push(blockBySelector('reportAnalogReading'));
         blocks.push(blockBySelector('reportDigitalReading'));
