@@ -214,8 +214,8 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 
 		defDurations = 'int noteDurations[] = {\n'
 		+' 8,4,4,8,\n'
-		+' 8,8,8,6,\n'
-		+' 4,4,6,8,\n'
+		+' 8,8,8,3,\n'
+		+' 4,4,3,8,\n'
 		+' 8,4,4,4,\n'
 		+' 8,4,8,8,\n'
 		+' 8,4,4,8,\n'
