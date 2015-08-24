@@ -437,17 +437,25 @@ BlockMorph.prototype.userMenu = function () {
     return menu;
 };
 
-BlockMorph.prototype.exportAsArduinoC = function () {
+BlockMorph.prototype.exportAsArduinoC = function (test) { //SDM added paramater
+	//SDM Added check if parameter is filled (function is called by green flag button)
+	if (test) {
+		myself = test;
+	} else {
+		myself = this;
+	};
+	// SDM
     var fs = require('fs'),
-        ide = this.parentThatIsA(IDE_Morph),
+        ide = myself.parentThatIsA(IDE_Morph),
         fileName = homePath() + (ide.projectName ? ide.projectName.replace(/[^a-zA-Z0-9]/g,'') : 'snap4arduino') + '.ino'; //SDM added numbers to regex
 
     try {
-        fs.writeFileSync(fileName, this.world().Arduino.processC(this.mappedCode()));
+        fs.writeFileSync(fileName, myself.world().Arduino.processC(myself.mappedCode()));
         ide.showMessage('Exported as ' + fileName, 1);
     } catch (error) {
         ide.inform('Error exporting to Arduino sketch!', error.message)
     }
+
 };
 
 

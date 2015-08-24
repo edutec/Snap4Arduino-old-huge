@@ -1,3 +1,25 @@
+//SDM Change behavior of green flag button, it will now export the Arduino sketch
+StageMorph.prototype.originalFireGreenFlagEvent = StageMorph.prototype.fireGreenFlagEvent;
+StageMorph.prototype.fireGreenFlagEvent = function() {
+    
+	if (StageMorph.prototype.enableCodeMapping) {
+		var hats = [],
+			ide = this.parentThatIsA(IDE_Morph);
+
+		this.children.concat(this).forEach(function (morph) {
+			if (morph instanceof SpriteMorph || morph instanceof StageMorph) {
+				hats = hats.concat(morph.allHatBlocksFor('__shout__go__'));
+			}
+		});
+		if (hats[0]) {
+			BlockMorph.prototype.exportAsArduinoC(hats[0]);
+		};
+	} else {
+		StageMorph.prototype.originalFireGreenFlagEvent();
+	};
+};
+//SDM
+
 // init decorator
 
 SpriteMorph.prototype.originalInit = SpriteMorph.prototype.init;
@@ -462,9 +484,11 @@ SpriteMorph.prototype.blockTemplates = function(category) {
 	
 	//SDM
 	if (category === 'sound') {
-		blocks.push(blockBySelector('doPlayNoteCustom'));
-		blocks.push(blockBySelector('doRestCustom'));
-		blocks.push(blockBySelector('defMelody'));
+		if (StageMorph.prototype.enableCodeMapping) {
+			blocks.push(blockBySelector('doPlayNoteCustom'));
+			blocks.push(blockBySelector('doRestCustom'));
+			blocks.push(blockBySelector('defMelody'));
+		};
 	};
 	//SDM
 	
@@ -475,11 +499,13 @@ SpriteMorph.prototype.blockTemplates = function(category) {
         blocks.push(blockBySelector('servoWrite'));
         blocks.push(blockBySelector('digitalWrite'));
         blocks.push(blockBySelector('pwmWrite'));
-		blocks.push('-'); //SDM
-		blocks.push(blockBySelector('crossFadeColor')); //SDM
-		blocks.push('-'); //SDM
-		blocks.push(blockBySelector('playMelody')); //SDM
-		blocks.push(blockBySelector('playSong')); //SDM
+		if (StageMorph.prototype.enableCodeMapping) {
+			blocks.push('-'); //SDM
+			blocks.push(blockBySelector('crossFadeColor')); //SDM
+			blocks.push('-'); //SDM
+			blocks.push(blockBySelector('playMelody')); //SDM
+			blocks.push(blockBySelector('playSong')); //SDM
+		};
         blocks.push('-');
         blocks.push(blockBySelector('reportAnalogReading'));
         blocks.push(blockBySelector('reportDigitalReading'));
