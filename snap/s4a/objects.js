@@ -358,6 +358,16 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 		defaults: [localize('blue') + '__blue', null, null, null],
 		translatable: true
 	};
+	
+	this.blocks.rgbColor =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'set color %colors on pins R %redPin G %grnPin B %bluPin',
+		defaults: [localize('blue') + '__blue', null, null, null],
+		translatable: true
+	};
 	//SDM
 	
     // Ardui... nization? 
@@ -433,6 +443,7 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 	StageMorph.prototype.codeMappings['playMelody'] = 'buzPin_iQMaak = <#1>;\nMelody();\n';
 	StageMorph.prototype.codeMappings['playSong'] = 'buzPin_iQMaak = <#2>;\nsong <#1>;\nMelody();\n';
 	StageMorph.prototype.codeMappings['crossFadeColor'] = 'crossFade(<#1>, <#2>, <#3>, <#4>);\nRGBPin <#2>;\nRGBPin <#3>;\nRGBPin <#4>;\n';
+	StageMorph.prototype.codeMappings['rgbColor'] = 'rgbanalogWrite(<#2>, <#1>[0]);\nrgbanalogWrite(<#3>, <#1>[1]);\nrgbanalogWrite(<#4>, <#1>[2]);\nRGBPin <#2>;\nRGBPin <#3>;\nRGBPin <#4>;\n';
 	//SDM
 }
 
@@ -497,6 +508,7 @@ SpriteMorph.prototype.blockTemplates = function(category) {
 		//SDM
 		if (StageMorph.prototype.enableCodeMapping) {
 			blocks.push('-');
+			blocks.push(blockBySelector('rgbColor'));
 			blocks.push(blockBySelector('crossFadeColor'));
 			blocks.push('-');
 			blocks.push(blockBySelector('playMelody'));

@@ -239,14 +239,8 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	//SDM
 	
 	//SDM
-	//crossFadeColor
-	var crossFadeInit = '/*\n'
-					+ '* Code for cross-fading 3 LEDs, red, green and blue (RGB)\n'
-					+ '* https://www.arduino.cc/en/Tutorial/ColorCrossfader\n'
-					+ '* April 2007, Clay Shirky <clay.shirky@nyu.edu>\n'
-					+ '*/ \n'
-					+ '\n'
-					+ '// Color arrays\n'
+	//crossFadeColor / rgbColor
+	var rgbColors = '// Color arrays\n'
 					+ 'int black[3]  = { 0, 0, 0 };\n'
 					+ 'int white[3]  = { 100, 100, 100 };\n'
 					+ 'int red[3]    = { 100, 0, 0 };\n'
@@ -255,6 +249,13 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 					+ 'int yellow[3] = { 40, 95, 0 };\n'
 					+ 'int softWhite[3] = { 30, 30, 30 };\n'
 					+ '//etc.\n'
+					+ '\n'
+	
+	var crossFadeInit = '/*\n'
+					+ '* Code for cross-fading 3 LEDs, red, green and blue (RGB)\n'
+					+ '* https://www.arduino.cc/en/Tutorial/ColorCrossfader\n'
+					+ '* April 2007, Clay Shirky <clay.shirky@nyu.edu>\n'
+					+ '*/ \n'
 					+ '\n'
 					+ 'int redVal = black[0];\n'
 					+ 'int grnVal = black[1];\n'
@@ -297,7 +298,7 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 						+ '}\n'
 						+ '\n'
 						+ 'void crossFade(int color[3], int redPin, int grnPin, int bluPin) {\n'
-						+ 'int R = (color[0] * 255) / 100;\n'
+						+ '  int R = (color[0] * 255) / 100;\n'
 						+ '  int G = (color[1] * 255) / 100;\n'
 						+ '  int B = (color[2] * 255) / 100;\n'
 						+ '\n'
@@ -322,9 +323,12 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 						+ '  delay(hold);\n'
 						+ '}\n'
 						
-	if (body.indexOf("crossFade(") > -1) {
-		header += crossFadeInit
-		body += crossFadeCode
+	if (body.indexOf("RGBPin") > -1) {
+		header += rgbColors
+		if (body.indexOf("crossFade(") > -1) { 
+			header += crossFadeInit
+			body += crossFadeCode
+		};
 		
 		RGBLines = lines.filter(function(each) { return each.match(/RGBPin/)});
 		RGBLines.forEach ( function(RGBLine) { body = body.replace(RGBLine + '\n', '') });
@@ -354,10 +358,13 @@ WorldMorph.prototype.Arduino.processC = function (body) {
     digitalInputPins.forEach( function(pin){ setup += '  pinMode(' + pin + ', INPUT);\n' });
 
 	//SDM
+	//Oops, I'm messing up the order of the blocks
+	//disable it for now
+	var doThis = false;
 	//Detect if the Melody-block is inside the loop() or not
 	//if not, move it to setup()
 	melodyLines = lines.filter(function(each) { return each.match(/Melody\(\)/)});
-	melodyLines.forEach ( function(melodytest) { if (melodytest === 'Melody();') {
+	melodyLines.forEach ( function(melodytest) { if (melodytest === 'Melody();' && doThis) {
 													body = body.replace(melodytest + '\n', '')
 													setup += '  ' + melodytest + '\n'
 												}
@@ -365,15 +372,30 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	//Detect if the crossFade-blocks are inside the loop() or not
 	//if not, move it to setup()
 	crossFadeLines = lines.filter(function(each) { return each.match(/crossFade\(/)});
-	crossFadeLines.forEach ( function(crossfadetest) { if (crossfadetest.substring(0,10) === 'crossFade(') {
-													crossfadetestNew = crossfadetest.substring(0, crossfadetest.indexOf("(")+1) + crossfadetest.substring(crossfadetest.lastIndexOf("_")+1, crossfadetest.length)
-													crossfadetestNew = crossfadetestNew.replace('"', '') 
+	crossFadeLines.forEach ( function(crossfadetest) { 
+												crossfadetestNew = crossfadetest.substring(0, crossfadetest.indexOf("(")+1) + crossfadetest.substring(crossfadetest.lastIndexOf("_")+1, crossfadetest.length)
+												crossfadetestNew = crossfadetestNew.replace('"', '') 
+												if (crossfadetest.substring(0,10) === 'crossFade(' && doThis) {
 													body = body.replace(crossfadetest + '\n', '')
 													setup += '  ' + crossfadetestNew + '\n'
 												} else {
-													crossfadetestNew = crossfadetest.substring(0, crossfadetest.indexOf("(")+1) + crossfadetest.substring(crossfadetest.lastIndexOf("_")+1, crossfadetest.length)
-													crossfadetestNew = crossfadetestNew.replace('"', '')
 													body = body.replace(crossfadetest + '\n', crossfadetestNew + '\n')
+												}
+												});
+	//SDM
+	
+	//Detect if the rgbColor-blocks are inside the loop() or not
+	//if not, move it to setup()
+	rgbColorLines = lines.filter(function(each) { return each.match(/rgbanalogWrite\(/)});
+	rgbColorLines.forEach ( function(rgbcolortest) { 
+												rgbcolortestNew = rgbcolortest.substring(0, rgbcolortest.indexOf(",")+2) + rgbcolortest.substring(rgbcolortest.lastIndexOf("_")+1, rgbcolortest.length)
+												rgbcolortestNew = rgbcolortestNew.replace('"', '')
+												rgbcolortestNew = rgbcolortestNew.replace('rgb', '')
+												if (rgbcolortest.substring(0,15) === 'rgbanalogWrite(' && doThis) {
+													body = body.replace(rgbcolortest + '\n', '')
+													setup += '  ' + rgbcolortestNew + '\n'
+												} else {
+													body = body.replace(rgbcolortest + '\n', rgbcolortestNew + '\n')
 												}
 												});
 	//SDM

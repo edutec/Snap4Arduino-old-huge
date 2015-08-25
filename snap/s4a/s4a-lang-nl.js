@@ -152,6 +152,9 @@ s4aTempDict = {
 	'fade to color %colors on pins R %redPin G %grnPin B %bluPin':
 		'ga naar kleur %colors op pin R %redPin G %grnPin B %bluPin',
 		
+	'set color %colors on pins R %redPin G %grnPin B %bluPin':
+		'maak kleur %colors op pin R %redPin G %grnPin B %bluPin',
+		
 	'black':
 		'zwart',
 		
