@@ -1,3 +1,25 @@
+//SDM Change behavior of green flag button, it will now export the Arduino sketch
+StageMorph.prototype.originalFireGreenFlagEvent = StageMorph.prototype.fireGreenFlagEvent;
+StageMorph.prototype.fireGreenFlagEvent = function() {
+    
+	if (StageMorph.prototype.enableCodeMapping) {
+		var hats = [],
+			ide = this.parentThatIsA(IDE_Morph);
+
+		this.children.concat(this).forEach(function (morph) {
+			if (morph instanceof SpriteMorph || morph instanceof StageMorph) {
+				hats = hats.concat(morph.allHatBlocksFor('__shout__go__'));
+			}
+		});
+		if (hats[0]) {
+			BlockMorph.prototype.exportAsArduinoC(hats[0]);
+		};
+	} else {
+		StageMorph.prototype.originalFireGreenFlagEvent();
+	};
+};
+//SDM
+
 // init decorator
 
 SpriteMorph.prototype.originalInit = SpriteMorph.prototype.init;
@@ -277,7 +299,77 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
         spec: 'set PWM pin %pwmPin to %n',
         translatable: true
     };
-
+	
+	//SDM
+	this.blocks.defMelody =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'sound',
+		spec: 'make melody %c',
+		translatable: true
+	};
+	
+	this.blocks.playMelody =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'play melody on pin %buzPin',
+		translatable: true
+	};
+	
+	this.blocks.playSong =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'play song %songs on pin %buzPin',
+		defaults: ['Happy', null],
+		translatable: true
+	};
+	
+	this.blocks.doPlayNoteCustom =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'sound',
+		spec: 'play note %tones for 1/ %n beats',
+		defaults: ['C4', 4],
+		translatable: true
+	};
+	
+	this.blocks.doRestCustom =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'sound',
+		spec: 'rest for 1/ %n beats',
+		defaults: [4],
+		translatable: true
+	};
+	
+	this.blocks.crossFadeColor =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'fade to color %colors on pins R %redPin G %grnPin B %bluPin',
+		defaults: [localize('blue') + '__blue', null, null, null],
+		translatable: true
+	};
+	
+	this.blocks.rgbColor =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'set color %colors on pins R %redPin G %grnPin B %bluPin',
+		defaults: [localize('blue') + '__blue', null, null, null],
+		translatable: true
+	};
+	//SDM
+	
     // Ardui... nization? 
     // Whatever, let's dumb this language down:
 
@@ -306,7 +398,7 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
     this.blocks.doSetVar.translatable = true;
     this.blocks.doChangeVar.translatable = true;
     this.blocks.doDeclareVariables.translatable = true;
-
+	
     StageMorph.prototype.codeMappings['delim'] = ',';
     StageMorph.prototype.codeMappings['tempvars_delim'] = ',';
     StageMorph.prototype.codeMappings['string'] = '"<#1>"';
@@ -343,6 +435,16 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
     StageMorph.prototype.codeMappings['digitalWrite'] = 'digitalWrite(<#1>, <#2>);';
     StageMorph.prototype.codeMappings['servoWrite'] = 'servo<#1>.write(<#2>);';
     StageMorph.prototype.codeMappings['pwmWrite'] = 'analogWrite(<#1>, <#2>);';
+	
+	//SDM
+	StageMorph.prototype.codeMappings['defMelody'] = 'tempmelody(\n  <#1>\ntempmelody)';
+	StageMorph.prototype.codeMappings['doPlayNoteCustom'] = 'playnote <#1>;\nduration <#2>;';
+	StageMorph.prototype.codeMappings['doRestCustom'] = 'playnote 0;\nduration <#1>;';
+	StageMorph.prototype.codeMappings['playMelody'] = 'buzPin_iQMaak = <#1>;\nMelody();\n';
+	StageMorph.prototype.codeMappings['playSong'] = 'buzPin_iQMaak = <#2>;\nsong <#1>;\nMelody();\n';
+	StageMorph.prototype.codeMappings['crossFadeColor'] = 'crossFade(<#1>, <#2>, <#3>, <#4>);\nRGBPin <#2>;\nRGBPin <#3>;\nRGBPin <#4>;\n';
+	StageMorph.prototype.codeMappings['rgbColor'] = 'rgbanalogWrite(<#2>, <#1>[0]);\nrgbanalogWrite(<#3>, <#1>[1]);\nrgbanalogWrite(<#4>, <#1>[2]);\nRGBPin <#2>;\nRGBPin <#3>;\nRGBPin <#4>;\n';
+	//SDM
 }
 
 SpriteMorph.prototype.initBlocks =  function() {
@@ -385,7 +487,17 @@ SpriteMorph.prototype.blockTemplates = function(category) {
         newBlock.isTemplate = true;
         return newBlock;
     };
-
+	
+	//SDM
+	if (category === 'sound') {
+		if (StageMorph.prototype.enableCodeMapping) {
+			blocks.push(blockBySelector('doPlayNoteCustom'));
+			blocks.push(blockBySelector('doRestCustom'));
+			blocks.push(blockBySelector('defMelody'));
+		};
+	};
+	//SDM
+	
     if (category === 'arduino') {
         blocks.push(arduinoConnectButton);
         blocks.push(arduinoDisconnectButton);
@@ -393,6 +505,16 @@ SpriteMorph.prototype.blockTemplates = function(category) {
         blocks.push(blockBySelector('servoWrite'));
         blocks.push(blockBySelector('digitalWrite'));
         blocks.push(blockBySelector('pwmWrite'));
+		//SDM
+		if (StageMorph.prototype.enableCodeMapping) {
+			blocks.push('-');
+			blocks.push(blockBySelector('rgbColor'));
+			blocks.push(blockBySelector('crossFadeColor'));
+			blocks.push('-');
+			blocks.push(blockBySelector('playMelody'));
+			blocks.push(blockBySelector('playSong'));
+		};
+		//SDM
         blocks.push('-');
         blocks.push(blockBySelector('reportAnalogReading'));
         blocks.push(blockBySelector('reportDigitalReading'));

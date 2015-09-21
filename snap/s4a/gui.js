@@ -1,3 +1,12 @@
+//SDM
+IDE_Morph.prototype.originalInit = IDE_Morph.prototype.init;
+IDE_Morph.prototype.init = function (isAutoFill) {
+    var myself = this;
+    myself.originalInit(isAutoFill);
+	myself.setLanguage('nl');
+};
+//SDM
+
 // userMenu proxy
 
 SpriteIconMorph.prototype.originalUserMenu = SpriteIconMorph.prototype.userMenu;
@@ -21,6 +30,7 @@ IDE_Morph.prototype.buildPanes = function (){
     var myself = this;
 
     this.originalBuildPanes();
+	
     this.controlBar.cloudButton.hide();
 
     this.controlBar.originalFixLayout = this.controlBar.fixLayout;
