@@ -10,43 +10,6 @@ SpriteIconMorph.prototype.userMenu = function () {
     return menu;
 }
 
-
-// Addessing issue #24 : https://github.com/edutec/Snap4Arduino/issues/24
-// Remove all items that are not usable from menus, plus add a few more
-
-// Remove cloud button from control bar
-
-IDE_Morph.prototype.originalBuildPanes = IDE_Morph.prototype.buildPanes;
-IDE_Morph.prototype.buildPanes = function (){
-    var myself = this;
-
-    this.originalBuildPanes();
-    this.controlBar.cloudButton.hide();
-
-    this.controlBar.originalFixLayout = this.controlBar.fixLayout;
-    this.controlBar.fixLayout = function () {
-        myself.controlBar.originalFixLayout();
-        myself.controlBar.projectButton.setLeft(150);
-        myself.controlBar.updateLabel()
-    };
-};
-
-// Hide cloud button when toggleAppMode is called (when changing language, opening projects, ...)
-IDE_Morph.prototype.originalToggleAppMode = IDE_Morph.prototype.toggleAppMode;
-IDE_Morph.prototype.toggleAppMode = function(mode) {
-    this.originalToggleAppMode(mode);
-    this.controlBar.cloudButton.hide();
-}
-
-
-// Remove cloud button from dialogs
-
-ProjectDialogMorph.prototype.originalAddSourceButton = ProjectDialogMorph.prototype.addSourceButton;
-ProjectDialogMorph.prototype.addSourceButton = function(source, label, symbol) {
-    if (source != 'cloud') { this.originalAddSourceButton(source, label, symbol) }
-}
-
-
 // Override Snap! menus
 // ToDo: Duplicate code! This is terrible style... we need to think of a better way 
 
