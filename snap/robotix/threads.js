@@ -29,11 +29,11 @@ Process.prototype.rightMotorForward = function (value) {
 Process.prototype.rightMotorBackward = function (value) {
     var board = this.homeContext.receiver.arduino.board;
 
-    if (board.pins[13].mode != board.MODES.PWM) {
-        board.pinMode(13, board.MODES.PWM);
+    if (board.pins[2].mode != board.MODES.PWM) {
+        board.pinMode(2, board.MODES.PWM);
     }
 
-    this.pwmWrite(13, Math.min(100, value) / 100 * 255);
+    this.pwmWrite(2, Math.min(100, value) / 100 * 255);
 };
 
 // Sensors
