@@ -136,6 +136,9 @@ s4aTempDict = {
 		
 	'make melody %c':
 		'maak melodie %c',
+		
+	'repeat %n %c':
+		'herhaal %n keer %c',
 	
 	'play melody on pin %buzPin':
 		'speel melodie op pin %buzPin',
@@ -170,11 +173,17 @@ s4aTempDict = {
 	'blue':
 		'blauw',
 		
+	'purple':
+		'paars',
+		
 	'yellow':
 		'geel',
 		
 	'softWhite':
 		'zacht wit',
+		
+	'set color %redPin = %n %grnPin = %n %bluPin = %n':
+		'maak kleur %redPin = %n %grnPin = %n %bluPin = %n',
 		
 	'export as Arduino sketch...':
 		'exporteer als Arduino-sketch...'

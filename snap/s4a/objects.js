@@ -310,6 +310,16 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 		translatable: true
 	};
 	
+	this.blocks.repeatMelody =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'sound',
+		spec: 'repeat %n %c',
+		defaults: [2],
+		translatable: true
+	};
+	
 	this.blocks.playMelody =
 	{
 		only: SpriteMorph,
@@ -368,6 +378,16 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 		defaults: [localize('blue') + '__blue', null, null, null],
 		translatable: true
 	};
+	
+	this.blocks.rgbColorTwo =
+	{
+		only: SpriteMorph,
+		type: 'command',
+		category: 'arduino',
+		spec: 'set color %redPin = %n %grnPin = %n %bluPin = %n',
+		defaults: [null, 100, null, 100, null, 100],
+		translatable: true
+	};
 	//SDM
 	
     // Ardui... nization? 
@@ -377,8 +397,8 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
     this.blocks.doWait.translatable = true;
     this.blocks.doForever.translatable = true;
     this.blocks.doRepeat.translatable = true;
-    this.blocks.doIf.translatable = true;
-    this.blocks.doIfElse.translatable = true;
+    //this.blocks.doIf.translatable = true;
+    //this.blocks.doIfElse.translatable = true;
     this.blocks.reportSum.translatable = true;
     this.blocks.reportDifference.translatable = true;
     this.blocks.reportProduct.translatable = true;
@@ -386,14 +406,14 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
     this.blocks.reportModulus.translatable = true;
     this.blocks.reportMonadic.translatable = true;
     this.blocks.reportRandom.translatable = true;
-    this.blocks.reportLessThan.translatable = true;
-    this.blocks.reportEquals.translatable = true;
-    this.blocks.reportGreaterThan.translatable = true;
-    this.blocks.reportAnd.translatable = true;
-    this.blocks.reportOr.translatable = true;
-    this.blocks.reportNot.translatable = true;
-    this.blocks.reportTrue.translatable = true;
-    this.blocks.reportFalse.translatable = true;
+    //this.blocks.reportLessThan.translatable = true;
+    //this.blocks.reportEquals.translatable = true;
+    //this.blocks.reportGreaterThan.translatable = true;
+    //this.blocks.reportAnd.translatable = true;
+    //this.blocks.reportOr.translatable = true;
+    //this.blocks.reportNot.translatable = true;
+    //this.blocks.reportTrue.translatable = true;
+    //this.blocks.reportFalse.translatable = true;
     this.blocks.reportJoinWords.translatable = true;
     this.blocks.doSetVar.translatable = true;
     this.blocks.doChangeVar.translatable = true;
@@ -404,10 +424,10 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
     StageMorph.prototype.codeMappings['string'] = '"<#1>"';
 
     StageMorph.prototype.codeMappings['doWait'] = 'delay(<#1> * 1000);';
-    StageMorph.prototype.codeMappings['doForever'] = 'void loop() {\n  <#1>\n}';
-    StageMorph.prototype.codeMappings['doRepeat'] = 'for (int i = 0; i < <#1>; i++) {\n  <#2>\n}';
-    StageMorph.prototype.codeMappings['doIf'] = 'if (<#1>) {\n  <#2>\n}';
-    StageMorph.prototype.codeMappings['doIfElse'] = 'if (<#1>) {\n  <#2>\n} else {\n  <#3>\n}';
+    StageMorph.prototype.codeMappings['doForever'] = 'void loop() {\n  <#1>\n} //end loop\n';
+    StageMorph.prototype.codeMappings['doRepeat'] = 'replacefor <#1>repfor\n  <#2>\n} //end for\n'; //'replacefor' will be replaced during exporting (see morphic.js)
+    StageMorph.prototype.codeMappings['doIf'] = 'if (<#1>) {\n  <#2>\n} //end if\n';
+    StageMorph.prototype.codeMappings['doIfElse'] = 'if (<#1>) {\n  <#2>\n} else {\n  <#3>\n} //end if else\n';
 
     StageMorph.prototype.codeMappings['reportSum'] = '(<#1> + <#2>)';
     StageMorph.prototype.codeMappings['reportDifference'] = '(<#1> - <#2>)';
@@ -438,12 +458,14 @@ SpriteMorph.prototype.initArduinoBlocks = function() {
 	
 	//SDM
 	StageMorph.prototype.codeMappings['defMelody'] = 'tempmelody(\n  <#1>\ntempmelody)';
+	StageMorph.prototype.codeMappings['repeatMelody'] = 'forloopmelody <#1>;\n  <#2>\nendloopmelody\n';
 	StageMorph.prototype.codeMappings['doPlayNoteCustom'] = 'playnote <#1>;\nduration <#2>;';
 	StageMorph.prototype.codeMappings['doRestCustom'] = 'playnote 0;\nduration <#1>;';
-	StageMorph.prototype.codeMappings['playMelody'] = 'buzPin_iQMaak = <#1>;\nMelody();\n';
-	StageMorph.prototype.codeMappings['playSong'] = 'buzPin_iQMaak = <#2>;\nsong <#1>;\nMelody();\n';
+	StageMorph.prototype.codeMappings['playMelody'] = 'buzPin_iQMaak = <#1>;\nMelody123();\n';
+	StageMorph.prototype.codeMappings['playSong'] = 'buzPin_iQMaak = <#2>;\nsong <#1>;\nMelody123();\n';
 	StageMorph.prototype.codeMappings['crossFadeColor'] = 'crossFade(<#1>, <#2>, <#3>, <#4>);\nRGBPin <#2>;\nRGBPin <#3>;\nRGBPin <#4>;\n';
 	StageMorph.prototype.codeMappings['rgbColor'] = 'rgbanalogWrite(<#2>, <#1>[0]);\nrgbanalogWrite(<#3>, <#1>[1]);\nrgbanalogWrite(<#4>, <#1>[2]);\nRGBPin <#2>;\nRGBPin <#3>;\nRGBPin <#4>;\n';
+	StageMorph.prototype.codeMappings['rgbColorTwo'] = 'rgbanalogWrite(<#1>, <#2>);\nrgbanalogWrite(<#3>, <#4>);\nrgbanalogWrite(<#5>, <#6>);\nRGBPin <#1>;\nRGBPin <#3>;\nRGBPin <#5>;\n';
 	//SDM
 }
 
@@ -494,30 +516,37 @@ SpriteMorph.prototype.blockTemplates = function(category) {
 			blocks.push(blockBySelector('doPlayNoteCustom'));
 			blocks.push(blockBySelector('doRestCustom'));
 			blocks.push(blockBySelector('defMelody'));
+			blocks.push(blockBySelector('repeatMelody'));
 		};
 	};
 	//SDM
 	
     if (category === 'arduino') {
-        blocks.push(arduinoConnectButton);
-        blocks.push(arduinoDisconnectButton);
-        blocks.push('-');
-        blocks.push(blockBySelector('servoWrite'));
-        blocks.push(blockBySelector('digitalWrite'));
-        blocks.push(blockBySelector('pwmWrite'));
+        if (!StageMorph.prototype.enableCodeMapping) {
+			blocks.push(arduinoConnectButton);
+			blocks.push(arduinoDisconnectButton);
+			blocks.push('-');
+			blocks.push(blockBySelector('servoWrite'));
+			blocks.push(blockBySelector('digitalWrite'));
+			blocks.push(blockBySelector('pwmWrite'));
+		};
 		//SDM
 		if (StageMorph.prototype.enableCodeMapping) {
 			blocks.push('-');
 			blocks.push(blockBySelector('rgbColor'));
 			blocks.push(blockBySelector('crossFadeColor'));
 			blocks.push('-');
+			blocks.push(blockBySelector('rgbColorTwo'));
+			blocks.push('-');
 			blocks.push(blockBySelector('playMelody'));
 			blocks.push(blockBySelector('playSong'));
 		};
 		//SDM
-        blocks.push('-');
-        blocks.push(blockBySelector('reportAnalogReading'));
-        blocks.push(blockBySelector('reportDigitalReading'));
+		if (!StageMorph.prototype.enableCodeMapping) {
+			blocks.push('-');
+			blocks.push(blockBySelector('reportAnalogReading'));
+			blocks.push(blockBySelector('reportDigitalReading'));
+		};
     };
 
     return blocks;

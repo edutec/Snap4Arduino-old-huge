@@ -273,6 +273,7 @@ SyntaxElementMorph.prototype.labelPart = function(spec) {
 					'red' : [localize('red') + '__red'],
 					'green' : [localize('green') + '__green'],
 					'blue' : [localize('blue') + '__blue'],
+					'purple' : [localize('purple') + '__purple'],
 					'yellow' : [localize('yellow') + '__yellow'],
 					'softWhite' : [localize('softWhite') + '__softWhite']
                 },

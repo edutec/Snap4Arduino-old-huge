@@ -166,27 +166,64 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 															});
 	
 	//recode the melody so that two variables are made (int melody[]) and (int duration[])
-	body = body.replace('tempmelody(\n', '')
-	body = body.replace('tempmelody)', '')
-	melodyNoteLines = lines.filter(function(each) { return each.match(/.*playnote/)});
 	var notes = '';
-	melodyNoteLines.forEach (function(line) {
-												note = line.substring(line.lastIndexOf(" ")+1,line.lastIndexOf(";"))
-												note = note.substring(note.lastIndexOf("_")+1,note.length)
-												notes += note + ','
-												body = body.replace(line + '\n', '')
-											});
-	notes = notes.substring(0, notes.length - 1)
-	
-	melodyDurationLines = lines.filter(function(each) { return each.match(/.*duration/)});
 	var durations = '';
-	melodyDurationLines.forEach (function(durLine) {
-												duration = durLine.substring(durLine.lastIndexOf(" ")+1,durLine.lastIndexOf(";"))
-												//durations += 1.0/duration + ','
-												durations += duration + ','
-												body = body.replace(durLine + '\n', '')
+	var indexform = []
+	var indexforendm = []
+	formLines = lines.forEach( function(formtest, i) {
+												if (formtest.indexOf('tempmelody(') > -1 ) {
+													indexform.push(i);
+												}
+												if (formtest.indexOf('tempmelody)') > -1 ) {
+													indexforendm.push(i);
+												}
 											});
 	
+	for (var j = 0; j < indexform.length; j++) {
+		var k = 0;
+		for (var i = indexform[j]; i <= indexforendm[j]; i++) {
+			if (lines[i].indexOf('forloopmelody') > -1) {
+				k = parseInt(lines[i].substring(lines[i].lastIndexOf(" ")+1,lines[i].lastIndexOf(";")))
+				body = body.replace(lines[i] + '\n', '')
+				var notestemp = ''
+				var durationstemp = ''
+			}
+
+			if (lines[i].indexOf('playnote') > -1 ) {
+				note = lines[i].substring(lines[i].lastIndexOf(" ")+1,lines[i].lastIndexOf(";"))
+				note = note.substring(note.lastIndexOf("_")+1,note.length)
+				notes += note + ','
+				if (k > 0) {
+					notestemp += note + ','
+				}
+				body = body.replace(lines[i] + '\n', '')
+			}
+
+			if (lines[i].indexOf('duration') > -1 ) {
+				duration = lines[i].substring(lines[i].lastIndexOf(" ")+1,lines[i].lastIndexOf(";"))
+				durations += duration + ','
+				if (k > 0) {
+					durationstemp += duration + ','
+				}
+				body = body.replace(lines[i] + '\n', '')
+			}
+			if (lines[i].indexOf('endloopmelody') > -1) {
+				for (var r = 1; r < k; r++) {
+					notes += notestemp
+					durations += durationstemp
+				}
+				k = 0
+				notestemp = ''
+				durationstemp = ''
+				body = body.replace(lines[i] + '\n', '')
+			}
+		}
+	}
+
+	body = body.replace('tempmelody(\n', '')
+	body = body.replace('tempmelody)', '')	
+	
+	notes = notes.substring(0, notes.length - 1)
 	durations = durations.substring(0, durations.length - 1)
 	
 	var defMelody = 'int melody[] = {\n  ' + notes + '\n};\n\n'
@@ -248,6 +285,7 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 					+ 'int blue[3]   = { 0, 0, 100 };\n'
 					+ 'int yellow[3] = { 40, 95, 0 };\n'
 					+ 'int softWhite[3] = { 30, 30, 30 };\n'
+					+ 'int purple[3] = { 50, 0, 50 };\n'
 					+ '//etc.\n'
 					+ '\n'
 	
@@ -360,24 +398,65 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	//SDM
 	//Oops, I'm messing up the order of the blocks
 	//disable it for now
-	var doThis = false;
+	var doThis = true;
+	
+	//Detect if for-block is inside the loop() or not
+	//if not, move it to setup()
+	lines = body.split('\n')
+	var indexfor = []
+	var indexforend = []
+	var forArray = []
+	forLines = lines.forEach( function(fortest, i) {
+												if (fortest.substring(0,10) === 'replacefor' && doThis) {
+													indexfor.push(i);
+												}
+												if (fortest === '} //end for' && doThis) {
+													indexforend.push(i);
+												}
+											});
+	if (doThis) {
+		m = 0
+		for (var j = 0; j < indexfor.length; j++) {
+			for (var i = indexfor[j]-1; i <= indexforend[j]; i++) {
+				forArray.push('moveToSetup  ' + lines[i] + '\n')
+				body = body.replace(lines[i] + '\n', 'regel' + m + '\n');
+				m++
+			}
+		}
+	}
+	lines = body.split('\n')
+	regelLines = lines.filter(function(each) { return each.match(/regel/)});
+	regelLines.forEach ( function (regeltest) { 
+												body = body.replace(regeltest, forArray[parseInt(regeltest.substring(5, regeltest.length))])
+											});
+	//SDM	
+	
 	//Detect if the Melody-block is inside the loop() or not
 	//if not, move it to setup()
-	melodyLines = lines.filter(function(each) { return each.match(/Melody\(\)/)});
-	melodyLines.forEach ( function(melodytest) { if (melodytest === 'Melody();' && doThis) {
-													body = body.replace(melodytest + '\n', '')
-													setup += '  ' + melodytest + '\n'
+	lines = body.split('\n')
+	melodyLines = lines.filter(function(each) { return each.match(/Melody123\(/)}); //have to use Melody123, otherwise it detects it twice etc.
+	melodyLines.forEach ( function(melodytest) { if (melodytest.substring(0,10) === 'Melody123(' && doThis) {
+													melodytestNew = 'Melody();'
+													body = body.replace(melodytest + '\n', 'moveToSetup  ' + melodytestNew + '\n')
 												}
 												});
+	//replace all other Melody123() with Melody()
+	lines = body.split('\n')
+	melodyLines = lines.filter(function(each) { return each.match(/Melody123\(/)});
+	melodyLines.forEach ( function(melodytest) {
+												body = body.replace('Melody123();', 'Melody();')
+												});
+	//SDM
+	
 	//Detect if the crossFade-blocks are inside the loop() or not
 	//if not, move it to setup()
+	lines = body.split('\n')
 	crossFadeLines = lines.filter(function(each) { return each.match(/crossFade\(/)});
 	crossFadeLines.forEach ( function(crossfadetest) { 
 												crossfadetestNew = crossfadetest.substring(0, crossfadetest.indexOf("(")+1) + crossfadetest.substring(crossfadetest.lastIndexOf("_")+1, crossfadetest.length)
 												crossfadetestNew = crossfadetestNew.replace('"', '') 
 												if (crossfadetest.substring(0,10) === 'crossFade(' && doThis) {
-													body = body.replace(crossfadetest + '\n', '')
-													setup += '  ' + crossfadetestNew + '\n'
+													body = body.replace(crossfadetest + '\n', 'moveToSetup  ' + crossfadetestNew + '\n')
 												} else {
 													body = body.replace(crossfadetest + '\n', crossfadetestNew + '\n')
 												}
@@ -386,27 +465,67 @@ WorldMorph.prototype.Arduino.processC = function (body) {
 	
 	//Detect if the rgbColor-blocks are inside the loop() or not
 	//if not, move it to setup()
+	lines = body.split('\n')
 	rgbColorLines = lines.filter(function(each) { return each.match(/rgbanalogWrite\(/)});
-	rgbColorLines.forEach ( function(rgbcolortest) { 
-												rgbcolortestNew = rgbcolortest.substring(0, rgbcolortest.indexOf(",")+2) + rgbcolortest.substring(rgbcolortest.lastIndexOf("_")+1, rgbcolortest.length)
+	rgbColorLines.forEach ( function(rgbcolortest) {
+												rgbcolortestNew = rgbcolortest
+												if (rgbcolortest.indexOf("_") > -1) {
+													rgbcolortestNew = rgbcolortest.substring(0, rgbcolortest.indexOf(",")+2) + rgbcolortest.substring(rgbcolortest.lastIndexOf("_")+1, rgbcolortest.length)
+												}
 												rgbcolortestNew = rgbcolortestNew.replace('"', '')
 												rgbcolortestNew = rgbcolortestNew.replace('rgb', '')
 												if (rgbcolortest.substring(0,15) === 'rgbanalogWrite(' && doThis) {
-													body = body.replace(rgbcolortest + '\n', '')
-													setup += '  ' + rgbcolortestNew + '\n'
+													body = body.replace(rgbcolortest + '\n', 'moveToSetup  ' + rgbcolortestNew + '\n')
 												} else {
 													body = body.replace(rgbcolortest + '\n', rgbcolortestNew + '\n')
 												}
 												});
 	//SDM
+
+	//SDM
+	//when exporting this string was seen as an invalid regular expression, fixed it this way
+	lines = body.split('\n')
+	replaceforLines = lines.filter(function(each) { return each.match(/replacefor/)});
+	replaceforLines.forEach ( function(replacefortest) {
+													body = body.replace("replacefor", "for (int rep = 0; rep <");
+												});
+	lines = body.split('\n')
+	replaceforLines = lines.filter(function(each) { return each.match(/repfor/)});
+	replaceforLines.forEach ( function(replacefortest) {
+													body = body.replace("repfor", "; rep++) {");
+												});
+	//SDM
 	
-    setup += '}\n\n';
+	//Detect all moveToSetup lines and move them to setup()
+	lines = body.split('\n')
+	moveToSetupLines = lines.filter(function(each) { return each.match(/moveToSetup/)});
+	moveToSetupLines.forEach ( function(movetosetuptest) {
+												if (doThis) {
+													movetosetuptestNew = movetosetuptest.substring(11, movetosetuptest.length)
+													body = body.replace(movetosetuptest + '\n', '')
+													setup += movetosetuptestNew + '\n'
+												}
+												});
+	//SDM
+	
+    setup += '} //end setup\n\n';
 	
 	//SDM
 	//if no forever loop is in the code, it will be added (is mandatory for an Arduino sketch)
 	if (body.indexOf("void loop()") == -1) {
 		body = body + 'void loop() {\n}\n'
 	};
+	//SDM
+	
+	//SDM
+	//quick-n-dirty cleanup ;-)
+	for (var i = 0; i<100; i++) {
+		body = body.replace('\n\n\n', '\n\n')
+		body = body.replace('\n  \n', '\n')
+		body = body.replace('\n    \n', '\n')
+		body = body.replace('\n      \n', '\n')
+		body = body.replace('\n        \n', '\n')
+	}
 	//SDM
 	
 	//SDM: added headerVar
