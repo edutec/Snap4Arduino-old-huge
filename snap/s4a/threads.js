@@ -103,6 +103,7 @@ Process.prototype.reportDigitalReading = function (pin) {
 
         if (board.pins[pin].mode != board.MODES.INPUT) {
             board.pinMode(pin, board.MODES.INPUT);
+            board.digitalRead(pin, nop);
         }
         return board.pins[pin].value == 1;
     } else {
