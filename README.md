@@ -1,3 +1,12 @@
+Warning!
+========
+
+This is the old repository for Snap4Arduino, only kept alive for archaeologic reasons. Please visit our new lightweight repo at: https://github.com/edutec/Snap4Arduino
+
+**PLEASE DO NOT SUBMIT ANY ISSUES OR PULL REQUESTS HERE**
+
+----
+
 Snap4Arduino
 ============
 
