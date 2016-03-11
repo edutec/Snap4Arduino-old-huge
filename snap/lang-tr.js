@@ -181,11 +181,11 @@ SnapTranslator.dict.tr = {
     'language_name':
         'Türkçe', // the name as it should appear in the language menu
     'language_translator':
-        'Hakan Atas', // your name for the Translators tab
+        'Oğuzhan KAYAR', // your name for the Translators tab
     'translator_e-mail':
-        'hakanatas@gmail.com', // optional
+        'info@oguzhankayar.com', // optional
     'last_changed':
-        '2015-7-26', // this, too, will appear in the Translators tab
+        '2015-11-12', // this, too, will appear in the Translators tab
 
     // GUI
     // control bar:
@@ -236,9 +236,9 @@ SnapTranslator.dict.tr = {
 
     // rotation styles:
     'don\'t rotate':
-        'dönebilir',
-    'can rotate':
         'dönemez',
+    'can rotate':
+        'dönebilir',
     'only face left/right':
         'sadece sağa/sola dönebilir',
 
@@ -762,7 +762,7 @@ SnapTranslator.dict.tr = {
     'uncheck to allow\nscript reentrance':
         'betiklemeye tekrar girişe\nizin vermek için seçimi kaldırın',
     'check to disallow\nscript reentrance':
-        'vbetiklemeye tekrar girişe\nizin vermemek için seçimi kaldırın',
+        'betiklemeye tekrar girişe\nizin vermemek için seçimi kaldırın',
     'Prefer smooth animations':
         'Pürüzsüz animayonu tercih et',
     'uncheck for greater speed\nat variable frame rates':
@@ -782,7 +782,7 @@ SnapTranslator.dict.tr = {
     'input names:':
         'girdi isimleri:',
     'Input Names:':
-        'girdi isimleri:',
+        'Girdi isimleri:',
     'input list:':
         'girdi listesi:',
 
@@ -927,7 +927,7 @@ SnapTranslator.dict.tr = {
     'Untitled':
         'Adsız',
     'Open Project':
-        'Projec aç',
+        'Proje aç',
     '(empty)':
         '(boş)',
     'Saved!':
@@ -1046,11 +1046,11 @@ SnapTranslator.dict.tr = {
     'About Snap':
         'Snap hakkında',
     'Back...':
-        'Geriye...',
+        'Geri...',
     'License...':
         'Lisans...',
     'Modules...':
-        'Komponenten...',
+        'Bileşenler...',
     'Credits...':
         'Katkıda bulunanlar...',
     'Translators...':
