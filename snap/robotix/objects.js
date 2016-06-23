@@ -167,7 +167,7 @@ SpriteMorph.prototype.initBlocks = function() {
         spec: 'Stop All'
     };	
 
-}
+};
 
 SpriteMorph.prototype.initBlocks();
 
@@ -248,4 +248,4 @@ SpriteMorph.prototype.blockTemplates = function(category) {
     };
 
     return blocks;
-}
+};

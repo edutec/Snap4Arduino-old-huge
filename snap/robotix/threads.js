@@ -2,12 +2,18 @@
 Process.prototype.leftMotorForward = function (value) {
     var board = this.homeContext.receiver.arduino.board;
 
+    if (board.pins[10].mode != board.MODES.PWM) {
+        board.pinMode(10, board.MODES.PWM);
+    }
+
     if (board.pins[11].mode != board.MODES.PWM) {
         board.pinMode(11, board.MODES.PWM);
     }
 
-    this.pwmWrite(11, Math.min(100, value) / 100 * 255);
+    this.pwmWrite(11, 0);
+    this.pwmWrite(10, Math.min(100, value) / 100 * 255);
 };
+
 Process.prototype.leftMotorBackward = function (value) {
     var board = this.homeContext.receiver.arduino.board;
 
@@ -15,25 +21,73 @@ Process.prototype.leftMotorBackward = function (value) {
         board.pinMode(10, board.MODES.PWM);
     }
 
+    this.pwmWrite(11, 255);
     this.pwmWrite(10, Math.min(100, value) / 100 * 255);
 };
+
+Process.prototype.leftMotorStop = function () {
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[10].mode != board.MODES.PWM) {
+        board.pinMode(10, board.MODES.PWM);
+    }
+
+    if (board.pins[11].mode != board.MODES.PWM) {
+        board.pinMode(11, board.MODES.PWM);
+    }
+
+    this.pwmWrite(11, 0);
+    this.pwmWrite(10, 0);
+};
+
 Process.prototype.rightMotorForward = function (value) {
     var board = this.homeContext.receiver.arduino.board;
 
+    if (board.pins[2].mode != board.MODES.PWM) {
+        board.pinMode(2, board.MODES.PWM);
+    }
     if (board.pins[12].mode != board.MODES.PWM) {
         board.pinMode(12, board.MODES.PWM);
     }
 
+    if (board.pins[13].mode != board.MODES.PWM) {
+        board.pinMode(13, board.MODES.PWM);
+    }
+
+    this.pwmWrite(2, 255);
+    this.pwmWrite(13, 255);
+
     this.pwmWrite(12, Math.min(100, value) / 100 * 255);
 };
+
 Process.prototype.rightMotorBackward = function (value) {
     var board = this.homeContext.receiver.arduino.board;
 
     if (board.pins[2].mode != board.MODES.PWM) {
         board.pinMode(2, board.MODES.PWM);
     }
+    if (board.pins[12].mode != board.MODES.PWM) {
+        board.pinMode(12, board.MODES.PWM);
+    }
 
-    this.pwmWrite(2, Math.min(100, value) / 100 * 255);
+    if (board.pins[13].mode != board.MODES.PWM) {
+        board.pinMode(13, board.MODES.PWM);
+    }
+
+    this.pwmWrite(2, 0);
+    this.pwmWrite(13, 0);
+
+    this.pwmWrite(12, Math.min(100, value) / 100 * 255);
+};
+
+Process.prototype.rightMotorStop = function (value) {
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[12].mode != board.MODES.PWM) {
+        board.pinMode(12, board.MODES.PWM);
+    }
+
+    this.pwmWrite(12, 0);
 };
 
 // Sensors
@@ -134,5 +188,5 @@ Process.prototype.stopAll = function () {
     for (i = 2; i < 14; i++) {
         this.digitalWrite(i, 0);
     }
-}
+};
 
