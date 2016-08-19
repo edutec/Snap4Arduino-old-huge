@@ -114,48 +114,22 @@ Process.prototype.bottomRightSensor = function () {
 Process.prototype.leftLEDRed = function (value) {
     var board = this.homeContext.receiver.arduino.board;
 
-    if (board.pins[4].mode != board.MODES.PWM) {
-        board.pinMode(4, board.MODES.PWM);
-    }
-
-    this.pwmWrite(4, value);
-};
-Process.prototype.leftLEDGreen = function (value) {
-    var board = this.homeContext.receiver.arduino.board;
-
-    if (board.pins[5].mode != board.MODES.PWM) {
-        board.pinMode(5, board.MODES.PWM);
-    }
-
-    this.pwmWrite(5, value);
-};
-Process.prototype.leftLEDBlue = function (value) {
-    var board = this.homeContext.receiver.arduino.board;
-
-    if (board.pins[6].mode != board.MODES.PWM) {
-        board.pinMode(6, board.MODES.PWM);
-    }
-
-    this.pwmWrite(6, value);
-};
-Process.prototype.rightLEDRed = function (value) {
-    var board = this.homeContext.receiver.arduino.board;
-
     if (board.pins[7].mode != board.MODES.PWM) {
         board.pinMode(7, board.MODES.PWM);
     }
 
     this.pwmWrite(7, value);
 };
-Process.prototype.rightLEDGreen = function (value) {
+Process.prototype.leftLEDGreen = function (value) {
     var board = this.homeContext.receiver.arduino.board;
 
     if (board.pins[8].mode != board.MODES.PWM) {
         board.pinMode(8, board.MODES.PWM);
     }
+
     this.pwmWrite(8, value);
 };
-Process.prototype.rightLEDBlue = function (value) {
+Process.prototype.leftLEDBlue = function (value) {
     var board = this.homeContext.receiver.arduino.board;
 
     if (board.pins[9].mode != board.MODES.PWM) {
@@ -163,6 +137,32 @@ Process.prototype.rightLEDBlue = function (value) {
     }
 
     this.pwmWrite(9, value);
+};
+Process.prototype.rightLEDRed = function (value) {
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[4].mode != board.MODES.PWM) {
+        board.pinMode(4, board.MODES.PWM);
+    }
+
+    this.pwmWrite(4, value);
+};
+Process.prototype.rightLEDGreen = function (value) {
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[5].mode != board.MODES.PWM) {
+        board.pinMode(5, board.MODES.PWM);
+    }
+    this.pwmWrite(5, value);
+};
+Process.prototype.rightLEDBlue = function (value) {
+    var board = this.homeContext.receiver.arduino.board;
+
+    if (board.pins[6].mode != board.MODES.PWM) {
+        board.pinMode(6, board.MODES.PWM);
+    }
+
+    this.pwmWrite(6, value);
 };
 
 // Speaker
@@ -188,5 +188,5 @@ Process.prototype.stopAll = function () {
     for (i = 2; i < 14; i++) {
         this.digitalWrite(i, 0);
     }
-};
+}
 

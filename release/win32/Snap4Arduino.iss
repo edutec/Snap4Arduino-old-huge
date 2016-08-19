@@ -6,19 +6,19 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{79712027-5DAE-425B-8534-1CA699720EA5}
-AppName=Snap4Arduino
+AppName=Snap4Phiro
 AppVersion=1.0.2-beta
-AppVerName=Snap4Arduino-1.0.2-beta
-AppPublisher=Citilab
-AppPublisherURL=http://www.s4a.cat/snap
-AppSupportURL=http://www.s4a.cat/snap
-AppUpdatesURL=http://www.s4a.cat/snap
-DefaultDirName={pf}\Snap4Arduino
-DefaultGroupName=Snap4Arduino
-AllowNoIcons=yes
+AppVerName=Snap4Phiro-1.0.2-beta
+AppPublisher=Robotix
+AppPublisherURL=http://robotixedu.com
+AppSupportURL=http://robotixedu.com
+AppUpdatesURL=http://robotixedu.com
+DefaultDirName={pf}\Snap4Phiro
+DefaultGroupName=Snap4Phiro
+AllowNoIcons=no
 OutputDir=.
-OutputBaseFilename=Snap4Arduino-1.0.2-beta
-SetupIconFile=s4a.ico
+OutputBaseFilename=Snap4Phiro-1.0.2-beta
+SetupIconFile=phiro.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -40,15 +40,15 @@ Source: "libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "libGLESv2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "nw.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "nw.pak"; DestDir: "{app}"; Flags: ignoreversion
-Source: "s4a.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "phiro.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\Snap4Arduino"; Filename: "{app}\nw.exe"; Parameters: "app.nw"; IconFilename: "{app}\s4a.ico"; WorkingDir: "{app}"
-Name: "{group}\{cm:ProgramOnTheWeb,Snap4Arduino}"; Filename: "http://www.s4a.cat/snap"
-Name: "{group}\{cm:UninstallProgram,Snap4Arduino}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\Snap4Arduino"; Filename: "{app}\nw.exe"; Parameters: "app.nw"; IconFilename: "{app}\s4a.ico"; Tasks: desktopicon; WorkingDir: "{app}"
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Snap4Arduino"; Filename: "{app}\nw.exe"; Parameters: "app.nw"; Tasks: quicklaunchicon; WorkingDir: "{app}"
+Name: "{group}\Snap4Phiro"; Filename: "{app}\nw.exe"; Parameters: "app.nw"; IconFilename: "{app}\phiro.ico"; WorkingDir: "{app}"
+Name: "{group}\{cm:ProgramOnTheWeb,Snap4Phiro}"; Filename: "http://robotixedu.com"
+Name: "{group}\{cm:UninstallProgram,Snap4Phiro}"; Filename: "{uninstallexe}"
+Name: "{commondesktop}\Snap4Phiro"; Filename: "{app}\nw.exe"; Parameters: "app.nw"; IconFilename: "{app}\phiro.ico"; Tasks: desktopicon; WorkingDir: "{app}"
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Snap4Phiro"; Filename: "{app}\nw.exe"; Parameters: "app.nw"; Tasks: quicklaunchicon; WorkingDir: "{app}"
 
 [Run]
-Filename: "{app}\nw.exe"; Parameters: "app.nw"; Description: "{cm:LaunchProgram,Snap4Arduino}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\nw.exe"; Parameters: "app.nw"; Description: "{cm:LaunchProgram,Snap4Phiro}"; Flags: nowait postinstall skipifsilent

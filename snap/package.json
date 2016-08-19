@@ -1,9 +1,9 @@
 {
   "main": "s4a.html",
-  "name": "Snap4Arduino",
-  "description": "Snap4Arduino",
+  "name": "Snap4Phiro",
+  "description": "Snap4Phiro",
   "window": {
-    "title": "Snap4Arduino",
+    "title": "Snap4Phiro",
     "icon": "s4a.ico",
     "toolbar": false,
     "frame": true,
