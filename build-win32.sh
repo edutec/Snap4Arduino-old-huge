@@ -13,7 +13,7 @@ cp -R ../modules/win32/* .
 zip -r app.nw *
 mv app.nw ../release/win32
 cd ../release/win32
-rm Snap4Arduino-*.exe
-wine "C:\Program Files\Inno Setup 5\ISCC.exe" "Snap4Arduino.iss"
-zip Snap4Arduino.zip Snap4Arduino-*.exe
+rm Snap4Phiro-*.exe
+wine "C:\Program Files\Inno Setup 5\ISCC.exe" "Snap4Phiro.iss"
+zip Snap4Phiro.zip Snap4Phiro-*.exe
 cd ../..
